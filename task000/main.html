@@ -5,6 +5,9 @@
 	<title>热身任务</title>
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.7.8/jquery.fullPage.css">
 	<link rel="stylesheet" type="text/css" href="./main.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />   
+	<meta name="apple-mobile-web-app-capable" content="yes" /> 
+	<meta name="format-detection" content="telephone=no" />
 </head>
 <body>
 
@@ -45,9 +48,8 @@
 <!-- 配置项 -->
 <script type="text/javascript">
 
-	$(document).ready(function(){
-		$("#fullPage").fullpage({
-		
+$(document).ready(function(){
+	$("#fullPage").fullpage({
 		controlArrows:false,
 		scrollingSpeed:1400,
 		
@@ -66,9 +68,35 @@
 		loopBottom:true,
 		loppHorizontal:true,
 
-		})
+		//补充header导航的active状态
+		afterLoad:function(link,index){
+			switch(index){
+				case 1: $("#fullpageMenu > li:eq(0)").css("background","red");
+				break;
+				case 2: $("#fullpageMenu > li:eq(1)").css("background","green")
+				break;
+				case 3:$("#fullpageMenu > li:eq(2)").css("background","orange")
+				break;
+			}
+		},
+
+		//header导航的正常状态
+		onLeave:function(index,nextindex){
+			switch(index){
+				case 1: $("#fullpageMenu > li:eq(0)").css("background","#999");
+				break;
+				case 2: $("#fullpageMenu > li:eq(1)").css("background","#999")
+				break;
+				case 3:$("#fullpageMenu > li:eq(2)").css("background","#999")
+				break;
+			}
+		}
+		
+
 	})
-	
+})
+
+
 </script>
 </body>
 </html>

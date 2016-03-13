@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>热身任务</title>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.7.8/jquery.fullPage.css">
+	<link rel="stylesheet" type="text/css" href="./main.css">
+</head>
+<body>
+
+<!-- 头部 -->
+<header>
+	<ul id="fullpageMenu">
+		<li data-menuanchor="page1"><a href="#page1">团队介绍</a></li>
+		<li data-menuanchor="page2"><a href="#page2">成员简介</a></li>
+		<li data-menuanchor="page2"><a href="#page3">未来期望（。。。）</a></li>
+	</ul>
+</header>
+
+
+<!-- 主屏 -->
+<div id="fullPage">
+	<!-- 团队介绍 -->
+	<div class="section section1">团队介绍</div>
+
+	<!-- 成员简介 -->
+	<div class="section section2">
+		<div class="slide">Léon</div>		
+		<div class="slide">那些花儿</div>
+		<div class="slide">简单</div>
+		<div class="slide">毛球</div>
+		<div class="slide">陈</div>
+	</div>
+
+	<!-- 未来期望 -->
+	<div class="section section3">未来期望</div>
+	
+</div>
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.js"></script>
+<script type="text/javascript" src
+="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.7.8/jquery.fullPage.js"></script>
+
+<!-- 配置项 -->
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		$("#fullPage").fullpage({
+		
+		controlArrows:false,
+		scrollingSpeed:1400,
+		
+		//header部分置顶
+		paddingTop:"100px",
+		fixedElements:"header",  
+		anchors:["page1","page2","page3"],
+		menu:"#fullpageMenu",
+
+		// 项目导航
+		navigation:true,
+		navigationPosition:"right",
+		slidesNavigation:true,		
+		slidesNaviPosition:"bottom",
+		loopTop:true,
+		loopBottom:true,
+		loppHorizontal:true,
+
+		})
+	})
+	
+</script>
+</body>
+</html>

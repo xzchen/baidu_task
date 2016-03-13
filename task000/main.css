@@ -1,0 +1,96 @@
+/*body部分*/
+body{
+	margin: 0;
+	padding: 0;
+	font: 17px;
+	text-align: center;
+	width: 100%;
+}
+
+/*header部分*/
+header{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100px;
+	background-color: #999;
+}
+header ul{
+	float: right;
+}
+
+header li{
+	list-style: none;
+	float: left;
+	
+}
+
+header a{
+	text-decoration: none;
+	margin:1em;
+	font: 20px/3.0 arial, sans-serif;
+}
+
+
+/*团队介绍*/
+.section1{
+	background-image: url(http://h.hiphotos.baidu.com/lvpics/w=1000/sign=049d1d655cafa40f3cc6cadd9b54024f/29381f30e924b899de6cd36f68061d950a7bf611.jpg);
+	background-size:cover;
+}
+
+
+/*成员简介*/
+.section2{
+	
+	background-image: url(http://g.hiphotos.baidu.com/lvpics/w=1000/sign=82800ad878cb0a4685228f395b53f724/96dda144ad3459823cc40db00ff431adcbef8442.jpg);
+	font-size: 50px;
+	background-size:cover;
+}
+
+/*.section2 .sidebar{
+	float: left;
+	margin-left: 300px;
+	border: 2px solid red;
+}
+
+.section2 img{
+	position: absolute;
+	left: 0;
+	top: 0;
+	display: inline-block;
+	width: 300px;
+	height: 500px;
+	border:2px solid red;
+}*/
+/*未来期望*/
+.section3{
+	background-image: url(http://img.taopic.com/uploads/allimg/121115/240368-12111522002984.jpg);
+	background-size:cover;
+}
+/*控制项目导航*/
+#fp-nav ul li a span{
+	width: 10px;
+	height: 10px;
+	margin: -5px 0 0 -5px;
+	background: #999;
+}   
+
+#fp-nav ul li a.active span{
+	width: 20px;
+	height: 20px;
+	margin: -10px 0 0 -10px;
+	background: #777;
+}
+.fp-slidesNav ul li a span{
+	width: 10px;
+	height: 10px;
+	margin: -5px 0 0 -5px;
+	background: #999;}  
+
+.fp-slidesNav ul li a.active span{
+	width: 20px;
+	height: 20px;
+	margin: -10px 0 0 -10px;
+	background: #777;
+}

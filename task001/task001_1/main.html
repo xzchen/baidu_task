@@ -44,23 +44,23 @@
 	<h2>图片</h2>
 	<figure>
 		<figcaption>好看的图片</figcaption>
-		<img src="http://www.touxiang.cn/uploads/20131227/27-082450_614.jpg">
+		<img src="http://www.touxiang.cn/uploads/20131227/27-082450_614.jpg" alt="午后咖啡">
 	</figure>
 	<figure>
 		<figcaption>好看的图片</figcaption>
-		<img src="http://www.touxiang.cn/uploads/20131227/27-082450_614.jpg">
+		<img src="http://www.touxiang.cn/uploads/20131227/27-082450_614.jpg" alt="午后咖啡">
 	</figure>
 	<figure>
 		<figcaption>好看的图片</figcaption>
-		<img src="http://www.touxiang.cn/uploads/20131227/27-082450_614.jpg">
+		<img src="http://www.touxiang.cn/uploads/20131227/27-082450_614.jpg" alt="午后咖啡">
 	</figure>
 	<figure>
 		<figcaption>好看的图片</figcaption>
-		<img src="http://www.touxiang.cn/uploads/20131227/27-082450_614.jpg">
+		<img src="http://www.touxiang.cn/uploads/20131227/27-082450_614.jpg" alt="午后咖啡">
 	</figure>
 	<figure>
 		<figcaption>好看的图片</figcaption>
-		<img src="http://www.touxiang.cn/uploads/20131227/27-082450_614.jpg">
+		<img src="http://www.touxiang.cn/uploads/20131227/27-082450_614.jpg" alt="午后咖啡">
 	</figure>
 </div>
 
@@ -117,19 +117,20 @@
 	<h2>侧栏注册窗口标题</h2>
 	<!-- 表单 -->
 	<form>
-		请输入邮箱地址：
-		<input type="text" placeholder="这是一个文本输入框"></input>	
+		<label for="text">请输入邮箱地址：</label>            <!-- label标签 for属性和控制元素id值相同 -->
+		<input type="text" placeholder="这是一个文本输入框" id="text"></input>	
 		<p>邮箱地址请按要求格式输入</p>
 	
-		请输入密码：
-		<input type="password" placeholder="这是一个文本输入框"></input> 
-		请重复输入密码：
-		<input type="password" placeholder="这是一个文本输入框"></input>
+		<label for="password">请输入密码：</label>
+		<input type="password" placeholder="这是一个文本输入框" id="password"></input> 
+		<label for="rePassword">请重复输入密码：</label>
+		<input type="password" placeholder="这是一个文本输入框" id="rePassword"></input>
 		<p>密码请为6-16为英文数字</p>
 		
 		性别:
-		<input type="radio" name="sex" value="male">男</input>         <!-- 只有name相同的radio才构成单选 -->    
-		<input type="radio" name="sex" value="female">女</input>
+		<label for="male">男</label>
+		<input type="radio" name="sex" value="male" id="male"></input>         <!-- 只有name相同的radio才构成单选 --><label for="female">女</label> 
+		<input type="radio" name="sex" value="female" id="female"></input>
 
 		城市：
 		<select name="city">
@@ -141,9 +142,12 @@
 		</select>
 
 		爱好:
-		<input type="checkbox" name="hobby" value="sport">运动</input>
-		<input type="checkbox" name="hobby" value="art">艺术</input>
-		<input type="checkbox" name="hobby" value="science">科学</input>
+		<label for="sport">运动</label>
+		<input type="checkbox" name="hobby" value="sport" id="sport"></input>
+		<label for="art">艺术</label>
+		<input type="checkbox" name="hobby" value="art" id="art"></input>
+		<label for="science">科学</label>
+		<input type="checkbox" name="hobby" value="science" id="science"></input>
 
 		个人描述：
 		<textarea>这是一个多行输入框，请输入您的个人描述</textarea>

@@ -1,0 +1,142 @@
+body {
+	background-color: #ddd;
+	padding: 0;
+	margin: 0;
+	font-family: "Microsoft Yahei"
+}
+p{
+	text-indent: 2em;
+}
+
+/*header部分*/
+header {
+	position: relative;
+	top: 0; 
+	left: 0;
+	height: 75px;
+	background-color: #89c3d8;
+}
+
+header img {
+	-webkit-transform-origin: left top;
+	-moz-transform-origin:left top;
+  	transform-origin: left top;
+	-webkit-transform: scale(.5);
+  	-moz-transform:scale(.5)
+  	transform: scale(.5);
+}
+header h1 {
+	display: inline-block;
+	position: absolute;
+	left: 40%;
+	top:20%;
+	margin: 0 auto;
+	
+}
+header ul {
+ 	float: right;
+ 	height: 50px;
+ 	margin-top: 20px;
+}
+
+header li {
+	float: left;
+	margin-left: 18px;
+}
+
+header a {
+	text-decoration: none;
+	color:#fff;
+}
+
+header a:visited {
+	color:#aaa;
+}
+
+/*每个section*/
+#picture,
+section {
+	border: 1px solid #ddd;
+	width: 90%;
+	padding: 1.2em;
+	
+	margin: 1.5em auto;
+	background: #fff;
+
+	-webkit-box-shadow:.1em .1em 1px #888;
+	-moz-box-shadow:.1em .1em 1px #888;
+	box-shadow: 2px 2px 1px #909090;
+}
+
+section ul li {
+	margin-bottom:.5em;
+	list-style: none;
+}
+
+/*picture部分*/
+#picture figure {
+	border:1px solid #ccc;
+	width: 560px;
+	padding: 5px;
+	text-align: center;
+}
+
+#picture img {
+	margin:10px;
+}
+
+/*table部分*/
+table {
+	width: 100%;
+	border:1px solid #ccc;
+	border-collapse: collapse;
+}
+
+table th {
+	text-align: left;
+	color: #fff;
+	background-color: #333;
+}
+
+/*sidebar部分*/
+#sidebar h3 {
+	padding-left: 1em;
+	border-left: 3px solid #ccc;
+}
+
+/*form部分，这里很多弄不清楚*/
+form div {
+	position: relative;
+	margin: 1em 30%;
+	font-size: 0.8em;
+}
+
+form div .label {
+	display: inline-block;
+	width: 90px;
+}
+
+form div p {
+	padding-left: 6em;
+	color: #999;
+}
+
+form div #text,
+form div #password, 
+form div #rePassword {
+	margin-left: .8em;
+}
+
+form div span {
+	display: inline-block;
+	margin-top: .8em;
+	width: 90px;
+	text-align: right;
+}
+
+form div #male {
+	margin-left: .8em; 
+}
+ 
+
+

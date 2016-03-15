@@ -1,3 +1,4 @@
+/*公用*/
 body {
 	background-color: #ddd;
 	padding: 0;
@@ -12,6 +13,16 @@ h3 {
 
 p{
 	text-indent: 2em;
+}
+
+section {
+	border: 1px solid #cdcdcd;
+	padding: 1.2em;
+	margin-bottom:1.3em; 
+	background: #fff;
+	-webkit-box-shadow:.1em .1em 1px #888;
+	-moz-box-shadow:.1em .1em 1px #888;
+	box-shadow: 2px 2px 1px #909090;
 }
 
 /*header部分*/
@@ -31,14 +42,15 @@ header img {
   	-moz-transform:scale(.5)
   	transform: scale(.5);
 }
+
 header h1 {
 	display: inline-block;
 	position: absolute;
 	left: 40%;
 	top:20%;
 	margin: 0 auto;
-	
 }
+
 header ul {
  	position: absolute;
  	top: 0;
@@ -63,66 +75,73 @@ header a:visited {
 	color:#000
 }
 
-/*每个section*/
-section {
-	border: 1px solid #ddd;
-	width: 90%;
-	padding: 1.2em;
-	
+/*中间container界面*/
+.container {
+	position: relative;
+	width: 97%;
 	margin: 1.5em auto;
-	background: #fff;
-
-	-webkit-box-shadow:.1em .1em 1px #888;
-	-moz-box-shadow:.1em .1em 1px #888;
-	box-shadow: 2px 2px 1px #909090;
 }
 
-section ul li {
+/*左侧main主界面*/
+.main {
+	margin-right: 410px;	
+}
+
+.main section ul li {
 	margin-bottom:.5em;
 	list-style: none;
 }
 
-/*picture部分*/
-#picture figure {
-	border:1px solid #ccc;
-	width: 560px;
-	padding: 5px;
+/*pictrue部分自适应*/
+/*这个是关键。。overflow。。但是hidden和auto在这里的差别是什么啊*/
+.main #picture {
+	overflow: hidden;
+}
+
+.main #picture figure {
+	float: left;
+	padding: 10px;
+	margin:16px 10px;
+	width: 125px;
 	text-align: center;
+	border: 1px solid #ccc;
 }
 
-#picture img {
-	margin:10px;
+.main #picture img {
+	margin-top: 10px;
+	width: 125px;
+	height: 78px;
 }
 
-/*table部分*/
-table {
-	width: 100%;
-	border:1px solid #ccc;
-	border-collapse: collapse;
+.main .clear {
+	clear: left;
 }
-
-table th {
-	text-align: left;
-	color: #fff;
-	background-color: #333;
-}
-
 /*sidebar部分*/
+#sidebar {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 350px;
+	box-sizing: 
+}
+
 #sidebar h3 {
-	padding-left: 1em;
 	border-left: 3px solid #ccc;
+	padding-left: 1em;	
+	line-height: 42px;
+	color: #000;
 }
 
 /*form部分，这里很多弄不清楚*/
-
 form > div {
 	position: relative;
-	margin: 1em 5% 1em 22%;
-	font-size: 0.8em;
+	margin: 1em auto;
+	font-size: 0.8em;*/
 	/*这个是为了控制整个form（除submit）部分进行定位*/
 }
+
 /*为了对齐，写了个类，然后再将需要进行text-align:right*/
-.label {       
+form .label {       
 	display: inline-block;
 	margin-top: 10px;
 	width: 90px;
@@ -148,18 +167,18 @@ form div #sport {
 form textarea {
 	margin-left: .8em;
 	vertical-align: text-top; 
-	width: 80%;
-	height: 7em;
+	width: 65%;
+	height: 6em;
 }
 
 form #submit {
 	display: block;
 	border-radius: .7em;
 	margin:.5em auto;
-	width: 96%;
+	width: 100%;
 	height: 40px;
-	font-size: 1em;
-	line-height: 34px;
+	font-size: 1.3em;
+	line-height: 40px;
 	font-weight: bold;
 	text-align: center;
 	color: #fff;
@@ -168,9 +187,6 @@ form #submit {
 
 /*footer部分*/
 footer {
-	position: relative;
-	bottom: 0; 
-	left: 0;
 	height: 75px;
 	text-align: center;
 	font-size: .3em;
@@ -180,4 +196,17 @@ footer {
 
 footer p {
 	padding-top: 15px;
+}
+
+/*table部分*/
+table {
+	width: 100%;
+	border:1px solid #ccc;
+	border-collapse: collapse;
+}
+
+table th {
+	text-align: left;
+	color: #fff;
+	background-color: #333;
 }

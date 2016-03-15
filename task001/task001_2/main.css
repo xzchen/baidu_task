@@ -4,6 +4,12 @@ body {
 	margin: 0;
 	font-family: "Microsoft Yahei"
 }
+
+h3 {
+	font-size: 16px;
+	color: #696772;
+}
+
 p{
 	text-indent: 2em;
 }
@@ -34,27 +40,30 @@ header h1 {
 	
 }
 header ul {
- 	float: right;
+ 	position: absolute;
+ 	top: 0;
+ 	right: 0;
  	height: 50px;
  	margin-top: 20px;
 }
 
 header li {
 	float: left;
-	margin-left: 18px;
+	margin-left: 1em;
 }
 
 header a {
+	margin-right: 1.3em;
+	font-size: 12px;	
 	text-decoration: none;
-	color:#fff;
+	color:#ffa765;
 }
 
 header a:visited {
-	color:#aaa;
+	color:#000
 }
 
 /*每个section*/
-#picture,
 section {
 	border: 1px solid #ddd;
 	width: 90%;
@@ -105,38 +114,77 @@ table th {
 }
 
 /*form部分，这里很多弄不清楚*/
-form div {
-	position: relative;
-	margin: 1em 30%;
-	font-size: 0.8em;
-}
 
-form div .label {
+form > div {
+	position: relative;
+	margin: 1em 5% 1em 22%;
+	font-size: 0.8em;
+	/*这个是为了控制整个form（除submit）部分进行定位*/
+}
+/*为了对齐，写了个类，然后再将需要进行text-align:right*/
+.label {       
 	display: inline-block;
+	margin-top: 10px;
 	width: 90px;
+	text-align: right;
 }
 
 form div p {
-	padding-left: 6em;
+	padding-left: 6.7em;
+	font-size: .9em;
 	color: #999;
 }
 
 form div #text,
 form div #password, 
-form div #rePassword {
+form div #rePassword,
+form div #male,
+form div #city,
+form div #sport {
 	margin-left: .8em;
 }
 
-form div span {
-	display: inline-block;
-	margin-top: .8em;
-	width: 90px;
-	text-align: right;
+
+form textarea {
+	margin-left: .8em;
+	vertical-align: text-top; 
+	width: 80%;
+	height: 7em;
 }
 
-form div #male {
-	margin-left: .8em; 
+form #submit {
+	display: block;
+	border-radius: .7em;
+	margin:.5em auto;
+	width: 96%;
+	height: 40px;
+	font-size: 1em;
+	line-height: 34px;
+	font-weight: bold;
+	text-align: center;
+	color: #fff;
+	background-color: #3355d0;
 }
+
+/*footer部分*/
+footer {
+	position: relative;
+	bottom: 0; 
+	left: 0;
+	height: 75px;
+	text-align: center;
+	font-size: .3em;
+	font-weight: bold;
+	background-color: #89c3d8;
+}
+
+footer p {
+	padding-top: 15px;
+}
+
+
+
+
  
 
 

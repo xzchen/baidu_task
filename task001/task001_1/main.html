@@ -133,8 +133,8 @@
 		<input type="radio" name="sex" value="male" id="male"></input>         <!-- 只有name相同的radio才构成单选 --><label for="female">女</label> 
 		<input type="radio" name="sex" value="female" id="female"></input>
 
-		城市：
-		<select name="city">
+		<label for="city">城市：</label>
+		<select name="city" id="city">
 			<option value="beijing">北京</option>
 			<option value="shanghai">上海</option>
 			<option value="guangzhou">广州</option>
@@ -142,7 +142,7 @@
 			<option value="hangzhou">杭州</option>
 		</select>
 
-		爱好:
+		<label>爱好:</label>
 		<label for="sport">运动</label>
 		<input type="checkbox" name="hobby" value="sport" id="sport"></input>
 		<label for="art">艺术</label>
@@ -150,8 +150,8 @@
 		<label for="science">科学</label>
 		<input type="checkbox" name="hobby" value="science" id="science"></input>
 
-		个人描述：
-		<textarea>这是一个多行输入框，请输入您的个人描述</textarea>
+		<label for="description">个人描述：</label>
+		<textarea id="description">这是一个多行输入框，请输入您的个人描述</textarea>
 		<input type="submit" value="确认提交"></input>
 	</form>
 </div>

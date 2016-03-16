@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>定位和居中问题</title>
+</head>
+
+<style type="text/css">
+html {
+	height: 100%;
+}
+
+body {
+	height: 100%;
+	min-width: 400px;
+	min-height: 200px;
+}
+
+.table {
+	display: table;
+	height: 100%;
+	width: 100%;
+}
+
+.table-cell {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.container {
+	position: relative;
+	overflow: hidden;
+	margin: 0 auto;
+	width: 400px;
+	height: 200px;
+	background-color: #ccc;
+}
+.top-left,
+.right-bottom {
+	position: absolute;
+	border-radius: 100%;
+	width: 100px;
+	height: 100px;
+	background-color: #fc0;
+	z-index: 10;
+}
+
+.top-left {
+	top: -50px;
+	left: -50px;
+}
+
+.right-bottom {
+	right: -50px;
+	bottom: -50px;
+}
+</style>
+
+<body>
+<!-- 用<table>也可以 -->
+<!-- <table style="height: 100%;width: 100%;">
+		<td>
+			<div class="container">
+				<div class="top-left"></div>
+				<div class="right-bottom"></div>
+			</div>
+		</td>
+</table>
+ -->
+ <div class="table">
+ 	<div class="table-cell">
+ 		<div class="container">
+				<div class="top-left"></div>
+				<div class="right-bottom"></div>
+		</div>
+ 	</div>
+ </div>
+</body>
+</html>

@@ -95,7 +95,7 @@ header a:visited {
 /*pictrue部分自适应*/
 /*这个是关键。。overflow。。但是hidden和auto在这里的差别是什么啊*/
 .main #picture {
-	overflow: hidden;
+	overflow: auto;
 }
 
 .main #picture figure {

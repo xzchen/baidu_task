@@ -207,6 +207,7 @@ header span {
 	font: 72px "SimHei";
 	font-style: oblique;
 	color: #f5e327;
+	margin-right: 18px;
 }
 
 .new .left h2 {
@@ -358,7 +359,7 @@ header span {
 	width: 165px;
 	height: 120px;
 	font:oblique normal normal 14px/16px "SimHei",sans-serif;
-	text-indent: 40px;
+	text-indent: 42px;
 }
 
 .right .last > p:before {
@@ -368,7 +369,7 @@ header span {
 	top: 16px;
 	left: -90px;
 	font-size:72px;
-	color:#5a5b5b;
+	color:#d45d5c;
 }
 
 .right .last > p:after {
@@ -378,9 +379,10 @@ header span {
 	right: -22px;
 	display: inline-block;
 	font-size:72px;
-	color:#5a5b5b;
+	color:#d45d5c;
 }
 
+/*footer部分*/
 footer {
 	margin-top:-30px;
 	border-top:1px solid #93838c;

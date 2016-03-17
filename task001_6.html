@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>模拟报纸排版</title>
+	<link rel="stylesheet" type="text/css" href="./task001/task001_6/main.css">
+</head>
+<body>
+
+<!-- header部分 -->
+<header>
+	<div>
+		<span>ife.baidu.com</span>
+	</div>
+	<span>2016.3</span>
+</header>
+
+<!-- 第一个section，左右两列布局 -->
+<section class="now">
+	<section class="picture">
+		<img src="http://7xrv34.com1.z0.glb.clouddn.com/01.png">
+	</section>
+	<div>
+		<p><big>A</big>BOUT</p>
+		<p><big>T</big>ECHNOLOGE</p>
+		<p>About technologe about technologe about technologe</p>
+		<p>700</p>
+		<p>3.2</p>
+		<p>CSS</p>
+		<p>CSSSSCCSCCSCSSC</p>
+	</div>
+</section>
+
+<!-- 第二个section，三栏布局 -->
+<section class="history">
+	<!-- article按序是左中右 -->
+	<article>
+		<h3>what</h3>
+		<p>前端前端前端前端前 端前端前端 前端前端前端前端前端前端前端前端前端前前端前端前前端前端前前端前端前前端前端 前端前端前端前端前端前端前端前端前端前端前端前端 前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端</p>
+	</article>
+
+	<article>
+		<h3>when</h3>
+		<p>前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端前端</p>
+	</article>
+
+	<article>
+		<h3>how</h3>
+		<p>前端前端前端前端前</p>
+		<p>前端前端前端前端前前端</p>
+		<p>前端前端前端</p>
+		
+		<ul>
+			<li>What-------<span>40%</span></li>
+			<li>What-------<span>40%</span></li>
+			<li>What-------<span>40%</span></li>
+		</ul>
+	</article>
+</section>
+
+<!-- 第三个section，较复杂的两列布局 -->
+<section class="new">
+	<!-- 分左右，左边的比较简单 -->
+	<div class="left">
+		<h2><span>THE</span>TECHNOLOGE OF FRONT</h2>
+		<h3>前端技术领域</h3>
+		<p>前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段 前端前端<img src="http://7xrv34.com1.z0.glb.clouddn.com/02.png">前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前<br>&nbsp;&nbsp;前端前端前段前端前端前段前端前端前段前端前端前段前端前端前前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前前段前端前端前段前端前端前段前端前端前段前端前端前端前段前端前端前段前端前端前段前端前端前段前端前端前前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前端前段前端前<br>&nbsp;&nbsp;端前前段前端前端前段前端前端前端前前段前端前端前段前端端前端前前段前端前端前段前端前端前前段前端前端前段前端前端前端前端前端前前段前端前前端前端前前段前端前前端前前段前端前前端前前段前端前前端前前段前</p>
+	</div>
+
+	<!-- 右边调位置比较麻烦，但是写完了觉得应该有更好的办法吧？自己太不行了应该，其实有的可以加span，但是自己非用伪类，嗯。。虽然写span也麻烦 -->
+	<div class="right">
+		<div class="picture">
+			<img src="http://7xrv34.com1.z0.glb.clouddn.com/03.png">
+			<p>前端技术<span> 前端技术前端技术</span></p>	
+		</div>
+		
+		<div class="last">
+			<ul>
+				<li>前端前端前端端前端前端...............<span>前端</span></li>
+				<li>前端前端端前端前....................<span>前前端</span></li>
+				<li>前端前端前端端前端前端...............<span>前端</span></li>
+			</ul>
+			
+			<div class="zero">
+				<!-- 这里为了居中，加了个div，就不写外联了，嵌套层级太多了 -->
+				<div style="position: absolute;top: 0;right: 0;bottom: 0;left: 0;margin:auto;width: 235px;height: 90px; ">
+					<span>0</span>
+				<p>ONE TWO<br>THREE FORE FIVE </p>
+				</div>
+			</div>
+			
+			<p>hello world hello world hello world hello world hello world hello world hello world hello world hello world hello world hello</p>
+
+		</div>
+	</div>
+	
+</section>
+
+<!-- footer部分 -->
+<footer>
+	<span>ife.baidu.com</span>
+</footer>
+</html>

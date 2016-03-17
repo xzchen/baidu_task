@@ -1,0 +1,390 @@
+/*公用部分*/
+html{
+	background-color: #44525c;
+	min-width: 980px;
+}
+
+body {
+	margin: 0 auto;
+	padding: 0 44px;
+	width: 892px;
+	height: 1386px;
+	font: 12px "SimHei";
+	background-color: #fff;
+}
+
+/*header部分*/
+header {
+	position: relative;
+	border-bottom: 2px solid #938e8c;
+	margin-bottom:33px;
+}
+
+header div {
+	width: 110px;
+	height: 61px;
+	background-color: #d83e75
+}
+
+header div span{
+	position: absolute;
+	bottom: 5px;
+	left: 5px;
+	color: #fff;
+}
+
+header span {
+	position: absolute;
+	right: 5px;
+	bottom: 5px;
+	color: #d45d5c;
+}
+
+/*第一个section*/
+.now {
+	position: relative;
+}
+
+/*第一个section左侧图片区，给他们加入伪类*/
+.now .picture:before{
+	content: "";
+	position: absolute;
+	top: 0;
+	width: 191px;
+	height: 301px;
+	background-color: #0f0;
+	opacity: 0.3
+}
+
+.now .picture:after{
+	content: "";
+	position: absolute;
+	top: 0;
+	right: 251px;
+	width: 191px;
+	height: 301px;
+	background-color: #552b55;
+	opacity: 0.3;
+}
+
+/*第一个section下右侧*/
+.now div {
+	position: absolute;
+	top: 0;
+	right: 0;
+	border-top: 2px solid #cc8091;
+	width: 203px;
+	height: 301px;
+}
+
+.now div p:nth-child(1),
+.now div p:nth-child(2){
+	margin: 24px 0;
+	font:24px/6px "Microsoft YaHei";
+	text-decoration:underline; 
+	color: #000;
+}
+
+.now div p:nth-child(3) {
+	margin:-5px 0;
+	font:10px/12px "KaiTi";
+	color: #676767;
+}
+
+.now div p:nth-child(4) {
+	margin:0 -20px;
+	font:oblique 116px  "Microsoft YaHei";
+	font-weight: bold;
+	color:#75b86b;
+	/*font-style: oblique italic*/
+}
+
+.now div p:nth-child(5) {
+	position: absolute;
+	bottom: 0;
+	left: 11px;
+	margin: 0;
+	font:55px/45px "Microsoft YaHei";
+	color: #cc8091;
+}
+
+.now div > p:nth-child(6) {
+	position: absolute;
+	bottom: 13px;
+	left:95px;
+	margin: 0;
+	font:21px/21px "Microsoft YaHei";
+	color: #cc8091;
+} 
+
+.now div > p:nth-child(7) {
+	position: absolute;
+	bottom: 0;
+	left: 95px;
+	margin: 0;
+	font:12px/12px "Microsoft YaHei";
+	color: #999
+} 
+
+/*第二个section部分*/
+.history {
+	position: relative;
+	margin:44px 0;
+}
+
+.history article {
+	margin-right: 30px;
+}
+
+.history article h3{
+	font: 16px 	"Microsoft YaHei";
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+.history article p {
+	font: 12px/16px "SimSun";
+	color:#767777;
+}
+
+.history article:nth-child(1) {
+	position: absolute;
+	top: -16px;
+	left: 0;
+	width: 25.7%;
+	color: #418c59;
+}
+
+.history article:nth-child(2) {
+	margin-left: 260px;
+	width: 230px;
+	color: #d2994f;
+}
+
+/*第三个article里面有个ul*/
+.history article:nth-child(3) {
+	position: absolute;
+	top: -16px;
+	left: 58%;
+	width: 20%;
+	height: 220px;
+	color: #cc7680;
+}
+
+.history ul {
+	position: absolute;
+	bottom:2px;
+	left: 0;
+	padding: 0;
+	font:12px/16px "Microsoft Yahei";
+	color: #231815;
+	opacity: .7;
+	list-style: none;
+}
+
+.history span {
+	font-style: italic;
+	color: #cd4a48;
+}
+
+
+/*第三个section部分,先分成两列布局，然后各自细分*/
+.new {
+	width: 100%;
+	position: relative;
+	top: -50px;
+	overflow: hidden;
+}
+
+/*左侧部分*/
+.new .left {
+	float: left;
+	width: 415px;
+}
+
+/*左侧上部*/
+.new .left h2 span {
+	font: 72px "SimHei";
+	font-style: oblique;
+	color: #f5e327;
+}
+
+.new .left h2 {
+	font: 42px/16px "SimHei";
+	font-weight: bold;
+	color:#11456b;
+}
+
+.new .left h3 {
+	font:33px "SimHei";
+	font-weight: bold;
+	color: #11456b;
+	border-bottom: 2px solid #11456b;
+}
+
+
+/*左侧下部*/
+.new .left p:first-letter {
+	position: absolute;
+	float: left;
+	margin-right: 3px;
+	margin-bottom: 5px;
+	font: 70px/58px "Microsoft";
+	color: #f5e327;
+}
+
+.new .left p {
+
+	font: 12px/16px "SimSun";
+	color: #767777;
+}
+
+.new .left img {
+	position: relative;
+	right: 6px;
+	margin:20px 0 10px 20px;
+	float: right;
+}
+
+/*右侧部分*/
+.right {
+	position: absolute;
+	top:50px;
+	right: 0;
+}
+
+.right .picture {
+	position: relative;
+}
+
+.right .picture:before {
+	position: absolute;
+	bottom: 0;
+	content: "";
+	display: block;
+	width: 458px;
+	height: 61px;
+	background: #000;
+	opacity: .7
+}
+
+.right .picture p{
+	position: absolute;
+	bottom: 8.5px;
+	left: 50px;
+	margin: 0;
+	border-left: 3px solid #72b16a;
+	font: 26px/44px "Microsoft";
+	color: #fff;
+	
+}
+
+.right .picture  p span {
+	font: 12px/140% "Microsoft";
+	font-style: oblique;
+	color: #72b16a;
+}
+
+/*最后右下角这块啦，总算要写完了*/
+.right .last {
+	position: relative;
+	top: 25px;
+	width: 459px;
+	height: 318px;
+	background-color: #eaf1cf;
+	
+}
+
+.right .last ul {
+	padding-top: 40px;
+	margin-left:  5px;
+}
+
+.right .last ul li{
+	height: 40px;
+	font:16px/20px "SimSun";
+	text-align: left;
+	color: #5a5b5b;
+	list-style-image: url(http://7xrv34.com1.z0.glb.clouddn.com/sj01.png);
+}
+
+.right .last ul span {
+	font:12px/20px "SimSun";
+	font-style: italic;
+	text-align: right;
+	color: #5a5b5b;
+}
+
+/*写里面这个block，好乱，弄不清楚了,这里和右边都用了好多伪类来添加效果，其实怪麻烦的。就是看下怎么用*/
+.right .last .zero {
+	position: absolute;
+	bottom: 0;
+	width:260px;
+	height: 160px;
+	background-color: #d83e75;
+	color: #fff;
+}
+
+.right .last .zero span:nth-child(1) {
+	display: inline-block;
+	border-right: 2px solid #fff;
+	font:110px/86px "Microsoft";
+	font-weight: bold;
+}
+.right .last .zero p{
+	position: absolute;
+	top: -15px;
+	left: 70px;
+	display: inline-block;
+	font: 21px/24px "SimHei";
+	font-style: oblique;
+}
+
+.right .last .zero p:after {
+	content: "hello world hello world hello world";
+	position: absolute;
+	display: block;
+	right: 0;
+	bottom: -25px;
+	font:12px/12px "SimHei";
+}
+
+/*真是最后一点了，调位置真心累*/
+.right .last > p {
+	position: absolute;
+	right :20px;
+	bottom: 30px;
+	margin:0;
+	width: 165px;
+	height: 120px;
+	font:oblique normal normal 14px/16px "SimHei",sans-serif;
+	text-indent: 40px;
+}
+
+.right .last > p:before {
+	content: '“';
+	position: absolute;
+	display: inline-block;
+	top: 16px;
+	left: -90px;
+	font-size:72px;
+	color:#5a5b5b;
+}
+
+.right .last > p:after {
+	content: '”';
+	position: absolute;
+	bottom: -3px;
+	right: -22px;
+	display: inline-block;
+	font-size:72px;
+	color:#5a5b5b;
+}
+
+footer {
+	margin-top:-30px;
+	border-top:1px solid #93838c;
+	text-align: right;
+	font:12px "SimHei";
+	color: #d45d5c;
+}

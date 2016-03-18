@@ -75,7 +75,7 @@ body {
 
 
 /*flex方式*/
-/*这里要注意，要给html body都定义heightL:100%,因为这样才规定了container父元素的高度。否则其无法撑开。*/
+/*这里要注意，要给html body都定义height:100%,因为这样才规定了container父元素的高度。否则其无法撑开。*/
 /*html {
 	height: 100%;
 }

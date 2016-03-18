@@ -1,0 +1,63 @@
+body,
+div {
+	padding: 20px;
+}
+
+body {
+	display: flex;
+	margin :0;
+	justify-content: space-between;  
+}
+
+div {
+	box-sizing: border-box;
+	border:1px solid #f00;
+	width: 150px; 
+}
+
+.one {
+	
+	height: 120px;
+}
+
+.two {
+	
+	height: 100px;
+}
+
+.three {
+	height: 40px;
+}
+
+.four {
+	border: 1px solid #00f;
+	height: 200px;
+}
+
+@media (min-width: 640px) {
+	body {
+		align-items: center;
+	}
+}
+
+@media (max-width: 639px) and (min-width: 490px){
+	body {
+		align-items:flex-end;
+		flex-wrap: wrap;
+	}
+	
+	.three {
+		margin-top: 20px;
+	}
+
+@media (max-width: 489px) {
+	body {
+		flex-direction :column;
+	}
+}
+
+	.four {
+		order: -1;
+	}
+}
+

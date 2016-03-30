@@ -1,0 +1,401 @@
+body,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,img,div,dl,dt,dd,input{margin: 0;padding:0;}{
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	min-width: 1280px;
+}
+
+/*header里面的图标是用CSS写的，来练练手，好麻烦。真心觉得要是用图片会容易多*/
+header {
+	position: relative;
+	display: flex;
+	height: 57px;
+	align-items: center;
+	background-color: #2189c0;
+}
+
+.logo {
+	position: relative;
+	left: 50px;
+	width: 36px;
+	height: 36px;
+	background-color: #fff;
+}
+
+.logo:after {
+	content: "";
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	display: block;
+	border-top: 3px solid #2189c0;
+	border-left: 3px solid #2189c0;
+	width: 15px;
+	height: 15px;	
+}
+
+.search {
+	position: relative;
+	display: block;
+	left: 800px;
+	border: 0;
+	width: 315px;
+	height: 26px;
+	border-radius: 13px;
+	text-indent: 3em;
+}
+
+/*input不支持加:after，所以只能加了个div来写这个icon*/
+.search-icon {
+	position: absolute;
+	top: 20px;
+	left: 850px;
+	border:2px solid #ccc;
+	border-radius: 100%;
+	width: 12px;
+	height: 12px;
+}
+
+.search-icon:before {
+	content: "";
+	position: absolute;
+	top: 7px;
+	left: 13px;
+	width: 8px;
+	height: 8px;
+	border-left:1px solid #ccc;
+	transform: rotate(-45deg);
+}
+
+header a {
+	position: relative;
+	left: 840px;
+	display: block;
+
+	text-decoration: none;
+	color: #fff;
+}
+
+header a:before {
+	content: "";
+	position: absolute;
+	top: -2px;
+	left: -17px;
+	display: block;
+	border-radius: 100%;
+	width: 10px;
+	height: 10px;
+	background-color: #fff;
+}
+
+header a:after {
+	content: "";
+	position: absolute;
+	top: 8px;
+	left: -20px; 
+	display: block;
+	border-radius: 100%;
+	width: 16px;
+	height: 16px;
+	background-color: #fff;
+}
+
+header a div {
+	position: absolute;
+	top: 17px;
+	left: -20px;
+	width: 100px;
+	height: 20px;
+	background-color: #2189c0;
+	z-index: 2;
+}
+
+/*侧边栏*/
+.sidebar {
+	position: relative;
+	float: left;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	box-sizing: border-box;
+	width: 260px;
+	height: 560px;
+	font-size: 12px;
+	background-color: #2b2e3d;
+	color:#5A697C;
+}
+
+/*用户名*/
+.user:before {
+	content: "";
+	position: relative;
+	display: inline-block;
+	border: 2px solid #ccc;
+	border-radius: 100%;
+	width: 57px;
+	height: 57px;
+}
+
+.user {
+	position: relative;
+	left: 45px;
+	margin-top: 20px;
+	height: 60px;
+	color: #fff;
+}
+
+.user span {
+	position: relative;
+	bottom: 25px;
+	left: 25px;
+	font-size: 16px;
+}
+
+.user:after {
+	content: "";
+	position: relative;
+	bottom: 6px;
+	left: -103px;
+	display: inline-block;
+	border-radius: 100%;
+	width: 49px;
+	height: 49px;
+	background-color: #ccc;
+}
+
+/*用户信息*/
+.user-info {
+	position: relative;
+	left: 45px;
+	height: 30px;
+	overflow: hidden;
+}
+
+.user-info div:nth-child(1) {
+	display: inline-block;
+	padding-left: 20px;
+	border-right: 2px solid #323546;
+	width: 67px;
+}
+
+.user-info div:nth-child(2) {
+	display: inline-block;
+	padding-left: 20px;
+	
+	width: 67px;
+}
+
+
+.user-info div:hover {
+	color: #fff;
+}
+
+/*列表*/
+.nav {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 415px;
+	list-style: none;
+}
+
+/*给每个li的list-style加上一个背景图片。然后用Sprite原理实现*/
+.nav li:before {
+	content: "";
+	width: 12px;
+	height: 12px;
+	display: inline-block;
+	background-image: url(http://numerhero.github.io/assets/download/ife/demo9/images/left-side/left-side.png);
+}
+
+.nav >li:before {
+	margin-left: 45px;
+	margin-right: 17px;
+}
+
+/*用选择器设置剩下四个一级li样式*/
+.nav > li:not([id="person"]) {
+	height: 45px;
+	line-height: 45px;
+}
+
+.nav li:not([id="person"]):hover {
+	background-color: #373d4d;
+	color:#fff;
+}
+
+/*个人报表部分*/
+.nav > li:nth-child(1) {
+	height: 190px;
+	box-sizing: border-box;
+	padding-top: 15px;
+	background: #373d4d;
+}
+
+.nav >li:nth-child(1):before {
+	left: 45px;
+	background-position: -70px 0px;
+}
+
+.repo { 
+	margin-top: 15px;
+	padding-left:73px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 135px;
+	list-style: none;
+}
+
+.repo > li:nth-child(1):before,
+.repo > li:nth-child(3):before {
+	background-position: -16px -63px;
+} 
+
+/*因为文件有两个图标，所以多加了个span*/
+.repo > li span {
+	display: inline-block;
+	margin: 0 6px 0 3px;
+	width: 12px;
+	height: 12px;
+	background-image: url(http://numerhero.github.io/assets/download/ife/demo9/images/left-side/left-side.png);
+}
+.repo > li:nth-child(1) span,
+.repo > li:nth-child(3) span {
+	background-position: -103px -25px;	
+}
+
+/*文件file部分*/
+.repo > li:nth-child(2) span {
+	background-position: -70px -25px;	
+}
+
+.repo > li:nth-child(2):before {
+	background-position: -34px -63px;
+} 
+
+.file {
+	margin-top: 15px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 45px;
+	list-style: none;
+}
+
+.file > li:before {
+	margin: 0 4px 0 30px;
+	background-position: -70px -45px;
+}
+
+/*给剩下的li加图标*/
+.nav >li:nth-child(2):before,
+.nav >li:nth-child(4):before,
+.nav >li:nth-child(5):before {
+	background-position: -70px -65px;
+}
+
+.nav >li:nth-child(3):before {
+	background-position: -102px -45px;
+}
+
+.nav >li:nth-child(6):before {
+	background-position: -102px 0;
+}
+
+/*main*/
+.main {
+	margin-left: 260px;
+	width: calc(100% - 260px)
+}
+
+/*面包屑*/
+.bread-crumb {
+	padding-left: 10px;
+	width: 100%;
+	color: #ccc;
+}
+
+.bread-crumb a {
+	display: inline-block;
+	width: 64px;
+	height: 30px;
+	font: 14px;
+	line-height: 30px;
+	text-align: center;
+	text-decoration: none;
+}
+
+.bread-crumb a:hover {
+	color: #6699c4
+}
+
+/*容器盒子*/
+.container {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	height: 1028px;
+	background-color: #ededed;
+}
+
+.container > div {
+	width: 890px;
+	background-color: #fff;
+}
+
+
+.selected {
+	margin-top: 20px;
+	height: 85px;
+}
+
+.selected:before {
+	content: "";
+	display: block;
+	border-right: 1px solid #494949;
+	border-bottom: 1px solid #353535;
+	width: 5px;
+	height: 5px;
+	transform: rotate(45deg);
+
+}
+.history {
+	height: 90px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	
+}
+
+.history > div {
+	width: 20px;
+	height: 60px;
+	background-color: #fff;
+}
+
+.count {
+	height: 90px;
+}
+
+.item {
+	height: 315px;
+}
+
+.calendar {
+	height: 340px;
+}
+
+
+
+
+
+
+
+
+
+

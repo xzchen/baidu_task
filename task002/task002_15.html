@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>零基础JavaScript编码（三）</title>
+</head>
+<body>
+
+<ul id="source">
+	<li>北京空气质量：<b>90</b></li>
+	<li>上海空气质量：<b>70</b></li>
+	<li>天津空气质量：<b>80</b></li>
+	<li>广州空气质量：<b>50</b></li>
+	<li>深圳空气质量：<b>40</b></li>
+	<li>福州空气质量：<b>32</b></li>
+	<li>成都空气质量：<b>90</b></li>
+</ul>
+
+<ul id="resort"></ul>
+
+<button id="sort-btn">排序</button>
+
+<script type="text/javascript">
+
+	// 返回了一个数组，得到城市名和其空气质量
+	function getData() {
+		var data =[];
+		var oSource = document.getElementById("source");
+		var aLi = oSource.getElementsByTagName("li");
+		for (var i= 0; i < aLi.length; i++) {
+			// 获得质量（数字）的元素节点
+			var num = aLi[i].getElementsByTagName("b")[0].innerText;
+			// 分割文本，得到城市名
+			var str = aLi[i].innerText;
+			var cityName = str.substring(0,2);
+			data[i] = [cityName, num];
+		}
+		return data;
+	}
+
+	// 将获得的数组数据按照降序排列
+	function sortAqiData(data) {
+
+		data.sort(function(a, b) {
+			return b[1] - a[1];
+		});
+		return data;
+	}
+
+	
+	// 将排序完的数据按照列表形式渲染出来
+	function render(data) {
+		var html = "";
+		// 这里先将排序内容存储在html里面，然后再统一加入resort列表里面。否则会多次加入。
+		for (var i = 0; i < data.length; i++) {
+			var num = ["一", "二" ,"三", "四", "五", "六", "七"]
+			html += "<li>第" + num[i] + "名：" +data[i][0] + "空气质量：" + "<b>" +data[i][1] + "</b></li>" 
+		}
+		document.getElementById("resort").innerHTML = html;
+	}
+
+
+	function btnHandle() {
+		var aqiData = getData();
+		aqiData = sortAqiData(aqiData);
+		render(aqiData);
+	}
+
+	function init() {
+		document.getElementById("sort-btn").addEventListener("click",btnHandle)
+	}
+
+	init();
+
+</script>
+</body>
+</html>

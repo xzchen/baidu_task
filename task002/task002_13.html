@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>零基础JavaScript编码（一）</title>
+</head>
+<body>
+    <label>请输入北京今天空气质量：
+        <input type="text" id="text">
+    </label>
+    <button id="button">确认填写</button>
+    <div>您输入的值是：<span id="span">尚未录入</span></div>
+
+    <script type="text/javascript">
+        // 用(function) () {...}) ()是生成一个匿名函数并且调用它
+        (function () {
+            var btn=document.getElementById("button")
+
+            // 事件绑定,适用其他和IE浏览器
+            if (btn.addEventListener) {
+                btn.addEventListener("click", spanChange)
+            }
+            else {
+                btn.attachEvent("click",spanChange)
+            }
+
+            function spanChange() {
+                // 判断是否输入值为空，trim()方法可以去掉两边的空格
+                if (document.getElementById("text").value.trim() == "") {
+                    document.getElementById("span").innerHTML = "尚未录入"
+                    return;
+                }
+                document.getElementById("span").innerHTML = document.getElementById("text").value
+            }
+        }) ()
+    </script>
+    
+</body>
+</html>

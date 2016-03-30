@@ -1,0 +1,58 @@
+body {
+	margin: 0;
+	background-color: #ccc;
+	font: 16px/1em "Microsoft YaHei"
+}
+
+.container {
+	margin: 100px auto;
+	width: 600px;
+}
+
+form {
+	float: left;
+	width: 220px;
+	color: #777;
+}
+
+form input {
+	box-sizing: border-box;
+	border: none;
+	border-radius: 5px;
+	margin: 10px 0;
+	width: 215px;
+	height: 32px;
+	padding: 5px 8px;
+}
+
+form button{
+	display: block;
+	border: none;
+	border-radius: 20px;
+	margin:0 auto;
+	width: 160px;
+	height: 32px;
+	background-color: #fff;
+	color: #777;
+}
+
+#aqi-table {
+	margin-left: 300px;
+	font-weight: bold;
+	text-align: center;
+	border-collapse: collapse;
+}
+
+#aqi-table:nth-child(2n) {
+	background-color: #fff;
+}
+
+#aqi-table:nth-child(2n+1) {
+	background-color: #ddd;
+}
+
+td {
+	width: 80px;
+	height: 25px;
+	border:1px solid #000;
+}　

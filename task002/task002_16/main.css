@@ -6,16 +6,16 @@ body {
 
 .container {
 	margin: 100px auto;
-	width: 600px;
+	width: 70%;
 }
 
-form {
+.form {
 	float: left;
-	width: 220px;
+	
 	color: #777;
 }
 
-form input {
+.form input {
 	box-sizing: border-box;
 	border: none;
 	border-radius: 5px;
@@ -25,11 +25,18 @@ form input {
 	padding: 5px 8px;
 }
 
-form button{
+.form span {
+	position: relative;
+	left: 10px;
+	color: #f00;
+	
+}
+
+.form button{
 	display: block;
 	border: none;
 	border-radius: 20px;
-	margin:0 auto;
+	margin-left: 35px;
 	width: 160px;
 	height: 32px;
 	background-color: #fff;
@@ -37,7 +44,7 @@ form button{
 }
 
 #aqi-table {
-	margin-left: 300px;
+	float: right;
 	font-weight: bold;
 	text-align: center;
 	border-collapse: collapse;

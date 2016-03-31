@@ -4,17 +4,19 @@
     <meta charset="UTF-8">
     <title>零基础JavaScript编码（四）</title>
     <link rel="stylesheet" type="text/css" href="main.css">
-
 </head>
 <body>
+
     <div class="container">
         <!--form模块-->        
-        <form>
-            <label>城市名称：<br><input type="text" id="aqi-city-input" ></label>
+        <!-- <form> 这个不能用了，用了表单提交后会刷新页面，所以渲染的元素会消失的 -->
+        <div class="form">
+            <label>城市名称：<br><input type="text" id="aqi-city-input" ><span id="aqi-city-span"></span></label>
             <br>
-            <label>空气质量指数<br><input type="text" id="aqi-value-input"><span></span></label>
+            <label>空气质量指数<br><input type="text" id="aqi-value-input"><span id="aqi-value-span"></span></label>
             <button id="add-btn">确认添加</button>
-        </form> 
+        </div>
+        <!-- </form>  -->
         
         <!--table模块-->        
         <table id="aqi-table">

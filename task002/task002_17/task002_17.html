@@ -1,0 +1,42 @@
+<!-- 开始是通过display:block/none控制选项卡的，后来为了方便布局display:felx之后，通过修改他们的位置：position:absolute;刚好，写到这里发现其实可以改变他们的z-index更好。嗯。。改透明度也可以，之前真的好蠢。最后各种影响效果，还是改成了position -->
+<!-- 我们每次运行渲染的时候，每日，每周，每月的都已经渲染出来了，只是通过span的点击来控制他们是否出现在我们视野里，而点击切换城市的时候，都是重新渲染一次，这里不符合实际，暂时不改了。 -->
+<!-- 每个柱子的title效果是直接加的title属性，如果用事件效果应该会好点，但是自己函数逻辑好乱，就这么写着吧，也不太影响。 -->
+<!-- 进行每周/月的数据处理的时候，没有考虑截至那天不是周天和月末的情况，以后看着要不要补。这个之前想了好久都没弄出来来，真写出来发现逻辑没有那么难啊，真是猪脑袋 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>零基础JavaScript编码（五）</title>
+	<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+
+	<!-- fieldset模块 -->
+	<fieldset id="form-gra-time">
+		<legend>日期粒度和城市</legend>
+		<span id="month" class="active">日</span>
+		<span id="week">周</span>
+		<span id="day">月</span>
+		<select id="city-select">
+			<option value="北京">北 京</option>
+			<option value="上海">上 海</option>
+			<option value="广州">广 州</option>
+			<option value="深圳">深 圳</option>
+			<option value="成都">成 都</option>
+			<option value="西安">西安</option>
+			<option value="福州">福 州</option>
+			<option value="福州">厦 门</option>
+			<option value="沈阳">沈 阳</option>
+		</select>
+	</fieldset>
+
+	<div id="aqi-chart-wrap">
+		<div id="days" style="top:0"></div>
+		<div id="weeks"></div>
+		<div id="months" style="justify-content: center;"></div>
+	</div>
+
+	<script type="text/javascript" src="main.js"></script>
+
+</body>
+</html>

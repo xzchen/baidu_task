@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>零基础JavaScript编码（二）</title>
+</head>
+<body>
+
+<h3>污染城市列表</h3>
+<ul id="list"></ul>
+
+<script type="text/javascript">
+
+var Data = [
+    ["北京", 90],
+    ["上海", 50],
+    ["福州", 10],
+    ["广州", 50],
+    ["成都", 90],
+    ["西安", 100],
+];
+
+(function () {
+    var oList = document.getElementById("list")
+    var finalData = new Array;
+    var n = 0;
+
+    // 获取污染指数大于60的城市
+    for (var i = 0; i < Data.length; i++) {
+        if (Data[i][1] > 60) {
+            finalData[n] = Data[i];
+            n++;
+        }
+    }
+
+    // 对获取的数组进行降序排列
+    finalData.sort( function (a, b) {
+        return b[1] - a[1];
+    })
+    
+    // 将排序后的数组元素依次放入ul中
+    for (var i = 0; i < finalData.length; i++) {
+        oList.innerHTML += "<li>第" + (i + 1) + "名：" + finalData[i][0] + "（样例），" + finalData[i][1] + "</li>";
+    }
+
+})();
+</script>
+</body>
+</html>

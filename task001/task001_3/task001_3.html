@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+
+<style type="text/css">
+
+	/*用position来完成*/
+	.container {
+		position: relative;
+		width: 90%;
+		background-color: #ccc;
+		border: 2px solid red;
+		min-height: 500px;
+	}
+	/*定义了min-height可以保证container可以包含.left ，然后又可以根据.mid确定高度
+	因为position:absolute是不给元素预留位置的，所以不能撑开父元素高度。*/
+		
+	
+
+	
+	.left{
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 200px;
+		height: 100px;
+		background: red;	
+	}
+    
+
+	.mid {
+		margin: 0 140px 0 220px;
+		background-color: orange;
+	}
+
+	.right {
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 120px;
+		height: 500px;
+		background-color: blue;
+	}
+
+     
+</style>
+
+<body>
+<div class="container">
+	<div class="left"></div>
+	
+	<div class="right"></div>
+	<div class="mid">
+		<p>men 士大夫深刻搭街坊坷拉三季稻疯狂拉升减肥的；啊就是灯笼裤飞机阿历克斯大家分厘卡时间的；立法精神动力的就拉开；减肥打开链接撒赖扩大飞机离开打算减肥的沙发；离开家刻录机发的卡拉时间就；了的萨芬就哦iweuroiajkldasfj； 机撒赖打开</p>
+		<p>men 士大夫深刻搭街坊坷拉三季稻疯狂拉升减肥的；啊就是灯笼裤飞机阿历克斯大家分厘卡时间的；立法精神动力</p>
+		狂拉升减肥的；啊就是灯笼裤飞机阿历克斯大家分厘卡时间的；立法精神动力</p>
+		<p>men 士大夫深刻搭街坊坷拉三季稻疯狂拉升减肥的；啊就是灯笼裤飞机阿历克斯大家分厘卡时间的；立法精神动力</p>
+		<p>men 士大夫深刻搭街坊坷拉三季稻疯狂拉升减肥的；啊就是灯笼裤飞机阿历克斯大家分厘卡时间的；
+	</div>
+</div>	
+</body>
+</html>

@@ -1,0 +1,71 @@
+div {
+    width: 600px;
+}
+
+#form input {
+    height: 30px;
+    font-size: 20px;
+    line-height:26px;
+}
+
+#form button {
+    display: inline-block;
+    height: 38px;
+    outline: 1px solid #ccc;
+    background-color: #fff;
+    -webkit-appearance: searchfield;
+    -moz-appearance: searchfield;
+    -ms-appearance: searchfield;
+    appearance: searchfield; 
+}
+
+/*柱形图*/
+#bar_chart {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height:330px;
+}
+
+#bar_chart p {
+    display: inline-block;
+    margin: 5px 0;
+    width: 50px;   
+}
+
+#bar_chart p:nth-child(5n), 
+#rank span:nth-child(5n) {
+    background-color: #138d26;
+}
+#bar_chart p:nth-child(5n+1),
+#rank span:nth-child(5n + 1) {
+    background-color: #d9ef0a;
+}
+#bar_chart p:nth-child(5n+2),
+#rank span:nth-child(5n+2) {
+    background-color: #96d89d;
+}
+#bar_chart p:nth-child(5n+3),
+#rank span:nth-child(5n+3) {
+    background-color: #0df127;
+}
+#bar_chart p:nth-child(5n+4),
+#rank span:nth-child(5n+4) {
+    background-color: #0aa27d;
+}
+
+/*span方块*/
+#rank {
+    position: absolute;
+    top: 380px;
+}
+
+#rank span {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    margin:5px 0;
+    line-height: 40px;
+    text-align: center;
+    background-color: #f60;
+}

@@ -114,7 +114,7 @@ window.onload = function() {
       		if (timeTitle.getDay() == 0) {	
       			// 日期不可以直接比较，差值比下好了	
       			if (timeTitle - firstSunday == 0) {
-      				height = Math.round((Total / 2)) 
+      				height = Math.round((Total / 3)) 
       			
       			}
       			else {

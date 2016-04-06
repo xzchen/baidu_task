@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>基础JavaScript练习（一）</title>
+    <style type="text/css">
+        #form button {
+            outline: 1px solid #ccc;
+            background-color: #fff;
+            -webkit-appearance: searchfield;
+            -moz-appearance: searchfield;
+            -ms-appearance: searchfield;
+            appearance: searchfield; 
+        }
+
+        #rank span {
+            margin:5px;
+            background-color: #f60;
+        }
+    </style>
+</head>
+<body>
+    <div id="form">
+        <input type="number" value="234"></input>
+        <button>左侧入</button>
+        <button>右侧入</button>
+        <button>左侧出</button>
+        <button>右侧出</button>
+    </div>
+    <div id="rank"></div>
+
+    
+</body>
+<script type="text/javascript">
+    (function () {
+        var form = document.getElementById("form")
+        var text = form.getElementsByTagName("input")[0]
+        var btn = form.getElementsByTagName("button")
+        var oRank = document.getElementById("rank")
+        var aSpan = oRank.getElementsByTagName("span")
+        
+        btn[0].onclick = function() {
+            var span = document.createElement("span")
+            span.innerHTML = text.value
+            oRank.insertBefore(span, oRank.firstChild)
+            // 这里用for的话感觉太费了，但是简单。这个任务可以用
+            for (var i = 0; i < aSpan.length; i++) {
+                aSpan[i].onclick = function() {
+                this.parentNode.removeChild(this)
+                }
+            }   
+        }
+
+        btn[1].onclick = function () {
+            var span = document.createElement("span")
+            span.innerHTML = text.value
+            oRank.appendChild(span)
+            for (var i = 0; i < aSpan.length; i++) {
+                aSpan[i].onclick = function() {
+                this.parentNode.removeChild(this)
+                }
+            }   
+        }
+        
+        btn[2].onclick = function () {
+            alert(oRank.firstChild.innerHTML)   
+            oRank.removeChild(oRank.firstChild) 
+            for (var i = 0; i < aSpan.length; i++) {
+                aSpan[i].onclick = function() {
+                this.parentNode.removeChild(this)
+                }
+            }   
+        }
+
+        btn[3].onclick = function () {
+            alert(oRank.lastChild.innerHTML)    
+            oRank.removeChild(oRank.lastChild)  
+            for (var i = 0; i < aSpan.length; i++) {
+                aSpan[i].onclick = function() {
+                this.parentNode.removeChild(this)
+                }
+            }   
+        }
+    })()
+</script>
+</html>

@@ -1,3 +1,4 @@
+﻿@charset "utf-8";
 /*看了下别人的，有个写法特好的记下。
 给11个浮动块设定要求宽度，加上一定padding值（padding:10px）后里面套一个小盒子。然后给小盒子设定要求颜色（当然，要有box-sizing:border-box保证box宽度计算包含padding）可以有同样效果。*/
 body {
@@ -22,19 +23,19 @@ body {
 @media (max-width: 768px){
      .col-sm-2{
         width:calc(16.666% - 22px);
-     }
+    }
      .col-sm-3{
         width:calc(25% - 22px);
-     }
+    }
      .col-sm-6{
         width:calc(50% - 22px);
-     }
+    }
      .col-sm-8{
         width:calc(66.666% - 22px);
-     }
+    }
      .col-sm-12{
         width:calc(100% - 22px);
-     }
+    }
 }  
 
 @media (min-width: 769px){

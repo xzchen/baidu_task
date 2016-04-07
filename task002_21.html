@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>基础JavaScript练习（一）</title>
+    <style type="text/css">      
+        p {
+            display: inline-block;
+            margin:10px;
+            background-color: #8BC4F9;
+        }
+
+        p:hover {
+            background-color: #f00;
+        }
+
+        span {
+            display: inline-block;
+            margin:5px;
+            background-color: #f60;
+        }
+    </style>
+</head>
+<body>
+    <div id="form">
+        <label>Tag<input type="text" placeholder="输入间隔符后自动放入tag下"></label>
+        <div id="tag"></div>
+        <textarea  placeholder="输入爱好，可以多种分割符分开输入。输入重复的爱好不会记录。超过10个之后自动删除之前输入的爱好" rows="5" cols="40" style="margin-top: 20px;"></textarea>
+        <button style="display: block;">确认兴趣爱好</button>
+        <div id="hobby">
+            <span>单机游戏</span>
+            <span>写网页</span>
+            <span>看书</span>
+        </div>
+    </div>
+    
+</body>
+<script type="text/javascript">
+    (function () {
+        var form = document.getElementById("form")
+        var text = form.getElementsByTagName("input")[0] 
+        var textarea = form.getElementsByTagName("textarea")[0]
+        var btn = form.getElementsByTagName("button")[0]
+        var tag = document.getElementById("tag")
+        var aP = tag.getElementsByTagName("p")
+        var hobby = document.getElementById("hobby")
+        var aSpan = hobby.getElementsByTagName("span")
+        var inputArray = []
+        
+        // 用onkeydown来判断是否输入间隔符
+        text.onkeydown = function (ev) {
+            var ev = event || ev
+            e = ev.keyCode || ev.which
+            // repeat要在函数内定义，不然再上次查重成功后repeat=ture，影响了下次的正常值的渲染
+            console.log(e)
+            var repeat = false
+            if (e == 32 || e == 9 || e == 192 || e == 13 ||e == 188 || e == 186) {
+                // 这里用trim是防止输入空格后被渲染出来
+                if (text.value.trim() != "") {
+                    if (aP.length == 0 ) {
+                        tag.innerHTML = "<p>" +text.value.trim() + "</p>"
+                        text.value = ""
+                    }else {
+                        //查重
+                        for (var i = 0; i < aP.length; i++) {
+                            if (text.value == aP[i].innerHTML) {
+                                text.value = ""
+                                repeat = true
+                                break
+                            }
+                        }
+                        //没有重复的话，按照是否超过队列个数要求执行
+                        if (repeat == false && (aP.length < 10)) {
+                            tag.innerHTML += "<p>" + text.value 
+                            + "</p>"
+                            text.value = ""
+                        } else if (repeat == false && (aP.length == 10)) {
+                            tag.removeChild(tag.firstChild)
+                            tag.innerHTML += "<p>" + text.value 
+                            + "</p>"
+                            text.value = ""
+                        }
+                    }
+                    // 这里是先判断个数再查重，出现的问题是当第10个是重复的时候它还会渲染进去。当然还可以改再第10个的时候再判断下重复。就另外写一下也是好的
+                    /*else if (aP.length < 10) {
+                        console.log(aSpan.length)
+                        for (var i = 0; i < aP.length; i++) {
+                            // 这里的trim()是防止查重的时候受空格多少而影响结果
+                            if (text.value.trim() == aP[i].innerHTML) {
+                                text.value = ""
+                                repeat = true
+                                break
+                            }   
+                        }
+                        if (repeat == false) {
+                            tag.innerHTML += "<p>" +text.value.trim() + "</p>"
+                            text.value = ""
+                        }
+                    } else {
+                        tag.removeChild(tag.childNodes[0])
+                        tag.innerHTML += "<p>" +text.value.trim() + "</p>"
+                        text.value = ""
+                    }*/
+                }
+            }
+        }
+
+        //tag的悬停删除事件
+        tag.onmouseover = function (ev) {
+            ev = ev || event
+            var target = ev.target || srcElement
+            if (target.nodeName.toLowerCase() == "p") {
+                target.innerHTML = "删除" + target.innerHTML   
+                target.onclick = function () {
+                    target.remove()
+                }
+                target.onmouseout = function () {
+                    target.innerHTML = target.innerHTML.substr(2)
+                }
+               
+            }
+        }      
+
+        //兴趣爱好
+        btn.onclick = function () {
+            inputArray = textarea.value.trim().split(/[\s\n\t\r,，；;、]+/g)
+            // 又乱了，刚写了发现第一次输入框中自身重复的话是不会被查重到的，就补了这个 。
+            for (var i = 0; i < inputArray.length; i++) {
+                console.log(inputArray)
+                for (var j = i + 1; j < inputArray.length; j++) {
+                    if (inputArray[j] == inputArray[i]) {
+                        console.log(inputArray[j] + "cishi 的j" +j)
+                        inputArray.splice(j, 1)
+                        console.log(inputArray)
+                        console.log("now")
+                        //删除后，如果连续重复超过2次，第3次的时候下标跳过了，不检验，将j自减下好了，解决下面那个splice的问题
+                        j--
+                    }
+                }
+            }
+            for (var i = 0; i < inputArray.length; i++) {
+                for (var j = 0; j < aSpan.length; j++) {
+                    if (inputArray[i] == aSpan[j].innerHTML) {
+                        // inputArray.splice(i, 1)不用，否则删除元素后下标会改变，无法正确查重
+                        delete inputArray[i]  
+                        break;
+                    }
+                }
+            }
+            for (var i = 0; i < inputArray.length; i++) {
+                //查重完成后，未定义的即为重复的
+                if (inputArray[i] != undefined && (aSpan.length < 10)) {
+                    var span = document.createElement("span")
+                    span.innerHTML = inputArray[i]
+                    hobby.insertBefore(span, hobby.lastChild)
+                }
+                else if (inputArray[i] != undefined && (aSpan.length = 10)) {
+                    //因为这里第一个节点名是#text（span不是用hobby.innerHTML加入的，而是插入的节点。）
+                    hobby.removeChild(hobby.children[0])
+                    var span = document.createElement("span")
+                    span.innerHTML = inputArray[i]
+                    hobby.insertBefore(span, hobby.lastChild)
+                }
+            }
+        }
+    })()
+    </script>
+</html>

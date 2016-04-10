@@ -50,7 +50,6 @@
             var ev = event || ev
             e = ev.keyCode || ev.which
             // repeat要在函数内定义，不然再上次查重成功后repeat=ture，影响了下次的正常值的渲染
-            console.log(e)
             var repeat = false
             if (e == 32 || e == 9 || e == 192 || e == 13 ||e == 188 || e == 186) {
                 // 这里用trim是防止输入空格后被渲染出来

@@ -44,8 +44,7 @@
         btn[0].onclick = function() {
             //当匹配到正则里的内容时分割字符串为数组,其中的+ 号表示至少匹配1次，防止多个分隔符在一起的时候被分割到数组里去
             inputArray = textarea.value.trim().split(/[\r，,、;；\n\t\s]+/g)
-            //数组倒序下，排序才正确
-            console.log(inputArray)
+            //数组倒序下，进入队列顺序才正确
             inputArray.reverse()
             for (var i = 0; i < inputArray.length; i++) {
                 var span = document.createElement("span")
@@ -76,24 +75,22 @@
         //模糊匹配
         btn[4].onclick = function () {
             text = input.value.trim()
-            console.log(text)
-            
-            // var reg = /text+/
-            //有bug，什么都不输入的时候搜索全对,要修改啊。。
+            //有bug，什么都不输入的时候搜索全对,要修改啊。。这么改感觉不太好。。
             var reg= new RegExp(text, "i")
-            console.log(reg)
-            for (var i = 0; i < aSpan.length; i++) {
-                aSpan[i].style.backgroundColor = "#f60"
-                // if (reg.test(aSpan[i].innerHTML)) {
-                //     console.log(1)
-                //     aSpan[i].style.backgroundColor = "#1bbbdc"
-                // }
-                if (aSpan[i].innerHTML.match(reg)) {
-
-                    console.log(31)
-                    aSpan[i].style.backgroundColor = "#1bbbdc"
+            if (text != "") {
+               for (var i = 0; i < aSpan.length; i++) {
+                   aSpan[i].style.backgroundColor = "#f60"
+                   
+                   if (reg.test(aSpan[i].innerHTML)) {
+                       aSpan[i].style.backgroundColor = "#1bbbdc"
+                   }
+               }       
+            }
+            else {
+                for (let i in aSpan) {
+                    aSpan[i].style.backgroundColor = "#f60"
                 }
-            }      
+            }  
         }
 
         // 点击删除动态改变

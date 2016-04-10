@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+<div id="container">
+	<div class="root">Super
+		<div class="depth2">Cat
+			<div class="depth3">Apple
+				<div class="depth4">Pear</div>
+				<div class="depth4">Pig</div>
+				<div class="depth4">Cola</div>
+				<div class="depth4">Soccer</div>
+			</div>
+			<div class="depth3">Phone</div>
+			<div class="depth3">
+				<div class="depth4">Book</div>
+				<div class="depth4">School</div>
+			</div>
+		</div>
+		<div class="depth2">Note
+			<div class="depth3">Human
+				<div class="depth4">Code</div>
+				<div class="depth4">Operate</div>
+				<div class="depth4">Man</div>
+			</div>
+			<div class="depth3">Program
+				<div class="depth4">Bement
+					<div class="depth5">Cat</div>
+				</div>
+				<div class="depth4">Glass</div>
+			</div>
+		</div>
+		<div class="depth2">Fish</div>
+	</div>
+
+	<fieldset id="form">
+		<legend>请选择遍历（搜索）方式和时间间隔</legend>
+		<button>仿前序深度遍历？</button>
+		<button>仿中序深度遍历？</button>
+		<button>仿后序深度遍历？</button>
+		<button>广度优先遍历？</button>
+		<br>
+		<label>遍历间隔时间<input type="number" id="text" value="1000">ms</label>
+		<input type="text" placeholder="请输入关键词，不区分大小写" id="searchInput">
+	</fieldset>
+</div>
+</body>
+<script type="text/javascript" src="main.js"></script>
+</html>

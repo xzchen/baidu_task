@@ -127,13 +127,13 @@ window.onload = function() {
       		if ( timeTitle.getDay() == 0  || (timeTitle - nowTime == 0)) {
       			// 日期不可以直接比较，差值比下好了	
       			if (timeTitle - firstSunday == 0) {	
-
       				height = Math.round(weekTotal / 3)
       			} else if (timeTitle - nowTime == 0) {
-      				if (nowTime.getDay == 0) {
+      				//截至到当日且当日为周天的情况
+      				if (nowTime.getDay() == 0) {
       					height = Math.round(weekTotal / 7) 
       				} else {
-      					height = Math.round(weekTotal / (timeTitle.getDay()))
+      					height = Math.round(weekTotal / nowTime.getDay())
       				}
       			}
       			else {

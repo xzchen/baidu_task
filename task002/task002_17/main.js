@@ -1,3 +1,6 @@
+// 定义时间初始值这里用引号括起来，不然因为当前时间的月份是从0开始计数的，会影响计算结果
+var beginTime = new Date("2016, 1, 1")
+var endTime = new Date()
 window.onload = function() {
 	// 获取操作元素
 	var fieldset=document.getElementById("form-gra-time")
@@ -26,18 +29,15 @@ window.onload = function() {
 	getTime()	
 	// 初始渲染页面
 	function getTime() {
-		// 定义时间初始值这里用引号括起来，不然因为当前时间的月份是从0开始计数的，会影响计算结果
-		var beginTime = new Date("2016, 1, 1")
-		var endTime = new Date()
 		var disTime = parseInt((endTime.getTime() - beginTime.getTime())/1000)
 
-		//或者用Math.floor()会更好？得到有多少天
-		var day = parseInt(disTime/3600/24)
+		//得到有多少天,向上取整截至到今天
+		var day = Math.ceil(disTime/3600/24)
 		
 		// 初始的时候输入北京的数值
 		render(day,500)	
 
-		// 当城市改变的时候，改变Aqi的峰值并渲染
+		// 当城市改变的时候，改变Aqi的峰值并渲染，这样就导致了重复渲染
 		oSelect.onchange = function() {	
 			switch (oSelect.selectedIndex) {
 				case 0:
@@ -56,11 +56,10 @@ window.onload = function() {
 					render(day, 100)
 					break;	
 			}
-
 		}
 	}
 
-	// 渲染空气质量
+	// 传入了从16年头到现在的天数，和每个城市的aqi峰值。通过这个函数能得到要渲染的每周/月数据（柱子高度，柱子个数）再进行渲染
 	function render(day ,aqi) {
 		// 获取操作元素
 		var oDay = document.getElementById("days")
@@ -77,14 +76,13 @@ window.onload = function() {
 		var compare = new Date("2016, 1, 1")
 
 		//AQI值累加和
-		Total = 0
+		weekTotal = 0
+		monthTotal = 0
 
-		//创建数组，存储周/月柱子高度（AQI值）
+		//创建数组，存储每周/月柱子高度（AQI值）
 		var weekHeight =new Array()
-		var weekTotal = new Array()
 		var monthHeight =new Array()
-		var monthTotal =new Array()
-
+		
 
 		//这个时间来进行第一周（不满7天的）和每个月柱子高度处理的日期判断条件
 		var firstSunday= new Date("2016, 1, 3")
@@ -107,15 +105,15 @@ window.onload = function() {
 			oP.title = timeTitle.getFullYear() + "-" + (timeTitle.getMonth()+1) + "-"  +timeTitle.getDate() + "\n" +"[AQI]:" + height
   			oDay.appendChild(oP)
   			
-  			//讲每日柱子的高度值累加求和方便进行每周每月的换算
-  			Total += height
-  			
-  			//判断有几周，将每周平均AQI值存储为数组
-      		if (timeTitle.getDay() == 0) {	
+  			//将每日柱子的高度值累加求和方便进行每周每月的换算,遇到每周/月结束时就清空它们
+  			weekTotal += height
+  			monthTotal += height
+
+  			//判断有几周，将每周平均AQI值存储为数组，这是之前没做截至日期的比较
+      		/*if (timeTitle.getDay() == 0 ) {	
       			// 日期不可以直接比较，差值比下好了	
       			if (timeTitle - firstSunday == 0) {
       				height = Math.round((Total / 3)) 
-      			
       			}
       			else {
       				// 这次的累加和减去上次的累加和除以天数可以得到平均值
@@ -123,25 +121,45 @@ window.onload = function() {
       			}
       			weekHeight.push(height) 
       			weekTotal.push(Total)
+      		}*/
+      		var nowTime =new Date(endTime.getFullYear() + "," + (endTime.getMonth()+1) + "," + endTime.getDate() + ",")
+      		//得到每周的AQI数据
+      		if ( timeTitle.getDay() == 0  || (timeTitle - nowTime == 0)) {
+      			// 日期不可以直接比较，差值比下好了	
+      			if (timeTitle - firstSunday == 0) {	
+
+      				height = Math.round(weekTotal / 3)
+      			} else if (timeTitle - nowTime == 0) {
+      				if (nowTime.getDay == 0) {
+      					height = Math.round(weekTotal / 7) 
+      				} else {
+      					height = Math.round(weekTotal / (timeTitle.getDay()))
+      				}
+      			}
+      			else {
+      				height = Math.round(weekTotal / 7)    			
+      			}
+   				weekTotal = 0
+   				weekHeight.push(height) 
       		}
 
-			
   			//判断有几月,将每月平均AQI值存储为数组
-  			if (timeTitle.getMonth() != compare.getMonth()) {
+  			if (timeTitle.getMonth() != compare.getMonth() || (timeTitle - nowTime == 0)) {
   				if (timeTitle - Jan == 0) {
-  					height = Math.round(Total / 31)
+  					height = Math.round(monthTotal / 31)
   				}
   				else if (timeTitle - Feb == 0) {
-  					height = Math.round((Total - monthTotal[monthTotal.length - 1]) / 29)
+  					height = Math.round(monthTotal  / 29)
   				}
-  		
+  				else if (timeTitle - Mar == 0) {
+  					height = Math.round(monthTotal  / 31)
+  				}
   				else {
-  					height = Math.round((Total - monthTotal[monthTotal.length - 1]) / 31)
+  					height = Math.round(monthTotal / timeTitle.getDate())
   				}
+  				monthTotal = 0
   				monthHeight.push(height)
-  				monthTotal.push(Total)
-  			}
-			
+  			}	
 		}
 		
 		// 渲染每周空气质量

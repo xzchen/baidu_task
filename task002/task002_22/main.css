@@ -1,0 +1,29 @@
+@charset "utf-8";
+/*二叉树*/
+#container {
+	width: 940px;
+	margin:50px auto;
+}
+#container div {
+	margin: 5px;
+	box-sizing: border-box;
+	padding: 15px;
+	display: inline-block;
+	outline: 2px solid #ccc;
+}
+/*深度为4的节点,由它的宽高来确定其它深度的节点*/
+.depth4{
+	width: 65px;
+	height: 80px;
+}
+
+/*fieldset部分*/
+fieldset {
+	margin-top: 50px;
+	text-align: center;
+}
+
+button {
+	width: 70px;
+	height: 40px;
+}

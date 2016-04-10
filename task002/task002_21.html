@@ -29,8 +29,8 @@
         <button style="display: block;">确认兴趣爱好</button>
         <div id="hobby">
             <span>单机游戏</span>
-            <span>写网页</span>
-            <span>看书</span>
+            <span>queio</span>
+            <span>169230</span>
         </div>
     </div>
     
@@ -45,9 +45,8 @@
         var aP = tag.getElementsByTagName("p")
         var hobby = document.getElementById("hobby")
         var aSpan = hobby.getElementsByTagName("span")
-        var inputArray = []
         
-        // 用onkeydown来判断是否输入间隔符
+        // 用onkeydown来判断是否输入间隔符，自动添加队列
         text.onkeydown = function (ev) {
             var ev = event || ev
             e = ev.keyCode || ev.which
@@ -116,16 +115,24 @@
                 }
                 target.onmouseout = function () {
                     target.innerHTML = target.innerHTML.substr(2)
-                }
-               
+                }  
             }
         }      
 
-        //兴趣爱好
+        //兴趣爱好，用inputArray来存放已经自身去重复，要添加到兴趣爱好里的数据
         btn.onclick = function () {
-            inputArray = textarea.value.trim().split(/[\s\n\t\r,，；;、]+/g)
-            // 又乱了，刚写了发现第一次输入框中自身重复的话是不会被查重到的，就补了这个 。
-            for (var i = 0; i < inputArray.length; i++) {
+            // 改下数组自身去重复的,这个比自己之前想的要简单好多了
+            var inputArray = []
+            var arr = textarea.value.trim().split(/[\s\n\t\r,，；;、]+/g)
+            console.log(arr)
+            for (var i = 0; i < arr.length; i++) {
+                if (inputArray.indexOf(arr[i]) < 0) {
+                    inputArray.push(arr[i])
+                }
+            }
+             // 又乱了，刚写了发现第一次输入框中自身重复的话是不会被查重到的，就补了这个 。
+             // inputArray = textarea.value.trim().split(/[\s\n\t\r,，；;、]+/g)
+            /*for (var i = 0; i < inputArray.length; i++) {
                 console.log(inputArray)
                 for (var j = i + 1; j < inputArray.length; j++) {
                     if (inputArray[j] == inputArray[i]) {
@@ -137,7 +144,8 @@
                         j--
                     }
                 }
-            }
+            }*/
+            //inputArray对于已添加的列表的查重
             for (var i = 0; i < inputArray.length; i++) {
                 for (var j = 0; j < aSpan.length; j++) {
                     if (inputArray[i] == aSpan[j].innerHTML) {
@@ -147,8 +155,9 @@
                     }
                 }
             }
+            //查重完成后，未定义的即为重复的
             for (var i = 0; i < inputArray.length; i++) {
-                //查重完成后，未定义的即为重复的
+                // 如果没有重复且没有超过队列个数限制 
                 if (inputArray[i] != undefined && (aSpan.length < 10)) {
                     var span = document.createElement("span")
                     span.innerHTML = inputArray[i]

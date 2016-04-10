@@ -19,7 +19,6 @@
             background-color: #f60;
         }
     </style>
-    <link rel="stylesheet" type="text/css" href="12.css">
 </head>
 <body>
     <div id="form">
@@ -29,7 +28,7 @@
         <button>左侧出</button>
         <button>右侧出</button>
         <input type="text" placeholder="输入内容即可匹配span"></input>
-        <button>查询</button>
+        <button>查 询</button>
     </div>
     <div id="rank"></div>  
 </body>
@@ -38,7 +37,7 @@
         var form = document.getElementById("form")
         var textarea = form.getElementsByTagName("textarea")[0]
         var btn = form.getElementsByTagName("button")
-        var text = form.getElementsByTagName("input")[0]
+        var input = form.getElementsByTagName("input")[0]
         var oRank = document.getElementById("rank")
         var aSpan = oRank.getElementsByTagName("span")
         var inputArray = []
@@ -76,12 +75,22 @@
 
         //模糊匹配
         btn[4].onclick = function () {
-            var reg= new RegExp(text.value)
+            text = input.value.trim()
+            console.log(text)
+            
+            // var reg = /text+/
+            //有bug，什么都不输入的时候搜索全对,要修改啊。。
+            var reg= new RegExp(text, "i")
+            console.log(reg)
             for (var i = 0; i < aSpan.length; i++) {
                 aSpan[i].style.backgroundColor = "#f60"
-                console.log(reg.test(aSpan[i].innerHTML))
-                if (reg.test(aSpan[i].innerHTML)) {
-                    console.log(i)
+                // if (reg.test(aSpan[i].innerHTML)) {
+                //     console.log(1)
+                //     aSpan[i].style.backgroundColor = "#1bbbdc"
+                // }
+                if (aSpan[i].innerHTML.match(reg)) {
+
+                    console.log(31)
                     aSpan[i].style.backgroundColor = "#1bbbdc"
                 }
             }      

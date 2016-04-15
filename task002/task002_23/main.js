@@ -97,27 +97,27 @@ function search (arr, speed, index) {
 	//判断第一个节点是否为匹配节点
 	if (index[0] == 0) {
 		arr[0].style.backgroundColor = "#ccc"
-		var i = 1;
 	}
 	else {
-		var i = 0;
+		arr[0].style.backgroundColor = "#f60"
 	}
+	var i = 1;
 	//关闭定时器，防止多个定时器同时存在
 	clearInterval(int) 
 	int = setInterval(function() {
 		for (let i = 0; i < arr.length; i++) {
 			arr[i].style.backgroundColor = "#fff"
 		}
-		//根据i值判断渲染到那个节点（按顺序）了。
+		// 根据i值判断渲染到那个节点（按顺序）了。
 		if (i < arr.length) {
 			//先统一为#f60这个颜色
 			arr[i].style.backgroundColor = "#f60"
-			//如果刚好这个节点文本内容同检索词一样，就改变它的颜色，表示被检索到了
+			//如果刚好这个节点文本内容同检索词一样，就改变它的颜色，表示被检索到了。这里可以改进下，这里没有让标记一直存在，而是检索完后跳出，体验不太好。
 			for (var j in index) {
 				if (i == index[j]) {
 					arr[i].style.backgroundColor = "#ccc"
 				}
-			}
+			}		
 		}
 		//当所有节点都被渲染完了
 		else {

@@ -1,0 +1,33 @@
+@charset "utf-8";
+/*二叉树*/
+#container {
+  width: 940px;
+  margin:50px auto;
+}
+#container div {
+  margin: 5px;
+  box-sizing: border-box;
+  padding: 15px;
+  display: inline-block;
+  outline: 2px solid #ccc;
+}
+
+
+/*fieldset部分*/
+fieldset {
+  margin-top: 50px;
+  text-align: center;
+}
+
+button {
+  height: 40px;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 200px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  font-size: 14px;
+}

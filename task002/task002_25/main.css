@@ -1,0 +1,39 @@
+@charset "utf-8";
+
+body {
+	font-size: 16px;
+}
+
+#container {
+	overflow: hidden;
+	width: calc(80%);
+	margin:0 auto;
+	min-width: 500px;
+}
+
+#nav {
+	
+	background-color: #f60;
+}
+
+#menu ul {
+	display:block;
+	/*border-left: 2px solid #ccc;*/
+}
+
+li {
+	/*border-top: 3px solid #ccc;*/
+	box-sizing: border-box;
+	margin:0 -20px;
+	padding: 5px 0 0 0;
+	list-style: none;
+}
+
+li  div {
+	display: none;
+	margin-left: 50px;
+}
+
+li div span {
+	margin-left: 10px;
+}

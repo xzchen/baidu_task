@@ -41,43 +41,29 @@
             var span = document.createElement("span")
             span.innerHTML = text.value
             oRank.insertBefore(span, oRank.firstChild)
-            // 这里用for的话感觉太费了，但是简单。这个任务可以用
-            for (var i = 0; i < aSpan.length; i++) {
-                aSpan[i].onclick = function() {
+            //修改下,之前自己真是蠢
+            span.onclick = function () {
                 this.parentNode.removeChild(this)
-                }
-            }   
+            }  
         }
 
         btn[1].onclick = function () {
             var span = document.createElement("span")
             span.innerHTML = text.value
             oRank.appendChild(span)
-            for (var i = 0; i < aSpan.length; i++) {
-                aSpan[i].onclick = function() {
+            span.onclick = function () {
                 this.parentNode.removeChild(this)
-                }
-            }   
+            }  
         }
         
         btn[2].onclick = function () {
             alert(oRank.firstChild.innerHTML)   
-            oRank.removeChild(oRank.firstChild) 
-            for (var i = 0; i < aSpan.length; i++) {
-                aSpan[i].onclick = function() {
-                this.parentNode.removeChild(this)
-                }
-            }   
+            oRank.removeChild(oRank.firstChild)     
         }
 
         btn[3].onclick = function () {
             alert(oRank.lastChild.innerHTML)    
             oRank.removeChild(oRank.lastChild)  
-            for (var i = 0; i < aSpan.length; i++) {
-                aSpan[i].onclick = function() {
-                this.parentNode.removeChild(this)
-                }
-            }   
         }
     })()
     </script>

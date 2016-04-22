@@ -2,31 +2,43 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>javs</title>
+	<title>Document</title>
 	<link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <body>
-<div id="container">
-	<div id="nav">
-		<label>请输入搜索文本<input type="text" placeholder="不区分大小写" id="text"></label>
-		<button id="button">搜索</button>
+<section id="menu">
+	<div><i class="collapseTriangle"></i><span>关于这个task</span><p><span onclick = addNode(this)>添加</span><span onclick = reName(this)>重命名</span></p>
+	<div><span>HTML</span>
+		<div><span>section用作检索到的元素对其父元素展开</span>
+			<div><span>有子div元素的div添加了一个i标签存放三角图标</span></div>
+			<div><span>所有div元素都有span标签存放文本内容</span></div>
+			<div><span>一个p标签存放dom操作项</span></div>
+		</div>
+		<div><span>fieldset部分很寻常</span>
+			<div><span>关键词不输入时只遍历而不检索</span></div>
+		</div>
 	</div>
-	<ul id="menu">
-		<li>板块1<ul>
-			<li>cneka<ul>
-				<li>sdfjlkasjdflk</li>
-				<li>sdfjlkasjdflk</li>
-				<li>sdfjlkasjdflk</li>
-			</ul></li>
-			<li>cneka</li>
-			<li>cneka</li>
-		</ul></li>
-		<li>板块2</li>
-		<li>板块3</li>
-		<li>板块4</li>
-	</ul>
-</div>
-	
+	<div><span>CSS</span>
+		<div><span>所有p下的span便签由margin产生间隔</span></div>
+		<div><span>三角图标由.collapseTriangle和.expandTriangle产生</span></div>
+	</div>
+	<div><span>JS</span>
+		<div>遍历和检索部分代码由之前task稍微修改而得</div>
+		<div>DOM操作事件重写了，难度不太大</div>
+		<div>每次记得操作的时候注意icon变化就好</div>
+	</div>
+	</div>
+</section>	
+<fieldset id="form">
+	<legend>请选择遍历（搜索）方式和时间间隔</legend>
+	<button>仿前序深度遍历？</button>
+	<button>仿中序深度遍历？</button>
+	<button>仿后序深度遍历？</button>
+	<button>广度优先遍历？</button>
+	<br>
+	<label>遍历间隔时间<input type="number" id="text" value="1000">ms</label>
+	<input type="text" placeholder="请输入关键词，不区分大小写" id="searchInput">
+</fieldset>
 </body>
 <script type="text/javascript" src="main.js"></script>
 </html>

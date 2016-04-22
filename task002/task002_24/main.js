@@ -116,6 +116,7 @@ function getKeyWord (keyword, arr, index) {
         reg = new RegExp ("^"+keyWord,"i");
         for (var i in arr) {
             //为了即支持大小写又必须完全一样，不能输入a就要匹配acd之类的。加了个trim()去掉周围空格
+
             if( (reg.test(arr[i].childNodes[0].nodeValue)) && (arr[i].childNodes[0].nodeValue.trim().length == keyWord.length)) {
                 // console.log(arr[i].childNodes[0].nodeValue.trim().length)
                 index.push(i)

@@ -28,7 +28,7 @@ window.onload = function() {
 			// 加入第一行数据，不进行判断是否重复
 			if (aBtn.length == 0) {
 				var html = "";
-				html = "<tr><td>" + cityName + "</td><td>" +value +"</td><td><button data-cityName = "+cityName+">删除</button></tr>"
+				html = "<tr><td>" + cityName + "</td><td>" +value +"</td><td><button >删除</button></tr>"
 				// 用childern[1]获取tbody元素。不加这个的话，每次文档中会自动补入一个新的tbody
 				table.children[1].innerHTML += html;
 			}

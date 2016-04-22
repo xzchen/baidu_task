@@ -1,39 +1,79 @@
 @charset "utf-8";
-
 body {
+	min-width: 600px;
+	padding: 0;
+	margin:0;
 	font-size: 16px;
+
 }
 
-#container {
-	overflow: hidden;
-	width: calc(80%);
-	margin:0 auto;
-	min-width: 500px;
+#menu {
+	width: 80%;
+	margin: 50px auto;
+}
+#menu  div {
+	outline: 1px solid #29ce9b;
+	padding-left: 30px;
+	margin:0px 0px;
+	line-height: 36px;
+	z-index: 2;
 }
 
-#nav {
-	
-	background-color: #f60;
+#menu div > span {
+	padding-left: 0px;
 }
 
-#menu ul {
-	display:block;
-	/*border-left: 2px solid #ccc;*/
-}
-
-li {
-	/*border-top: 3px solid #ccc;*/
-	box-sizing: border-box;
-	margin:0 -20px;
-	padding: 5px 0 0 0;
-	list-style: none;
-}
-
-li  div {
+p {
 	display: none;
-	margin-left: 50px;
+	margin:0px 50px;
+	z-index: 3;
 }
 
-li div span {
-	margin-left: 10px;
+p span {
+	margin: 0 20px;
+	cursor:pointer;
 }
+
+.collapseTriangle {
+	position: absolute;
+	margin: 13px -15px;
+	display: inline-block;
+	width:0;
+	height: 0;
+	border-width: 5px;
+	border-color:#08ece2  transparent transparent transparent;
+	border-style: solid;
+}
+
+.expandTriangle {
+	position: absolute;
+	margin: 13px -10px;
+	display: inline-block;
+	width:0;
+	height: 0;
+	border-width: 5px;
+	border-color: transparent transparent transparent #1987B9;
+	border-style: solid;
+}
+
+
+fieldset {
+	width: 80%;
+	margin: 50px auto;
+	text-align: center;
+}
+
+button {
+	height: 40px;
+	margin-bottom: 5px;
+}
+
+input {
+	width: 200px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	font-size: 14px;
+}
+
+ 

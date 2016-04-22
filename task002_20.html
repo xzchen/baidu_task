@@ -95,7 +95,7 @@
 
         // 点击删除动态改变
         oRank.onclick = function (ev) {
-            ev = ev|| event
+            ev = ev|| event;
             var target = ev.target || ev.srcElement
             if (target.nodeName.toLowerCase() == "span") {
                 target.remove()

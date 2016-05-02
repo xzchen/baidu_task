@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>表单（一）单个表单项的检验</title>
+</head>
+<style type="text/css">
+	body {
+		font: 24px/1.5 "microsoft yahei";
+		min-width:730px;
+	}
+	
+	input {
+		width: 500px;
+		height: 60px;
+		border:1px solid #ccc;
+		border-radius: 10px;
+		font-size: 24px; 
+		margin: 0 10px 0px 2em;
+	}
+
+	button {
+		width: 100px;
+		height: 60px;
+		border:1px solid #ccc;
+		border-radius: 10px;
+		font-size: 24px;
+		background-color: #2f79ba;
+		color:#fff;
+	}
+
+	p {
+		margin: 0.5em 0 0  4em;
+		color:#ccc;
+	}
+
+	.text-gray {
+		color:#ccc;
+	}
+
+	.text-red {
+		color: #f00;
+	}
+
+	.text-green {
+		color:#0f0;
+	}
+</style>
+<body>
+	<div>
+		<label>名称<input type="text" required="required"><button>验证</button></label>
+		<p>必填，长度为4~16个字符</p>
+	</div>
+</body>
+<script type="text/javascript">
+	var btn = document.querySelector("button");
+	btn.onclick = function () {
+		var input = document.querySelector("input");
+		var text = input.value.trim();
+		var p = document.querySelector("p");
+		if (text == "") {
+			p.innerText = "姓名不能为空";
+			p.className = "text-red";
+			input.style.borderColor = "#f00";
+		}
+		else {
+			var count = 0;
+			for (let i = 0, len = text.length; i < len; i++) {
+				if (text.charCodeAt(i) >= 0 && text.charCodeAt(i) <= 128) {
+					count++;
+				}
+				else {
+					count += 2;
+				}
+			}
+			if (count < 4 || count > 16) {
+				p.innerText = "必填，长度为4~16个字符";
+				p.className = "text-gray";
+				input.style.borderColor = "#ccc";
+			}
+			else {
+				p.innerText = "名称格式正确";
+				p.className = "text-green";
+				input.style.borderColor = "#0f0";
+			}
+		}
+	}
+</script>
+</html>

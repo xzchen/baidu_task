@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>表单（二）多个表单项的动态校验</title>
+</head>
+<style type="text/css">
+	body {
+		font: 24px/1.5 "microsoft yahei";
+		min-width:730px;
+	}
+
+	label {
+		position: relative;
+		display: block;
+		box-sizing: border-box;
+		margin: 50px 0;
+	}
+
+	label span{
+		display: inline-block;
+		width: 100px;
+		text-align: right;
+	}
+	input {
+		width: 500px;
+		height: 60px;
+		border:1px solid #000;
+		border-radius: 10px;
+		font-size: 24px; 
+		margin: 0 10px 0px 1.8em;
+	}
+
+	input:focus {
+		outline: 0;
+	}
+
+	button {
+		position: absolute;
+		left: 20em;
+		width: 100px;
+		height: 60px;
+		border:1px solid #ccc;
+		border-radius: 10px;
+		font-size: 24px;
+		background-color: #2f79ba;
+		color:#fff;
+	}
+
+	p {
+		position: absolute;
+		bottom: -36px;
+		display: none;
+		margin: -.5em 0 0  6em;
+	}
+
+	.info {
+		border-color: #ccc;
+		color:#ccc;
+	}
+
+	.right {
+		border-color: #0f0;
+		color:#0f0;
+	}
+
+	.wrong {
+		border-color: #f00;
+		color: #f00;
+	}
+</style>
+	<div id="form">
+		<label><span>名称</span><input type="text" required="required"><p>必填，长度为4~16个字符</p></label>
+		<label><span>密码</span><input type="password" required="required"><p>必填，长度为4~16个字符</p></label>
+		<label><span>密码确认</span><input type="password" required="required"><p>必填，长度为4~16个字符</p></label>
+		<label><span>邮箱</span><input type="text" required="required"><p>必填，长度为4~16个字符</p></label>
+		<label><span >手机</span><input type="text" required="required"><p>必填，长度为4~16个字符</p></label>
+		<button>提交</button>
+	</div>
+</body>
+<script type="text/javascript">
+	//选择器函数
+	function $(selector, context) {
+		context = context || document;
+		var elements = context.querySelectorAll(selector);
+		return Array.prototype.slice.call(elements);
+	}
+	
+	window.onload = function () {
+		var form = document.getElementById('form');;
+		var aInput = $("input");
+		var aP = $("p");
+		var submit = $("button")[0];
+
+		//此处是拿了@贝多尔爸爸团队的代码，用JSON存储数据
+		var hintText=[{hint:"必填，长度为4~16位字符",right:"用户名格式正确",wrong:"用户名格式有误",isPassed:false, blank:"用户名不能为空"},
+                {hint:"必填，长度为6~18位字符,只能包含字母或者数字",right:"密码可用",wrong:"密码不可用",isPassed:false, blank:"密码不能为空"},
+                {hint:"必填，必须与密码相同",right:"密码输入一致",wrong:"密码输入不一致",isPassed:false, blank:"密码不能为空"},
+                {hint:"填写正确的邮箱格式",right:"邮箱格式正确",wrong:"邮箱格式错误",isPassed:false, blank:"邮箱不能为空"},
+                {hint:"必填，长度为11位字符",right:"手机格式正确",wrong:"手机格式错误",isPassed:false, blank:"手机号不能为空"}];
+       	
+       	//当submit点击的时候去判断是否都符合正则要求。
+        submit.onclick = function () {
+        	var allPassed = function () {
+        		for (let i = 0, len = hintText.length; i < len; i++) {
+        			//event属性也可以调用。。这次才知道。
+        			aInput[i].onblur();
+        		}
+        		for (let i = 0, len = hintText.length; i < len; i++) {
+        			if (!hintText[i].isPassed) {
+        				return (allPassed = false);
+        			}
+        		}
+        		return (allPassed = true);
+        	}
+        	allPassed();
+        	if (allPassed) {
+        		alert("提交成功")
+        	}
+        	else {
+        		alert("提交失败")
+        	}
+        }
+        /**
+         * [regValue 看是否符合正则要求]
+         * @param  {[number]} i     [表单里input的索引]
+         * @param  {[string]} value [input的文本值]
+         * @return {[type]}       [description]
+         */
+        function regValue(i,value) {
+        	switch (i) {
+        		case 0:
+        			value = value.replace(/[\u4e00-\u9fa5]/g, "nn");
+        			hintText[0].isPassed = /^\w{4,16}$/.test(value);
+        			break;
+ 				case 1:
+ 					hintText[1].isPassed = /^[0-9a-zA-z]{6,10}$/g.test(value);
+ 					break;
+ 				case 2:
+ 					hintText[2].isPassed = (/^[0-9a-zA-z]{6,10}$/g.test(value) && (aInput[1].value === value))
+ 					break;
+ 				case 3:
+ 					hintText[3].isPassed = /^[0-9a-zA-z]+@{1}[0-9a-zA-z]+\.{1}[0-9a-zA-z]+$/.test(value);
+ 					break;
+ 				case 4:
+ 					hintText[4].isPassed = /^1\d{10}$/.test(value)
+ 					break;
+        	}
+        }
+
+		for (let i = 0, len = aInput.length; i < len; i++) {
+			aInput[i].onfocus = function () {
+				this.className = "info";
+				aP[i].style.display = "block";
+				aP[i].className = "info";
+				aP[i].innerText = hintText[i].hint;
+			}
+
+			/**
+			 * [onkeyup description]
+			 * @return {[type]} [description]
+			 * 未完成，下次看着补补。
+			 */
+			
+			aInput[i].onblur = function () {
+				var value = this.value.trim();
+				if (value !== "") {
+					regValue(i, value);
+					if (hintText[i].isPassed) {
+						this.className = "right";
+						aP[i].className = "right";
+						aP[i].innerText = hintText[i].right;
+					}
+					else {
+						this.className = "wrong";
+						aP[i].className = "wrong";
+						aP[i].innerText = hintText[i].wrong;
+					}
+				}
+				else {
+					this.className = "wrong";
+					aP[i].style.display = "block";
+					aP[i].className = "wrong";
+					aP[i].innerText = hintText[i].blank;
+				}	
+			}
+		}
+	}
+</script>
+</html>

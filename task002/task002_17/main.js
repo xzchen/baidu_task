@@ -102,7 +102,9 @@ window.onload = function() {
 			// 给每个柱子加title，title的值由timeTitle的各个方法获得
 			timeTitle.setDate(timeTitle.getDate() + 1)
 			compare.setDate(compare.getDate() + 1)
-			oP.title = timeTitle.getFullYear() + "-" + (timeTitle.getMonth()+1) + "-"  +timeTitle.getDate() + "\n" +"[AQI]:" + height
+			var mon = (timeTitle.getMonth() + 1) < 10 ? "0" + (timeTitle.getMonth() + 1) : timeTitle.getMonth();
+			var da = timeTitle.getDate() < 10 ? "0" + timeTitle.getDate() : timeTitle.getDate();
+			oP.title = timeTitle.getFullYear() + "-" + mon  + "-"  + da + "\n" +"[AQI]:" + height;
   			oDay.appendChild(oP)
   			
   			//将每日柱子的高度值累加求和方便进行每周每月的换算,遇到每周/月结束时就清空它们

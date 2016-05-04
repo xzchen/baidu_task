@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>表单（二）多个表单项的动态校验</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
 </head>
 <style type="text/css">
 	body {
@@ -86,8 +87,10 @@
 		return Array.prototype.slice.call(elements);
 	}
 	
+
 	window.onload = function () {
-		var form = document.getElementById('form');;
+		var form = document.getElementById('form');
+
 		var aInput = $("input");
 		var aP = $("p");
 		var submit = $("button")[0];

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>任务三十七：UI组件之浮出层</title>
+	<link rel="stylesheet"  href="main.css">
+	<meta vierport>
+</head>
+<body>
+	<button id="button">浮出层</button>
+	<ol>
+		<li>不想很麻烦去兼容ie，就把wrap层当作document使用了</li>
+		<li>这个按钮是出现浮出层的接口，点击页面任何位置可以使得该浮出层消失</li>
+		<li><strong>有bug啊</strong>如果要用加margin的定位去居中的话，还得修改。</li>
+		<li><strong>有bug啊</strong>拖动到上下边界去移动滚动条，必须要保持移动才可以。只能是加大了“步长”去获得类似效果</li>
+		<li><strong>有bug啊</strong>每次页面改变的时候，是直接将其绝对居中，但是感觉逻辑不太对</li>
+		<li>目前只实现了最基本的功能，改明看着改改。 2016/5/4</li>
+	</ol>
+	<div id="wrap">
+		<div id="div"></div>
+	</div>
+</body>
+<script type="text/javascript" src="main.js"></script>
+</html>

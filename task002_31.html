@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>表单（三）联动</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+</head>
+<style type="text/css">
+	body {
+		font: 24px/1.5 "microsoft yahei";
+		min-width:730px;
+	}
+
+	input:focus {
+		outline: 0;
+	}
+
+	#form input,
+	#form select,
+	#from option{
+		font: 16px/1.25 "microsoft yahei";
+	}
+
+	#form > label {
+		position: relative;
+	}
+
+	#form > label > label{
+		display: none;
+		margin: 20px 0;
+	}
+	
+	#form  select {
+		display: inline-block;
+		width: 150px;
+		height: 40px;
+		margin-left: 20px;
+	}
+
+	#form select:not([class="active"]) {
+		position: absolute;
+		bottom: 0;
+		left: 231px;
+		display: none;
+		color: #ccc;
+	}
+
+	.active {
+		display: inline-block;
+	}
+</style>
+<body>
+	<div style="height: 120px;width: 480px;position: absolute;left: 0;right: 0;top: 0;bottom:0;margin:auto">
+	<form id="form">
+		<label><input checked="true" type="radio" name="isStudents" value="yes" style="margin-left: 50px;">在校生
+			<label><span>学校</span>
+				<select class="active">
+					<option>北京</option>
+					<option>上海</option>
+					<option>长沙</option>
+				</select>
+				<select>
+					<option>北京大学</option>
+					<option>清华大学</option>
+				</select>
+				<select>
+					<option>上海大学</option>
+					<option>复旦大学</option>
+				</select>
+				<select>
+					<option>湖南大学</option>
+					<option>中南大学</option>
+				</select>
+			</label>
+		</label>
+		
+		<label style="position:absolute;top: 0;left: 160px; width: 500px;"><input type="radio" name="isStudents" value="no">非在校生
+			<label style="position: absolute;  width: 500px;left: -160px;top:38px;"><span>就业单位</span><input type="text" style="display: inline-block;width: 300px;height: 40px;margin-left: 30px;"></label>
+		</label>
+	</form>
+	</div>
+</body>
+<script type="text/javascript">
+	//选择器函数
+	function $(selector, context) {
+		context = context || document;
+		var elements = context.querySelectorAll(selector);
+		return Array.prototype.slice.call(elements);
+	}
+	
+	window.onload = function () {
+		var form = document.getElementById('form');
+		var aLabel = $("form > label");
+		var aRadio = $("form > label > input")
+		var aSelect = $("select");
+		
+		//初始化页面
+		$("label",aLabel[0])[0].style.display= "block";
+		aSelect[1].className = "active";
+
+		// 感觉上这个更好点。虽然代码多了。但是速度会更快？
+		for (let i = 0; i < aRadio.length; i++) {
+			aRadio[i].onclick = function () {
+				$("label", aLabel[i])[0].style.display = "block";
+				if (i == 0) {
+					console.log(i)
+					$("label",aLabel[1])[0].style.display = "none";
+				}
+				else {
+					$("label", aLabel[0])[0].style.display = "none";
+				}
+			}
+		}
+		/*form.onclick = function () {
+			for (let i = 0; i < aRadio.length; i++) {
+				if (aRadio[i].checked) {
+					$("label",aLabel[i])[0].style.display= "block";
+				}
+				else {
+					$("label",aLabel[i])[0].style.display= "none";
+				}
+			}
+		}*/
+		aSelect[0].onchange = function () {
+			for (let i = 1, len = aSelect.length; i < len; i++) {
+					aSelect[i].className = "";
+			}
+			aSelect[this.selectedIndex + 1].className = "active";
+		}
+	}
+</script>
+</html>

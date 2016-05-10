@@ -76,18 +76,17 @@
         btn[4].onclick = function () {
             text = input.value.trim()
             //有bug，什么都不输入的时候搜索全对,要修改啊。。这么改感觉不太好。。
-            var reg= new RegExp(text, "i")
+            var re = new RegExp(text, "ig")
             if (text != "") {
-               for (var i = 0; i < aSpan.length; i++) {
-                   aSpan[i].style.backgroundColor = "#f60"
-                   
-                   if (reg.test(aSpan[i].innerHTML)) {
+               for (let i = 0; i < aSpan.length; i++) {
+                    aSpan[i].style.backgroundColor = "#f60"
+                    if (re.test(aSpan[i].innerHTML)) {
                        aSpan[i].style.backgroundColor = "#1bbbdc"
-                   }
+                    }
                }       
             }
             else {
-                for (let i in aSpan) {
+                for (let i = 0; i < aSpan.length; i++) {
                     aSpan[i].style.backgroundColor = "#f60"
                 }
             }  

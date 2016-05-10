@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>UI组件之冻结行列表格</title>
+	<style type="text/css">
+		#table {
+			width: 600px;
+			margin: 100px auto;
+			border-collapse:collapse;
+			text-align: center;
+		}
+		
+		thead {
+			position: static;
+			top: 0;
+		}
+
+		th {
+			position: relative;
+			width: 120px;
+			height: 55px;
+			border: 1px solid #ccc;
+			background-color: #333;
+			color:#fff;
+		}
+
+		td{
+			width: 120px;
+			height: 40px;
+			border: 1px solid #ccc;
+		}
+		
+		.ascendingTriangle,
+		.descendingTriangle{
+			position: absolute;
+			display: block;
+			border-style: solid;
+			border-color: #fff transparent;
+			cursor: pointer;
+		}
+		
+		.ascendingTriangle {
+			top: calc(50% - 15px);
+			right:10%;
+			border-width:0px 7px 10px 7px;
+		}
+
+		.descendingTriangle {
+			top: calc(50% + 5px);
+			right:10%;
+			border-width:10px 7px 0px 7px;
+		}
+
+	</style>
+</head>
+<body style="height: 1800px;">
+	<ol>
+		<li>还是有缺陷，必须设定各th td和table 的宽度，不然就不能当滚动的时候不能完全对齐</li>
+	</ol>
+	<table id="table" cellspacing="1";>
+	<thead id="thead">
+		<tr><th class="name">姓名</th><th>语文<i class="ascendingTriangle"></i><i class="descendingTriangle"></i></th><th>数学<i class="ascendingTriangle"></i><i class="descendingTriangle"></i></th><th>英语<i class="ascendingTriangle"></i><i class="descendingTriangle"></i></th><th>总分<i class="ascendingTriangle"></i><i class="descendingTriangle"></i></th></tr>	
+	</thead>	
+	<tbody id="tbody"></tbody>
+	</table>
+</body>
+<script type="text/javascript">
+	function $(selector, context) {
+		context = context || document;
+		var elements = context.querySelectorAll(selector);
+		return Array.prototype.slice.call(elements);
+	}
+
+	//渲染Tbody的函数
+	function renderTbody() {
+		for (let i = 0, len = score.length; i < len; i++) {
+			tbody.innerHTML += "<tr><td>" + score[i][0] + "</td><td>" + score[i][1] + "</td><td>" + score[i][2] + "</td><td>" + score[i][3] + "</td><td>" + score[i][4] + "</td></tr>"
+		}
+	}
+
+	//初始化tbody
+	var tbody = document.getElementById('tbody');
+	var score = [["小明", 80, 90, 70, 240], ["小红", 70, 80, 60, 210], ["小绿", 80, 80, 80, 240], ["小蓝", 90, 90, 90, 270], ["小明", 80, 90, 70, 240], ["小红", 70, 80, 60, 210], ["小绿", 80, 80, 80, 240], ["小蓝", 90, 90, 90, 270], ["小明", 80, 90, 70, 240], ["小红", 70, 80, 60, 210], ["小绿", 80, 80, 80, 240], ["小蓝", 90, 90, 90, 270], ["小明", 80, 90, 70, 240], ["小红", 70, 80, 60, 210], ["小绿", 80, 80, 80, 240], ["小蓝", 90, 90, 90, 270]]
+	renderTbody(score);
+	
+	//获取三角图标
+	var ascendingTriangle = $(".ascendingTriangle");
+	var descendingTriangle = $(".descendingTriangle");
+
+	//升序排列
+	for (let i = 0, len = ascendingTriangle.length; i < len; i++) {
+		ascendingTriangle[i].onclick = function () {
+			score.sort(function (value1, value2) {
+				return value1[i + 1] - value2[i + 1];
+			})
+			tbody.innerHTML = "";
+			renderTbody();
+		}
+	}
+
+	//降序排列
+	for (let i = 0, len = descendingTriangle.length; i < len; i++) {
+		descendingTriangle[i].onclick = function () {
+			score.sort(function (value1, value2) {
+				return value2[i + 1] - value1[i + 1];
+			})
+			tbody.innerHTML = ""	
+			renderTbody();
+		}
+	}
+
+	var disHeight = table.offsetTop;
+	var disBottom = table.offsetHeight + disHeight 
+	window.onscroll = function (ev) {
+		var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+		// window.scrollTop?
+		if (scrollTop >= disHeight && (scrollTop <= disBottom) ){
+			thead.style.position = "fixed";
+			thead.style.width = table.offsetWidth + "px";
+			thead.style.top = 0 + "px";
+		}
+		else {
+			thead.style.position = "static";
+		}
+	}
+</script>
+</html>

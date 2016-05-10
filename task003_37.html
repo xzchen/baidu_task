@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>任务三十七：UI组件之浮出层</title>
-	<link rel="stylesheet"  href="/task003/task003_37/main.css">
+	<link rel="stylesheet"  href="./task003/task003_37/main.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
 	<base target="_blank">
 </head>
@@ -16,10 +16,19 @@
 		<li><strong>有bug啊</strong>拖动到上下边界去移动滚动条，必须要保持移动才可以。只能是加大了“步长”去获得类似效果</li>
 		<li><strong>有bug啊</strong>每次页面改变的时候，是直接将其绝对居中，但是感觉逻辑不太对</li>
 		<li>目前只实现了最基本的功能，改明看着改改。 2016/5/4</li>
+		<li>盒子修改成一个登录框，增加了处理事件。登录框内元素可以单独操作 2016/5/9</li>
 	</ol>
+
 	<div id="wrap">
-		<div id="div"></div>
+		<div id="div">
+			<p>登录<button id="close">X</button></p>
+			<form id="form">
+				<input type="text" placeholder="请输入用户名">
+				<input type="password" placeholder="请输入密码">
+				<button id="sign-in">登录</button>
+			</form>
+		</div>
 	</div>
 </body>
-<script type="text/javascript" src="/task003/task002_37/main.js"></script>
+<script type="text/javascript" src="./task003/task002_37/main.js"></script>
 </html>

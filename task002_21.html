@@ -108,12 +108,13 @@
             ev = ev || event
             var target = ev.target || srcElement
             if (target.nodeName.toLowerCase() == "p") {
-                target.innerHTML = "删除" + target.innerHTML   
+                target.innerHTML = "删除 " + target.innerHTML + " ？"    
                 target.onclick = function () {
-                    target.remove()
+                    target.parentNodes.removeChild(target)
                 }
                 target.onmouseout = function () {
-                    target.innerHTML = target.innerHTML.substr(2)
+                    target.innerHTML = target.innerHTML.slice(3)
+                    target.innerHTML = target.innerHTML.slice(0, target.innerHTML.length - 2)
                 }  
             }
         }      

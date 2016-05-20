@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>任务四二：UI组件之日历组件（三）</title>
+	<link rel="stylesheet" href="main.css">
+	<link rel="stylesheet"  href="main.css">
+</head>
+<body>
+<div>
+	<h3 id="dateText"></h3>
+	<div id="calendar">
+		<select name="year" id="year"></select>
+		<select name="month" id="month" style="margin: 0 35px;"></select>
+		<button id="button">返回今天</button>
+		<table id="table">
+			<thead><tr>
+				<th>一</th>
+				<th>二</th>
+				<th>三</th>
+				<th>四</th>
+				<th>五</th>
+				<th>六</th>
+				<th>日</th>
+			</tr></thead>
+			<tbody id="tbody"></tbody>
+		</table>
+		<span id="ok">确定</span>
+		<span id="cancel">取消</span>
+	</div>
+	<h4><mark>Tips</mark><br>1.点击文本显示框控制日历表的出现和隐藏<br>2.点击确定按钮后才会更新当前选择日期<br>3.点击取消或者隐藏日历表那么回返回之间确定（也是是文本显示框）里的日期<br>4.“返回今天”的按钮可以回到现实日期</h4>
+
+	<ol style="line-height: 20px;">改动项
+		<li>解决之前inline-block level 元素间隙问题</li>
+		<li>最初准备写2个，一个用来选择某个日期，一个用来选择某时间段，写下来发现选择DOM节点太麻烦</li>
+		<li>后来换成了在一个日历上写，用单击和双击事件来区别。嗯，写下来好累。又要改函数，而且发现自己最初的思路错了，应该最初让所有元素加载进来，日期改变的时候只是控制他们的出现和隐藏，不然选择时间段的标记又得麻烦。也不是直接用的日期表示的，只是用td格子内容模拟的。哪天看着改了。2016/5/10</li>
+	</ol>
+	
+</div>	
+<script type="text/javascript" src="main.js"></script>
+</body>
+</html>

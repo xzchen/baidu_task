@@ -4,11 +4,22 @@ body,div,select,button,form,label,input {
 	margin: 0px;
 }
 
+h3 {
+	display: block;
+	width: 250px;
+	line-height: 30px;
+	border: 2px solid #ccc;
+	border-radius: 20px;
+	text-align: center;
+	margin: 40px auto;
+}
+
 #calendar {
+	display: none;
 	width: 400px;
 	padding: 10px;
 	border:2px solid #57abff;
-	margin: 50px auto;
+	margin: 20px auto;
 	font-weight: bold;
 	word-spacing: -8px;
 }
@@ -58,3 +69,22 @@ td:hover {
 .holiday {
 	color: #f00;
 }
+
+#ok,
+#cancel {
+	display: inline-block;
+	width: 150px;
+	text-align: center;
+	line-height: 40px;
+	word-spacing: 0;
+}
+
+#ok {
+	background-color: #0FBDC3;
+}
+
+#cancel {
+	float: right;
+	background-color: #76CA00;
+}
+

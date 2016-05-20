@@ -58,7 +58,7 @@ function search (arr, speed, index) {
 	for (let i = 0; i < arr.length; i++) {
 		arr[i].style.backgroundColor = "#fff"
 	}
-	//匹配条件
+	//匹配条件，这里当时真蠢了。。都是摸索着来的。现在其实可以直接reg = new RegExp("^"+keyWord+"$","i"),就不用去判断length是否相等了。。
 	if (reg.test(arr[0].getElementsByTagName("span")[0].innerHTML) && (arr[0].getElementsByTagName("span")[0].innerHTML.length == keyWord.length)) {
 		arr[0].style.backgroundColor = "#ccc";
 		count++;

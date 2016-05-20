@@ -1,0 +1,105 @@
+.container {
+	position: absolute;
+	display: block;
+	width: 500px;
+	height: 500px;
+	left: 50%;
+	top: 50%;
+	margin-top: -250px;
+	margin-left: -250px;
+}
+.row,
+.col {
+	position: absolute;
+	font-size: 0;
+	text-align: center;
+	line-height: 50px;
+}
+
+.row {
+	position: absolute;
+	top: -50px;
+}
+.col {
+	position: absolute;
+	display: flex;
+	top: 0px;
+	left: -50px;
+	flex-direction: column;
+}
+
+span {
+	font-size: 16px;
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+}
+table {
+	border-collapse: collapse;
+	outline:1px solid #000;
+	width: 500px;
+	height: 500px;
+}
+td {
+	border:0;
+	outline: 1px solid #ccc;
+}
+
+.box {
+	position: absolute;
+	width: 50px;
+	height: 50px;
+}
+
+.box div {
+	position: absolute;
+}
+
+.box div:nth-child(1) {
+	background: #00f;
+}
+
+.box div:nth-child(2) {
+	background-color: #f00;
+}
+.tHead {
+	width: 50px;
+	height: 15px;
+	
+}
+
+.tBody {
+	top: 15px;
+	width: 50px;
+	height: 35px;
+}
+
+.rHead {
+	left:35px;
+	width: 15px;
+	height: 50px;
+}
+.rBody {
+	width: 35px;
+	height: 50px;
+}
+
+.bHead {
+	width: 50px;
+	height: 15px;
+	top:35px;
+}
+.bBody {
+	width: 50px;
+	height: 35px;
+}
+
+.lHead {
+	width: 15px;
+	height: 50px;
+}
+.lBody {
+	width: 35px;
+	height: 50px;
+	left: 15px;
+}

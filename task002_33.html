@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>任务三十三：听指令的小方块（一）</title>
+	<link rel="stylesheet" type="text/css" href="./task002/task002_33/main.css">
+</head>
+<body>
+
+<div class ="container" id="container">
+	<div class="row">
+		<span>1</span>
+		<span>2</span>
+		<span>3</span>
+		<span>4</span>
+		<span>5</span>
+		<span>6</span>
+		<span>7</span>
+		<span>8</span>
+		<span>9</span>
+		<span>10</span>
+	</div>
+	<table id="table">
+		<tbody id="tbody"></tbody>
+	</table>
+	<div class="col">
+		<span>1</span>
+		<span>2</span>
+		<span>3</span>
+		<span>4</span>
+		<span>5</span>
+		<span>6</span>
+		<span>7</span>
+		<span>8</span>
+		<span>9</span>
+		<span>10</span>
+	</div>
+	<button>前进</button>
+	<button>左转</button>
+	<button>右转</button>
+	<button>后转</button>
+	<input type="text" id="command" value=" go">
+	<button>执行</button>
+	<ol>
+		<li>鼠标点击格子会瞬移到指定位置</li>
+		<li>支持键盘驱动</li>
+		<li>支持按住键盘加鼠标（按钮）点击事件转疯啦。。</li>
+		<li>GO：向蓝色边所面向的方向前进一格（一格等同于正方形的边长）</li>
+		<li>TUN LEF：向左转（逆时针旋转90度）</li>
+		<li>TUN RIG：向右转（顺时针旋转90度）</li>
+		<li>TUN BAC：向右转（旋转180度）
+	移动不能超出格子空间</li>
+		<li>不区分大小写</li>
+	</ol>
+</div>	
+</body>
+<script type="text/javascript" src="./task002/task002_33/main.js"></script>
+</html>

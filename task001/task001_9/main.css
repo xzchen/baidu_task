@@ -1,402 +1,754 @@
-﻿@charset "utf-8";
+@charset "utf-8";
+/*Global样式*/
 body,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,img,div,dl,dt,dd,input{margin: 0;padding:0;}{
 	padding: 0;
 	margin: 0;
+}
+
+html {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+*, 
+*:before, 
+*:after {
+	-webkit-box-sizing: inherit;
+	-moz-box-sizing: inherit;
+	box-sizing: inherit;
+} 
+
+*:after,
+*:before {
+	position: absolute;
+	display: block;
+	content: "";
 }
 
 body {
 	min-width: 1280px;
 }
 
-/*header里面的图标是用CSS写的，来练练手，好麻烦。真心觉得要是用图片会容易多*/
+li {
+	list-style: none;
+}
+
+.gray {
+	color:#a9a9a9;
+}
+
+/*header*/
 header {
-	position: relative;
 	display: flex;
-	height: 57px;
+	justify-content: space-between;
 	align-items: center;
+	height: 57px;
+	padding: 0 60px 0 50px;
 	background-color: #2189c0;
 }
 
 .logo {
 	position: relative;
-	left: 50px;
-	width: 36px;
-	height: 36px;
+	width: 37px;
+	height: 37px;
 	background-color: #fff;
 }
 
 .logo:after {
-	content: "";
-	position: absolute;
 	right: 0;
 	bottom: 0;
-	display: block;
-	border-top: 3px solid #2189c0;
-	border-left: 3px solid #2189c0;
-	width: 15px;
-	height: 15px;	
+	width: 19px;
+	height: 19px;
+	border-width: 3px 0 0 3px;
+	border-style: solid;
+	border-color: #2189c0;
 }
 
 .search {
 	position: relative;
-	display: block;
-	left: 800px;
-	border: 0;
-	width: 315px;
-	height: 26px;
-	border-radius: 13px;
-	text-indent: 3em;
 }
 
-/*input不支持加:after，所以只能加了个div来写这个icon*/
+.search input {
+	width: 315px;
+	height: 30px;
+	padding-left: 3em;
+	border: 0;
+	border-radius: 13px;
+	margin-right: 22px;
+}
+
 .search-icon {
 	position: absolute;
-	top: 20px;
-	left: 850px;
-	border:2px solid #ccc;
-	border-radius: 100%;
-	width: 12px;
-	height: 12px;
-}
-
-.search-icon:before {
-	content: "";
-	position: absolute;
-	top: 7px;
+	top: 6px;
 	left: 13px;
-	width: 8px;
-	height: 8px;
-	border-left:1px solid #ccc;
-	transform: rotate(-45deg);
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	border:1px solid #aeaeae;
+	border-radius: 50%;
 }
 
-header a {
-	position: relative;
-	left: 840px;
-	display: block;
+.search-icon:after {
+	left: 12px;
+	top: 12px;
+	width: 8px;
+	height: 1px;
+	background-color: #aeaeae;
+	transform-origin: 0;
+	transform: rotate(45deg);
+}
 
-	text-decoration: none;
+.sign-in {
+	position: relative;
+	display: inline-block;
+	padding-left: 20px;
 	color: #fff;
 }
 
-header a:before {
-	content: "";
-	position: absolute;
-	top: -2px;
-	left: -17px;
-	display: block;
-	border-radius: 100%;
+.sign-in:before {
+	left: 3px;
 	width: 10px;
 	height: 10px;
-	background-color: #fff;
-}
-
-header a:after {
-	content: "";
-	position: absolute;
-	top: 8px;
-	left: -20px; 
-	display: block;
 	border-radius: 100%;
-	width: 16px;
-	height: 16px;
 	background-color: #fff;
 }
 
-header a div {
+.sign-in:after {
+	left: 0;
+	bottom: 0;
+	width: 16px;
+	height: 8px;
+	border-radius: 8px  8px 2px 2px;
+	background-color: #fff;
+}
+
+.container {
 	position: absolute;
-	top: 17px;
-	left: -20px;
-	width: 100px;
-	height: 20px;
-	background-color: #2189c0;
-	z-index: 2;
+	width: 1280px;
+	margin: 0 auto;
 }
 
 /*侧边栏*/
 .sidebar {
-	position: relative;
-	float: left;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	box-sizing: border-box;
+	position: absolute;
+	top: 0px;
+	bottom: 0;
 	width: 260px;
-	height: 560px;
-	font-size: 12px;
+	padding-top: 20px;
 	background-color: #2b2e3d;
-	color:#5A697C;
+	color: #495466;
 }
 
-/*用户名*/
-.user:before {
-	content: "";
+.user-name {
 	position: relative;
-	display: inline-block;
-	border: 2px solid #ccc;
-	border-radius: 100%;
-	width: 57px;
-	height: 57px;
-}
-
-.user {
-	position: relative;
-	left: 45px;
-	margin-top: 20px;
-	height: 60px;
+	margin: 0px 0 20px 45px;
+	padding:20px 5px 20px 83px ;
 	color: #fff;
 }
 
-.user span {
-	position: relative;
-	bottom: 25px;
-	left: 25px;
-	font-size: 16px;
-}
-
-.user:after {
-	content: "";
-	position: relative;
-	bottom: 6px;
-	left: -103px;
-	display: inline-block;
+.user-name:before {
+	top: 0;
+	left: 0;
+	width: 59px;
+	height: 59px;
+	border: 1px solid #fff;
 	border-radius: 100%;
-	width: 49px;
-	height: 49px;
-	background-color: #ccc;
 }
 
-/*用户信息*/
+.user-name:after {
+	top: 6px;
+	left: 6px;
+	width: 47px;
+	height: 47px;
+	border-radius: 100%;
+	background-color: #b9babe;
+}
+
 .user-info {
-	position: relative;
-	left: 45px;
-	height: 30px;
-	overflow: hidden;
+	word-spacing: -8px;
+	padding-left: 60px;
 }
 
-.user-info div:nth-child(1) {
+.user-info span{
 	display: inline-block;
-	padding-left: 20px;
-	border-right: 2px solid #323546;
-	width: 67px;
+	width: 33px;
 }
 
-.user-info div:nth-child(2) {
-	display: inline-block;
-	padding-left: 20px;
-	
-	width: 67px;
-}
-
-
-.user-info div:hover {
+.user-info span:hover,
+.info-list li:hover {
+	background-color: #343e4e;
 	color: #fff;
 }
 
-/*列表*/
-.nav {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	height: 415px;
-	list-style: none;
+/*侧边栏个人信息的li*/
+.info-list li {
+	position: relative;
+	line-height: 40px;
+	font-size: 12px;
 }
 
-/*给每个li的list-style加上一个背景图片。然后用Sprite原理实现*/
-.nav li:before {
-	content: "";
-	width: 12px;
-	height: 12px;
-	display: inline-block;
+.info-list li:after {
+	top: 12px;
+	width: 13px;
+	height: 13px;
+	background-image: url(http://numerhero.github.io/assets/download/ife/demo9/images/left-side/left-side.png)
+}
+
+.info-list > li {
+	padding-left: 70px;
+}
+
+.info-list > li:after {
+	left:45px;
+}
+
+.info-list > li:nth-of-type(1):after {
+	background-position: -70px 0px; 
+}
+.info-list > li:nth-of-type(2):after,
+.info-list li:nth-of-type(4):after, 
+.info-list li:nth-of-type(5):after {
+	background-position: -70px -65px; 
+}
+.info-list li:nth-of-type(3):after {
+	background-position: -102px -45px; 
+}
+.info-list li:nth-of-type(6):after {
+	background-position: -102px 0; 
+}
+
+/*person-repo个人报表的ul*/
+.person-repo li{
+	padding-left: 40px;
+}
+
+.person-repo li:after{
+	left: 0;
+}
+
+.person-repo > li:before {
+	top: 12px;
+	left: 20px;
+	width: 13px;
+	height: 13px;
 	background-image: url(http://numerhero.github.io/assets/download/ife/demo9/images/left-side/left-side.png);
 }
 
-.nav >li:before {
-	margin-left: 45px;
-	margin-right: 17px;
+/*个人列表下li和icon*/
+.person-repo > li:nth-of-type(1):after,
+.person-repo > li:nth-of-type(3):after {
+	background-position: -11px -62px;
+}
+.person-repo > li:nth-of-type(2):after {
+	background-position: -32px -62px;
+}
+.person-repo > li:nth-of-type(1):before,
+.person-repo > li:nth-of-type(3):before {
+	background-position: -70px -25px;
+}
+.person-repo > li:nth-of-type(2):before {
+	background-position: -102px -25px;
 }
 
-/*用选择器设置剩下四个一级li样式*/
-.nav > li:not([id="person"]) {
-	height: 45px;
-	line-height: 45px;
+/*文件二 下 li和icon*/
+.file li {
+	padding-left: 25px;
 }
 
-.nav li:not([id="person"]):hover {
-	background-color: #373d4d;
-	color:#fff;
-}
-
-/*个人报表部分*/
-.nav > li:nth-child(1) {
-	height: 190px;
-	box-sizing: border-box;
-	padding-top: 15px;
-	background: #373d4d;
-}
-
-.nav >li:nth-child(1):before {
-	left: 45px;
-	background-position: -70px 0px;
-}
-
-.repo { 
-	margin-top: 15px;
-	padding-left:73px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	height: 135px;
-	list-style: none;
-}
-
-.repo > li:nth-child(1):before,
-.repo > li:nth-child(3):before {
-	background-position: -16px -63px;
-} 
-
-/*因为文件有两个图标，所以多加了个span*/
-.repo > li span {
-	display: inline-block;
-	margin: 0 6px 0 3px;
-	width: 12px;
-	height: 12px;
-	background-image: url(http://numerhero.github.io/assets/download/ife/demo9/images/left-side/left-side.png);
-}
-.repo > li:nth-child(1) span,
-.repo > li:nth-child(3) span {
-	background-position: -103px -25px;	
-}
-
-/*文件file部分*/
-.repo > li:nth-child(2) span {
-	background-position: -70px -25px;	
-}
-
-.repo > li:nth-child(2):before {
-	background-position: -34px -63px;
-} 
-
-.file {
-	margin-top: 15px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	height: 45px;
-	list-style: none;
-}
-
-.file > li:before {
-	margin: 0 4px 0 30px;
+.file > li:after {
 	background-position: -70px -45px;
 }
 
-/*给剩下的li加图标*/
-.nav >li:nth-child(2):before,
-.nav >li:nth-child(4):before,
-.nav >li:nth-child(5):before {
-	background-position: -70px -65px;
-}
-
-.nav >li:nth-child(3):before {
-	background-position: -102px -45px;
-}
-
-.nav >li:nth-child(6):before {
-	background-position: -102px 0;
-}
-
-/*main*/
+/*右边主体*/
 .main {
+	position: relative;
+	width: 1020px;
 	margin-left: 260px;
-	width: calc(100% - 260px)
-}
-
-/*面包屑*/
-.bread-crumb {
-	padding-left: 10px;
-	width: 100%;
-	color: #ccc;
-}
-
-.bread-crumb a {
-	display: inline-block;
-	width: 64px;
-	height: 30px;
-	font: 14px;
-	line-height: 30px;
-	text-align: center;
-	text-decoration: none;
-}
-
-.bread-crumb a:hover {
-	color: #6699c4
-}
-
-/*容器盒子*/
-.container {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	align-items: center;
-	width: 100%;
-	height: 1028px;
+	font-size: 12px;
 	background-color: #ededed;
 }
 
-.container > div {
-	width: 890px;
-	background-color: #fff;
-}
-
-
-.selected {
-	margin-top: 20px;
-	height: 85px;
-}
-
-.selected:before {
-	content: "";
+.bread-crumb {
 	display: block;
-	border-right: 1px solid #494949;
-	border-bottom: 1px solid #353535;
-	width: 5px;
-	height: 5px;
-	transform: rotate(45deg);
-
-}
-.history {
-	height: 90px;
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-	
-}
-
-.history > div {
-	width: 20px;
-	height: 60px;
+	overflow: hidden;
+	line-height: 30px;
+	padding-left: 20px;
 	background-color: #fff;
 }
 
-.count {
-	height: 90px;
+.bread-crumb li {
+	float: left;
+	padding-left: .5em;
 }
 
+.bread-crumb li:hover {
+	color: #84a8d9;
+}
+
+.content {
+	overflow: hidden;
+	width: 890px;
+	margin:0 auto;
+}
+
+/*查询项部分*/
+.query-info {
+	height: 85px;
+	padding: 13px 80px 13px 30px;
+	border: 1px solid #ccc;
+	margin: 15px 0 7px 0;
+	background-color: #fff;
+	color: #b7b7b7;
+}
+
+.div-box {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.div2 {
+	width: 200px;
+	margin: -0px 35px 0 40px;
+}
+
+.query-info label select {
+	margin: 0px 0 10px 10px;
+	height: 25px;
+}
+
+.div2 label select {
+	width: 120px;
+}
+
+.div2 span {
+	position: relative;
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	margin-left: 15px;
+	text-indent: .2em;
+	vertical-align: bottom;
+	background-color: #acacac;
+	color: #fff;
+}
+
+.div3 {
+	width: 290px;
+}
+
+.div3 label:nth-child(1) input {
+	width: 120px;
+	height: 25px;
+	margin-left: 10px;
+}
+
+.div3 label:nth-child(2) {
+	margin-left: 2px;
+}
+.div3 label:nth-child(2) select,
+.div3 label:nth-child(3) select {
+	width: 70px;
+}
+
+.div3 label:nth-child(4) {
+	float: right;
+}
+
+.div3 label:nth-child(4) select {
+	width: 120px;
+}
+
+.search-btn {
+	width: 50px;
+	margin: 15px 0 0 25px;
+	line-height: 25px;
+	text-align: center;
+	background-color: #398ac1;
+	color: #fff;
+}
+
+/*历史查询*/
+.history-info {
+	display: flex;
+	height: 70px;
+	justify-content: space-between;
+}
+
+.history-info div {
+	height: 70px;
+	background-color: #fff;
+	box-shadow: -1px -1px 3px #ccc ;
+}
+
+.command {
+	width: 30px;
+	font-size: 24px;
+	text-align: center;
+	line-height: 70px;
+	color: #afafaf;
+}
+
+.history-info div:nth-child(2) {
+	box-shadow: 0 4px 0px #4388c9 inset;
+}
+
+.history-item {
+	box-sizing: border-box;
+	width: 108px;
+}
+
+.history-item:hover {
+	box-shadow: 0 4px 0px #4388c9 inset;
+}
+
+.history-item {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+
+.history-item span {
+	position: relative;
+	top: -3px;
+	font-size: 12px;
+	color: #b7b7b7;
+}
+
+.history-item p {
+	font-size: 20px;
+	font-weight: bold;
+	color: #f60;
+}
+
+.history-query {
+	width: 130px;
+	text-align: center;
+	line-height: 70px;
+}
+
+/*2016年4月份统计*/
+.statistics-month {
+	display: flex;
+	justify-content: space-between;
+}
+
+.statistics-month div {
+	position: relative;
+	width: 200px;
+	height: 70px;
+	border: 1px solid #ccc;
+	background-color: #fff;
+}
+
+.statistics-month p span {
+	margin-bottom: 10px;
+	display: block;
+	color: #000;
+}
+
+.statistics-month p {
+	margin: 15px 0 0 10px;
+	color: #b1b1b1;
+}
+
+.statistics-month div:after {
+	display: inline-block;
+	top: 10px;
+	right: 15px;
+	width: 60px;
+	height: 50px;
+}
+
+.statistics-month div:nth-child(1) {
+	border-left: 3px solid #43b291;
+}
+.statistics-month div:nth-child(1):after {
+	background-color: #43b291;
+}
+.statistics-month div:nth-child(2) {
+	border-left: 3px solid #388bbf;
+}
+.statistics-month div:nth-child(2):after {
+	background-color: #388bbf;
+}
+.statistics-month div:nth-child(3) {
+	border-left: 3px solid #ce4b36;
+}
+.statistics-month div:nth-child(3):after {
+	background-color: #ce4b36;
+}
+.statistics-month div:nth-child(4) {
+	border-left: 3px solid #ffcd46;
+}
+.statistics-month div:nth-child(4):after {
+	background-color: #ffcd46;
+}
+
+/*后面四个模块一样的部分*/
 .item {
-	height: 315px;
+	display: inline-block;
+	border: 1px solid #ced2d5;
+	border-radius: 10px;
+	margin-top: 10px;
+	background-color: #fff;
 }
 
+/*第一组项目*/
+.first-item {
+	float: left;
+	width: 530px;
+	height: 365px;
+}
+
+.first-item-text{
+	padding-left: 20px;
+	line-height: 40px;
+	background-color: #f4f5f7;
+	color: #b5b5b5;
+}
+
+.first-item > div {
+	width: 490px;
+	height: 280px;	
+	border: 1px solid #ced2d5;
+	border-top: 0;
+	border-radius: 7px;
+	margin: 15px 0 0 20px;
+}
+
+.first-item ol {
+	width: 490px;
+	border-bottom: 1px solid #ced2d5;
+	border-right: 2px solid #fff;
+	border-radius: 5px;
+	overflow: hidden;
+}
+
+.first-item li {
+	float:left;
+	width: 80px;
+	margin-right: 8px;
+	text-align: center;
+	line-height: 25px;
+	background-color: #edecf0;
+}
+
+.first-item li:nth-child(1) {
+	border-top: 1px solid #ced2d5;
+	border-right: 1px solid #ced2d5;
+	border-bottom: 1px solid #fff;
+	outline: 1px solid #fff;
+}
+
+.first-item table{
+	margin: 30px 0 0 35px;
+	width: 400px;
+	border-collapse:collapse;
+}
+
+.first-item td {
+	line-height: 30px;
+	text-align: center;
+	border: 1px solid #ced2d5;
+}
+
+/*第二个第一组项目*/
+.first-item-two {
+	position: relative;
+	float: right;
+	width: 350px;
+	height: 365px;
+}
+
+.first-item-two > div {
+	width: 280px;
+	height: 270px;
+	margin: 15px auto;
+}
+
+.first-item-two span {
+	display: block;
+	margin-bottom: 5px;
+	color: #dcdcdc;
+}
+
+.first-item-two ul {
+	overflow: hidden;
+	height: 45px;
+	border-top: 1px solid #e7e7e7;
+	border-bottom: 1px solid #e7e7e7;
+}
+
+.first-item-two li {
+	float: left;
+	padding-top: 5px;
+}
+
+.first-item-two li:nth-child(1) {
+	width: 90px;
+	height: 45px;
+	border-right: 1px solid  #e7e7e7;
+}
+
+.first-item-two li:nth-child(2) {
+	padding-left: 15px;
+}
+
+.agreement {
+	position: absolute;
+	bottom: 0px;
+	width: 280px;
+	height: 65px;
+	border-top: 1px solid #e7e7e7;
+}
+
+.agreement label {
+	position: absolute;
+	top: 10px;
+	color: #dcdcdc;
+}
+
+.agreement input {
+	display: inline-block;
+	margin-right: 5px;
+	vertical-align: -2px;
+}
+
+.agreement .btn {
+	position: absolute;
+	top: 10px;
+	right: 0px;
+	margin: 0px;
+}
+
+/*日历*/
 .calendar {
-	height: 340px;
+	width: 360px;
+	height: 350px;
 }
 
+.calendar > div {
+	width: 310px;
+	margin: 10px 0 0 25px;
+}
 
+.calendar .time-select {
+	display: flex;
+	justify-content: space-between;
+}
 
+.time-select select:nth-child(2) {
+	width: 80px;
+}
 
+.time-select button {
+	border: 1px solid #cbcbcb;
+	background-color: #fff;
+}
 
+.calendar table {
+	margin-top: 10px;
+	width: 310px;
+	border-collapse: collapse;
+}
 
+.calendar th {
+	width: 44px;
+	height: 30px;
+	border-top: 1px solid #a8cfec;
+	border-bottom: 1px solid #ececec;
+}
 
+.caledar tbody {
+	height: 230px;
+}
 
+.calendar td{
+	width: 44px;
+	height: 40px;
+	margin-bottom: 5px;
+	text-align: center;
+}
+
+.calendar .red {
+	color: red;
+}
+
+.calendar .click-date {
+	outline: 1px solid #fcdcb8;
+}
+
+.calendar p {
+	display: inline-block;
+}
+
+.calendar span {
+	display: block;
+}
+
+.car-rank {
+	float: right;
+	width: 520px;
+	height: 350px;
+}
+
+.car-rank table {
+	width: 450px;
+	height: 270px;
+	margin: 15px 0 0 20px;
+	border-collapse: collapse;
+	text-align: center;
+}
+
+.car-rank th {
+	height: 25px;
+	border: 1px solid #cbcbcb;
+}
+
+.car-rank td {
+	height: 25px;
+	border: 1px solid #cbcbcb;
+}
+
+.car-rank .search-indexing {
+	padding-left: 30px;
+	width: 295px;
+	text-align: left;
+}
+
+.orange {
+	background-color: #f3edf1;
+}
+
+.blue {
+	background-color: #7bbfe2;
+}
+
+.search-indexing b {
+	position: relative;
+	width: 170px;
+	height: 5px;
+	background-color: #ccc;
+}
+.search-indexing i{
+	position: absolute;
+	top: 10px;
+	display: inline-block;
+	height: 5px;
+
+}
+
+.car-rank tbody tr:nth-child(1) i{
+	width: 70%;
+	background-color: #f00;
+}
+
+.car-rank tbody tr:nth-child(2) i{
+	width: 50%;
+	background-color: #f00;
+}
 
 

@@ -39,7 +39,6 @@ window.onload = function () {
 	var table = document.getElementById('table');
 	var aTd = document.getElementsByTagName('td');
 
-
 	//添加事件 
 	var aBtn = document.getElementsByTagName('button');
 	aBtn[0].onclick = function () {

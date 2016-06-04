@@ -378,7 +378,7 @@ header {
 .history-info div {
 	height: 70px;
 	background-color: #fff;
-	box-shadow: -1px -1px 3px #ccc ;
+	box-shadow: -1px -1px 3px #ccc;
 }
 
 .command {
@@ -656,7 +656,6 @@ header {
 }
 
 .calendar th {
-	width: 44px;
 	height: 30px;
 	border-top: 1px solid #a8cfec;
 	border-bottom: 1px solid #ececec;
@@ -667,7 +666,6 @@ header {
 }
 
 .calendar td{
-	width: 44px;
 	height: 40px;
 	margin-bottom: 5px;
 	text-align: center;
@@ -681,14 +679,11 @@ header {
 	outline: 1px solid #fcdcb8;
 }
 
-.calendar p {
-	display: inline-block;
-}
-
 .calendar span {
 	display: block;
 }
 
+/*汽车行业品牌榜*/
 .car-rank {
 	float: right;
 	width: 520px;
@@ -719,36 +714,66 @@ header {
 	text-align: left;
 }
 
-.orange {
-	background-color: #f3edf1;
-}
-
-.blue {
-	background-color: #7bbfe2;
-}
-
 .search-indexing b {
 	position: relative;
+	left: 20px;
+	display: inline-block;
 	width: 170px;
 	height: 5px;
 	background-color: #ccc;
 }
 .search-indexing i{
 	position: absolute;
-	top: 10px;
 	display: inline-block;
 	height: 5px;
+}
 
+.car-rank tbody tr:hover {
+	background-color: #f4f5f7;
+}
+
+.car-rank tbody tr:nth-child(1) {
+	background-color: #f4f5f7;
 }
 
 .car-rank tbody tr:nth-child(1) i{
-	width: 70%;
-	background-color: #f00;
+	width: 90%;
+	background-color: #ee6e51;
 }
-
 .car-rank tbody tr:nth-child(2) i{
-	width: 50%;
-	background-color: #f00;
+	width: 80%;
+	background-color: #f08251;
 }
-
+.car-rank tbody tr:nth-child(3) i{
+	width: 77%;
+	background-color: #f1974d;
+}
+.car-rank tbody tr:nth-child(4) i{
+	width: 75%;
+	background-color: #74ccf1;
+}
+.car-rank tbody tr:nth-child(5) i{
+	width: 70%;
+	background-color: #74ccf1;
+}
+.car-rank tbody tr:nth-child(6) i{
+	width: 65%;
+	background-color: #74ccf1;
+}
+.car-rank tbody tr:nth-child(7) i{
+	width: 50%;
+	background-color: #74ccf1;
+}
+.car-rank tbody tr:nth-child(8) i{
+	width: 45%;
+	background-color: #74ccf1;
+}
+.car-rank tbody tr:nth-child(9) i{
+	width: 40%;
+	background-color: #74ccf1;
+}
+.car-rank tbody tr:nth-child(10) i{
+	width: 30%;
+	background-color: #74ccf1;
+}
 

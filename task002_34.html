@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>任务三十四：听指令的小方块（二）</title>
+	<link rel="stylesheet" type="text/css" href="./task002/task002_34/main.css">
+</head>
+<body>
+
+<div class ="container" id="container">
+	<div class="row">
+		<span>1</span>
+		<span>2</span>
+		<span>3</span>
+		<span>4</span>
+		<span>5</span>
+		<span>6</span>
+		<span>7</span>
+		<span>8</span>
+		<span>9</span>
+		<span>10</span>
+	</div>
+	<table id="table">
+		<tbody id="tbody"></tbody>
+	</table>
+	<div class="col">
+		<span>1</span>
+		<span>2</span>
+		<span>3</span>
+		<span>4</span>
+		<span>5</span>
+		<span>6</span>
+		<span>7</span>
+		<span>8</span>
+		<span>9</span>
+		<span>10</span>
+	</div>
+	<button>前进</button>
+	<button>左转</button>
+	<button>右转</button>
+	<button>后转</button>
+	<button>至上</button>
+	<button>至右</button>
+	<button>至下</button>
+	<button>至左</button>
+	<button>上移</button>
+	<button>右移</button>
+	<button>下移</button>
+	<button>左移</button>
+	
+	<input type="text" id="command" value="go" list="commands">
+	<datalist id="commands">
+		<option value="GO"></option>
+		<option value="TUN LEF"></option>
+		<option value="TUN RIG"></option>
+		<option value="TUN BAC"></option>
+		<option value="TRA TOP"></option>
+		<option value="TRA RIG"></option>
+		<option value="TRA BOT"></option>
+		<option value="TRA LEF"></option>
+		<option value="MOV TOP"></option>
+		<option value="MOV RIG"></option>
+		<option value="MOV BOT"></option>
+		<option value="MOV LEF"></option>
+	</datalist>
+	<button>执行</button>
+	<ol>
+		<li>未完成。多次点击旋转角度出错，要不停止定时器后执行要不保证旋转到固定角度</li>
+		<li>没写改变原点的旋转</li>
+		<li>或许可以换成用对象把各种属性包含了？2016/6/1</li>
+		<li>加了任务的其他要求，基本完成了。</li>
+		<li>其实真不会对象的思想。勉强写了点。各种凑</li>
+		<li>当盒子处于上下左右运动的时候，点击各种按钮无效。为了实现当旋转的时候点击有效，写得麻烦了。还有N多bug。但是好难去测试了。先放着了2016/6/4</li>
+	</ol>
+</div>	
+</body>
+<script type="text/javascript" src="./task002/task002_34/main.js"></script>
+</html>

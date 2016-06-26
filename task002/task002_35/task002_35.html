@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>听指令的小方块（三）</title>
+	<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+
+<div class ="container" id="container">
+	<div class="row">
+		<span>1</span>
+		<span>2</span>
+		<span>3</span>
+		<span>4</span>
+		<span>5</span>
+		<span>6</span>
+		<span>7</span>
+		<span>8</span>
+		<span>9</span>
+		<span>10</span>
+	</div>
+	<table id="table">
+		<tbody id="tbody"></tbody>
+	</table>
+	<div class="col">
+		<span>1</span>
+		<span>2</span>
+		<span>3</span>
+		<span>4</span>
+		<span>5</span>
+		<span>6</span>
+		<span>7</span>
+		<span>8</span>
+		<span>9</span>
+		<span>10</span>
+	</div>
+	<button>前进</button>
+	<button>左转</button>
+	<button>右转</button>
+	<button>后转</button>
+	<button>至上</button>
+	<button>至右</button>
+	<button>至下</button>
+	<button>至左</button>
+	<button>上移</button>
+	<button>右移</button>
+	<button>下移</button>
+	<button>左移</button>
+	
+	<input type="text" id="command" value="go" list="commands">
+	<textarea id="value">
+go
+tun lef
+go 2 
+tun rig
+go 3
+tun bac
+go4
+tra top
+go5
+tra 
+tra 
+tra rig
+go 7
+tra bot
+go8 
+tra lef
+go 6
+mov top 2
+tra bot
+go 3
+mov bot 5
+go2
+	</textarea>
+	<button>执行</button>
+	<ol>
+		<li>之前34的一些bug基本解决了，方法比之前简单多了。真是蠢</li>
+		<li>目前上下左右运动的时候，迅速/连续点击还是有bug。。。</li>
+		<li>目前仅仅支持输入命令,但是没有进行验证提示，错误的命令不会执行而已</li>
+		<li>无法实时只是执行到哪个命令（可以获得当前是执行的第多少个命令，但是无法通过ui展示出来），下一步做到这点</li>
+		<li>感觉上能整合的部分都整合了，写的过程中发现大量代码冗余，懂得用函数复用了。</li>
+		<li>这算是面向对象吗？还是不懂。。。2016/6/26</li>
+	</ol>
+</div>	
+</body>
+<script type="text/javascript" src="main.js"></script>
+</html>

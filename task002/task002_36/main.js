@@ -22,8 +22,10 @@
 	var table = document.getElementById('table');
 	table.innerHTML += "<div id = 'box' class = 'box'><div class='tHead'></div>ben<div class='tBody'></div></div>";
 	var box = document.getElementById('box');
-	box.style.top = Math.floor(Math.random()*10)*50 + "px";
-	box.style.left = Math.floor(Math.random()*10)*50 + "px";
+	/*box.style.top = Math.floor(Math.random()*10)*50 + "px";
+	box.style.left = Math.floor(Math.random()*10)*50 + "px";*/
+	box.style.top = 450 + "px";
+	box.style.left = 450 + "px";
 }()
 
 //根据命令后面跟的数字决定移动多少距离，这里的long是得到是几个单位长度（一个Td格子的边长）
@@ -44,6 +46,17 @@ window.onload = function () {
 	var rotateFlag = true;   //同上，判断是否在进行旋转操作
 	var moveTimer = null;	//移动函数的定时器
 	var rotateTimer = null;	//旋转函数的定时器
+	var count = 0;
+	var arrTd = [];			//把Td用二维数组表示，这样方便定位。如arrTd[3][5]。表示第3行，第5列（从0行0列开始起）
+	for (let i = 0; i < 10; i++) {
+		arrTd[i] = [];
+	}
+	for (let i = 0; i < 10; i++) {
+		for (let j = 0; j < 10; j++) {
+			arrTd[i].push(aTd[count]);
+			count++
+		}
+	}
 
 	//用一个对象来存储跟这个方块盒子相关的信息
 	var boxInfo = {            
@@ -81,17 +94,17 @@ window.onload = function () {
 			//（满足是否去运动的条件。判断是否有障碍（墙/边界） 或许可以写个函数。但是这样就要区分是上下还是左右运动）
 			if ( (startPos + speed) >= 0 && (startPos + speed) <= 450) {
 				moveFlag = false;	//表示正处于一个运动状态（旋转）。
-				let index;   //存放我们要去测试的TD格子是否是墙的序号
+				let index;   //存放我们要去测试我们将会移动到的TD格子的序号。如果是上下，则记录的是行数。左右记录列数。
 				//上下移动的情况。根据speed正负值判断是上还是下。另外处于上下移动的时候，我们的小方块所在的列数就不会变化。
 				if (direction == "top") {
 					if (speed < 0) {   //代表向上
-						index = (boxInfo.rows - 1) * 10 + boxInfo.cols  //设定了index的初始检验值。
+						index = boxInfo.rows - 1;  //设定了index的初始检验值。
 					}
 					else {
-						index = (boxInfo.rows + 1) * 10 + boxInfo.cols
+						index = boxInfo.rows + 1;
 					}
-					//判断在移动的时候是否遇到墙的阻碍，是则退出move这个函数。并且告知commandTimer判定这个指令完成了。
-					if (aTd[index].className == "wall") {
+					//判断将会移动到的下一个td格子是否是“墙”，是则退出move这个函数。并且告知commandTimer判定这个指令完成了。
+					if (arrTd[index][boxInfo.cols].className == "wall") {
 						moveFlag = true;
 						return false;
 					}
@@ -121,15 +134,14 @@ window.onload = function () {
 								boxInfo.rows = Math.round(box.offsetTop / 50);  //把小方块格子的所处的行重新赋值一下
 								//因为boxInfo.cols在上下运动时不会改变，每次只是改变的boxInfo.rows。所以只是每次运动到TD格子边界都是td的序号格子加减10。有点小问题。虽然每次，但是如果在运动中途点击改变了位置。index位置就会发生错乱
 								if (speed < 0) {
-									index = (boxInfo.rows - 1) * 10 + boxInfo.cols;
+									index = boxInfo.rows - 1;
 								}
 								else {
-									index = (boxInfo.rows + 1) * 10 + boxInfo.cols;
+									index = boxInfo.rows + 1;
 								}
 								//为了防止超过aTd的下标之后报错
-								if (0 <= index && index <= 99) {
-									if (aTd[index].className == "wall") {
-										console.log(index)
+								if (0 <= index && index <= 9) {
+									if (arrTd[index][boxInfo.cols].className == "wall") {
 										clearInterval(moveTimer);
 										box.style.top = boxInfo.rows * 50 + "px";  //当是因为步长不能被50的倍数整除时就停止了运动后其位置能回到正确的格子边界
 										moveFlag = true;
@@ -141,13 +153,13 @@ window.onload = function () {
 				}
 				else if (direction == "left") { 
 					if (speed < 0) {   //代表向左
-						index = (boxInfo.rows) * 10 + boxInfo.cols - 1;
+						index = boxInfo.cols - 1;
 					}
 					else {
-						index = (boxInfo.rows) * 10 + boxInfo.cols + 1;
+						index = boxInfo.cols + 1;
 					}
 					//判断在移动的时候是否遇到墙的阻碍，是则退出move这个函数。并且告知commandTimer判定这个指令完成了。
-					if (aTd[index].className == "wall") {
+					if (arrTd[boxInfo.rows][index].className == "wall") {
 						moveFlag = true;
 						return false;
 					}
@@ -173,13 +185,13 @@ window.onload = function () {
 							if (Math.abs(Math.round(box.offsetLeft / 50) * 50 - box.offsetLeft) < Math.abs(speed)) {
 								boxInfo.cols = Math.round(box.offsetLeft / 50);  //把小方块格子的所处的行重新赋值一下
 								if (speed < 0) {
-									index = (boxInfo.rows) * 10 + boxInfo.cols - 1;
+									index = boxInfo.cols - 1;
 								}
 								else {
-									index = (boxInfo.rows) * 10 + boxInfo.cols + 1;
+									index = boxInfo.cols + 1;
 								}
 								if (0 <= index && index <= 99) {
-									if (aTd[index].className == "wall") {
+									if (arrTd[boxInfo.rows][index].className == "wall") {
 										clearInterval(moveTimer);
 										box.style.left = boxInfo.cols * 50 + "px";  //当是因为步长不能被50的倍数整除时就停止了运动后其位置能回到正确的格子边界
 										moveFlag = true;
@@ -230,6 +242,46 @@ window.onload = function () {
 				rotateFlag = true;
 			}
 			
+		},
+
+		/*moveTo: function (x, y) {
+			console.log(x + "," + y);
+			var openList = [];
+			var closeList = [];
+			closeList.push(arrTd[boxInfo.rows][boxInfo.cols])
+			// openList.push(arrTd[boxInfo.rows - 1][boxInfo.cols])
+			var g = 1;
+			var nowRows = boxInfo.rows;
+			var nowCols = boxInfo.cols;
+			judgeIsOpenListandCountSocre(g, nowRows - 1, nowCols, openList)
+			judgeIsOpenListandCountSocre(g, nowRows, nowCols + 1, openList)
+			judgeIsOpenListandCountSocre(g, nowRows + 1, nowCols, openList)
+			judgeIsOpenListandCountSocre(g, nowRows, nowCols - 1, openList)
+			console.log(openList)
+			for (let i = 0; i < openList.length; i++) {
+				console.log(openList[i].fScore + "i")
+			}
+			for (let i = 0; i < openList.length - 1; i++) {
+
+				if (openList[i].fScore < openList[i + 1].fScore) {
+					var temp = openList[i].fScore;
+					openList[i].fScore = openList[i + 1].fScore;
+					openList[i + 1].fScore = temp;
+				}
+			}
+			for (let i = 0; i < openList.length; i++) {
+				console.log(openList[i].fScore + "i")
+			}
+			//添加分值最小最近的那个作为下一个起点
+			closeList.closeList[openList[0]];
+		}*/
+	}
+
+	function judgeIsOpenListandCountSocre(g, rows, cols, openList) {
+		if ( 0 <= rows && 0 <= cols && rows <= 9 && cols <= 9 && arrTd[rows][cols].className != "wall") {
+			openList.push(arrTd[rows][cols]);
+			let h = Math.abs(3 - rows) + Math.abs(6 - cols)
+			arrTd[rows][cols].fScore = g + h;
 		}
 	}
 
@@ -246,6 +298,63 @@ window.onload = function () {
 		}	
 	}
 
+	function getDirectionAndBuildWall(nowY, nowX) {
+		if (boxInfo.direction === 0) {
+			if (checkIsWallOrBorder(boxInfo.rows - 1, boxInfo.cols)  === false) {
+				arrTd[nowY - 1][nowX].className = "wall";
+			}
+		}
+		else if (boxInfo.direction === 1){
+			if (checkIsWallOrBorder(boxInfo.rows, boxInfo.cols + 1)  === false) {
+				arrTd[nowY][nowX + 1].className = "wall";
+			}
+			
+		}
+		else if (boxInfo.direction === 2){
+			if (checkIsWallOrBorder(boxInfo.rows + 1, boxInfo.cols) === false) {
+				arrTd[nowY + 1][nowX].className = "wall";
+			}
+		}
+		else if (boxInfo.direction === 3){
+			if (checkIsWallOrBorder(boxInfo.rows, boxInfo.cols - 1)  === false) {
+				arrTd[nowY][nowX - 1].className = "wall";
+			}
+		}
+	}
+
+	function checkIsWallOrBorder(rows, cols) {
+		if (0 <= rows && rows <= 9 && 0 <= cols && cols <= 9) {
+			if (arrTd[rows][cols].className == "wall") {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+	}
+
+	function getDirectionAndBruWall (nowY, nowX, str) {
+		if (boxInfo.direction === 0) {
+			if (checkIsWallOrBorder(nowY - 1, nowX) === true) {
+				arrTd[nowY - 1][nowX].style.backgroundColor = str;
+			} 
+		}
+		else if (boxInfo.direction === 1){
+			if (checkIsWallOrBorder(nowY, nowX + 1) === true) {
+				arrTd[nowY][nowX + 1].style.backgroundColor = str;
+			}
+		}
+		else if (boxInfo.direction === 2){
+			if (checkIsWallOrBorder(nowY + 1, nowX) === true) {
+				arrTd[nowY + 1][nowX].style.backgroundColor = str;
+			}
+		}
+		else if (boxInfo.direction === 3){
+			if (checkIsWallOrBorder(nowY, nowX - 1) === true) {
+				arrTd[nowY][nowX - 1].style.backgroundColor = str;
+			}
+		}
+	}
 	//每个按钮的执行语句
 	for (let i = 0; i <= 11; i++) {
 		aBtn[i].onclick = function () {
@@ -351,6 +460,24 @@ window.onload = function () {
 		}
 	}
 
+	/*for (var i = 0, len = aTd.length; i < len; i++) {
+		aTd[i].onrightclick= function () {
+			console.log(1)
+			if (this.className != "wall") {
+				box.style.left = this.offsetLeft + "px";
+				box.style.top = this.offsetTop + "px";
+				boxInfo.rows = box.offsetTop / 50;
+				boxInfo.cols = box.offsetLeft / 50;
+			}
+			return false;
+		}
+	}
+	table.onrightclick = function () {
+		console.log("ta")
+	}*/
+
+
+
 	var run = document.getElementById('run');
 	var index = document.getElementById('index');
 	var commandList = document.getElementById('commandList');
@@ -394,7 +521,7 @@ window.onload = function () {
 
 	//验证单个指令是否合法的正则。
 	function checkCommand(strc) {
-		var commandReg = /^GO\s*\d?\s*$|^TUN LEF\s*\d?$|^TUN RIG\s*\d?$|^TUN BAC\s*\d?$|^MOV TOP\s*\d?\s*$|^MOV RIG\s*\d?\s*$|^MOV BOT\s*\d?\s*$|^MOV LEF\s*\d?\s*$|^TRA TOP\s*\d?\s*$|^TRA RIG\s*\d?\s*$|^TRA BOT\s*\d?\s*$|^TRA LEF\s*\d?\s*$/i
+		var commandReg = /^GO\s*\d?\s*$|^TUN LEF\s*\d?$|^TUN RIG\s*\d?$|^TUN BAC\s*\d?$|^MOV TOP\s*\d?\s*$|^MOV RIG\s*\d?\s*$|^MOV BOT\s*\d?\s*$|^MOV LEF\s*\d?\s*$|^TRA TOP\s*\d?\s*$|^TRA RIG\s*\d?\s*$|^TRA BOT\s*\d?\s*$|^TRA LEF\s*\d?\s*$|^MOVE TO\s*\d\s*,\s*\d\s*\s*$|^BUILD\s*$|^BRU\s*/i
 		if (commandReg.test(strc)) {
 			return true;
 		}
@@ -529,6 +656,18 @@ window.onload = function () {
 						else if (/^TRA LEF/i.test(arr[i])) {
 							boxInfo.move("left", -50 * getUnitLength(arr[i]));
 						}
+						else if (/^MOVE TO\s*\d{0,2}/i.test(arr[i])) {
+							var targetSite = arr[i].match(/\d/g)
+							if (targetSite.length === 2) {
+								boxInfo.moveTo(targetSite[0], targetSite[1])
+							}
+						}
+						else if (/^BUILD/i.test(arr[i])) {
+							getDirectionAndBuildWall(boxInfo.rows, boxInfo.cols);
+						}
+						else if (/^BRU/i.test(arr[i])) {
+							getDirectionAndBruWall(boxInfo.rows, boxInfo.cols, arr[i].slice(3).trim());
+						}
 						i++;
 					}	
 				}
@@ -543,4 +682,4 @@ window.onload = function () {
 
 
 //Q：
-//L81
+//onrightclick事件。

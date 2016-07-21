@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>听指令的小方块（三）</title>
+	<title>听指令的小方块（四）</title>
 	<link rel="stylesheet" type="text/css" href="main.css">
 </head>
 <body>
@@ -48,15 +48,8 @@
 	<button>下移</button>
 	<button>左移</button>
 	<ol style="width: 530px;">
-		<li>之前34的一些bug基本解决了，方法比之前简单多了。真是蠢</li>
-		<li>目前上下左右运动的时候，迅速/连续点击还是有bug。。。</li>
-		<li>目前仅仅支持输入命令,但是没有进行验证提示，错误的命令不会执行而已</li>
-		<li>无法实时只是执行到哪个命令（可以获得当前是执行的第多少个命令，但是无法通过ui展示出来），下一步做到这点</li>
-		<li>感觉上能整合的部分都整合了，写的过程中发现大量代码冗余，懂得用函数复用了。</li>
-		<li>这算是面向对象吗？还是不懂。。。2016/6/26</li>
-		<li>解决动态标识当前执行指令的问题，但是还不懂怎么跟着滚动。等白天了把这个问题看着解决了？2016/6/28</li>
-		<li>。。。scrollTop变化就行。。好蠢。目前基本不会大改了。以后有空的话，可能会增加个时间的选项。决定完成一个命令需要多少时间。2016/6/29</li>
-		<li>写了点发现把36写在35了。目前刚暂时完成了生成墙和墙不可通过的要求。在运动的时候点击。由于之前存储的状态未变，还是可能会出现到“墙”上的bug。（估摸短时间内不会懂去解决） 2016/6/30</li>
+		<li>刚写到随机生成“墙”和墙不可通过的要求。下次写的时候希望可以写出通过指令生成“墙”。和“粉刷墙”的要求。寻路算法还没看。2016/6/30</li>
+		<li>写了指令生成“墙”和“粉刷墙”的要求。但是最近没网。寻路看了点，不能写。最近大多时候都没网，不好找资料看。2016/6/30</li>
 	</ol>
 </div>	
 
@@ -66,41 +59,96 @@
 		<li>1</li>
 	</ol>
 	<textarea id="commandList" spellcheck="false">
-GO
+go 2
 tun lef
-go 2 
+go 2
+build 
+bru red
+tun lef
+go
 tun rig
-go 3
-tun bac 3
-go4
-tra top 3
-go5
-tra 
-tra rig
-go 7
-tra bot
-go8 
-tra lef
-go 6
-mov top 2
-tra bot
-go 3
-mov bot 5
+go 2
+tun rig
+build
+bru rbg(0, 255, 234)
 tun lef
-go2
-tun lef 3
-tra lef 3
-  MOV TOP 5
-TUN LEF 3
-TRA RIG 5
-GO 2
-TUN BAC 
-MOV LEF
-TUN RIG
-GO 0
-MOV BOT 2
-GO 2
-TUN LEF</textarea>
+go
+tun rig
+build
+bru #f60
+tun lef
+go 
+tun rig
+build
+bru red
+tun lef
+go 
+tun rig
+go 2
+tun rig
+build
+bru #123
+tun lef
+go
+tun rig
+build
+bru pink
+tun lef
+go 
+tun rig
+build
+bru #378
+tun lef
+go 
+tun rig
+build 
+bru orange
+tun lef
+go
+tun rig
+build
+bru yellow
+tun lef
+go
+tun rig
+go 2
+tun rig
+build
+bru #987
+tun lef
+go
+tun rig
+build
+bru #123893
+tun lef 
+go
+tun rig
+build
+bru #abc
+tun lef
+go
+tun rig
+go 2
+tun rig
+build
+bru #acd
+tun lef
+go
+tun rig
+build
+bru #999
+tun lef
+go
+tun rig 
+go 2
+tun rig
+build
+bru #765
+tun lef
+go
+tun rig
+build
+bru #a73</textarea>
 	<button id="run">执行</button>
 	<button id="refresh">清空</button>
 	<button id="build">随机建墙</button>

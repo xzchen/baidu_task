@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+	<meta charset="UTF-8">
+	<title>副本</title>
+	<meta http-equiv="X-UA-Compatible" content="IE-Edge">
+	<link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="stylesheet" type="text/css" href="./task002/task002_32/main.css">
+</head>
+<body ng-controller="form" class="container">
+
+<!-- 表单配置区 -->
+<form name="configForm" class="col-lg-3 col-sm-4 a form-inline" role="form"  novalidate="novalidate">
+	<!-- 第一个配置项，选择生成的input控件的类型 -->
+	<fieldset>
+		<legend>表单类型</legend>
+		<div class="form-group form-group-lg ben">
+			<label ng-repeat = "input in inputTypes" class="radio-inline">
+				<input type="radio" ng-model="inputData.type" value="{{input.value}}">{{input.content}}
+			</label>
+		</div>
+	</fieldset>
+
+	<!-- 第二个配置项，选择生成的input控件中label关联的名称及其第一个限制条件（是否必填required） -->
+	<fieldset>
+		<legend>通用选择</legend>
+		<!-- 有输入。出现校验状态成功样式 -->
+		<div ng-show="configForm.label.$valid" class="form-group has-success">
+			<label class="control-label"> 名称：<input type="text" ng-model="inputData.label" ng-required="true" name="label" class="form-control">
+			</label> 
+		</div>
+		<!-- 无输入，不符合规则。出现校验状态失败样式 -->
+		<div ng-show="configForm.label.$invalid" class="form-group has-error">
+			<label class="control-label"> 
+				名称：
+				<input type="text" ng-model="inputData.label" ng-required="true" name="label" class="form-control">
+			</label> 
+		</div>
+		<div class="form-group ben">
+				<label class="radio-inline">
+					<input type="radio" ng-model="inputData.required" ng-value="true">
+					必填
+				</label>
+				<label class="radio-inline">
+					<input type="radio" ng-model="inputData.required" ng-value="false">
+					选填
+				</label>
+			</div>
+	</fieldset>
+
+	<!-- 3.1第三个配置项，选择生成input的第二个限制条件（字符长度），这里开始出现分歧。只有之前的限制条件required为true，并且其类型属于文本、密码、邮箱才需要长度限制条件。这是第一种情况。可以用ng-if来表现-->
+	<!-- 这里如果用ng-show的话就只是隐藏DOM。那么就不能满足对于必填字符串限制范围的条件 -->
+	<fieldset ng-if="inputData.required && (inputData.type === 'text' || inputData.type === 'password' || inputData.type === 'email')">
+		<legend>长度限制</legend>
+		<div ng-show="configForm.minlength.$valid" class="form-group has-success">
+			<label class="control-label">
+				最小：
+				<input type="number" ng-model="inputData.minlength" ng-required="true" class="form-control" name="minlength">
+			</label>
+		</div>	
+		<div ng-show="configForm.minlength.$invalid" class="form-group has-error">
+			<label class="control-label">
+				最小：
+				<input type="number" ng-model="inputData.minlength" ng-required="true" class="form-control" name="minlength">
+			</label>
+		</div>	
+		<div ng-show="configForm.maxlength.$invalid" class="has-error">
+			<label class="control-label">
+				最大：
+				<input type="number"  ng-model="inputData.maxlength" ng-required="true" class="form-control" name=maxlength>
+			</label>
+		</div>
+		<div ng-show="configForm.maxlength.$valid" class="has-success">
+			<label class="control-label">
+				最大：
+				<input type="number"  ng-model="inputData.maxlength" ng-required="true" class="form-control" name=maxlength>
+			</label>
+		</div>
+	</fieldset>
+	
+	<!-- 3.2配置三的第二种情况 -->
+	<fieldset ng-if = "inputData.type === 'checkbox' || inputData.type === 'radio' || inputData.type === 'select'">
+		<legend>可选选项</legend>
+		<!-- 这里为了保证输入选项大于2个。同样加入1个input去伪装验证。。嗯，但是这里验证表单展示区的那个判断是否勾选了checkbox的验证要简单多。 -->
+		<input type="text" ng-required="checkOptionsLength()" ng-model="optionLength" name="options" style="display: none;">
+		<input type="text" ng-model="inputData.currentOption" ng-keyup="addOption()" placeholder="空格/回车添加 至少2个选项" class="form-control">
+		<p ng-class="{'has-success':configForm.options.$valid,'has-error':configForm.options.$invalid}" >
+			<span ng-repeat="option in inputData.options" class="option" ng-click="deleteOption($index)">{{option}}</span>
+		</p>
+	</fieldset>
+	
+	<!-- 第四个配置项，定义需要验证的正则规则 -->
+	<!-- <fieldset>
+		<legend>正则规则</legend>
+		<input type="text" name="pattern" class="form-control" placeholder="请输入正则规则,">
+	</fieldset> -->
+
+	<!-- 提交按钮。根据配置信息取创建input。把每个input放入inputs里面
+	inputs数组里面存储的是所有生成input的数据 -->
+	<input type="button" ng-disabled="configForm.$invalid" ng-click="createInput()" value="提交" class="btn btn-primary">
+</form>
+
+<!-- 表单展示区 -->
+<div ng-show="inputs!=''" class="col-lg-8 a col-lg-offset-1 col-sm-7 col-sm-offset-1 a formShow">
+<!-- 	{{formShow.input0.error}}
+{{formShow.error}} -->
+	<h3 class="text-center text-info">表单展示区</h3>
+	<hr>
+	<form name="formShow" class="form-horizontal" style="">
+		<!-- 循环inputs，根据其创建 -->
+		<div ng-repeat="input in inputs">
+			<!-- 第一种情况。生成的input类型为text/email/password,为了验证。同理只能用ng-if直接删除dom元素不用ng-show -->
+			<div ng-if="input.type === 'text' || input.type === 'password' || input.type === 'email'" ng-class="{'has-success': formShow.{{input.name}}.$valid, 'has-error':formShow.{{input.name}}.$invalid}" class="form-group">
+				
+				<!-- 布局方式。让label和input控件水平排列。form-horizontal+bs栅格系统。label占据3/12 -->
+				<label  class="control-label col-sm-3 has-success" for="{{input.name}}">
+					<i ng-show="input.required" class="glyphicon glyphicon-asterisk"></i> {{input.label}}
+				</label>
+				
+				<!-- input控件占据9/12 -->
+				<div class="col-sm-9">
+					<!-- 1.1第一种情况的分歧一。其为必填项目 -->
+					
+					<!-- 生成的input不是email -->
+					<input ng-if="input.required && input.type != 'email'" name="{{input.name}}" type="{{input.type}}" ng-required="{{input.required}}" ng-minlength="input.minlength" ng-maxlength="{{input.maxlength}}" ng-model="foo"  class="form-control" id="{{input.name}}">
+
+					<!-- 生成的input是email,用个input-group 并且看怎么把email的自定义验证去掉 -->
+					<div ng-if="input.type=='email'" class="input-group">
+						<input ng-if="input.required" name="{{input.name}}" type="{{input.type}}" ng-required="{{input.required}}" ng-minlength="input.minlength" ng-maxlength="{{input.maxlength}}" ng-model="foo"  class="form-control" id="{{input.name}}">
+						<div class="input-group-addon">@163.com</div>
+					</div>
+
+					<!-- //删除1个input项目？看要不要写 -->
+					<!-- <i class="glyphicon glyphicon-minus" style="position: absolute;top:0px; right: -15px; display: inline-block;padding: 10px;" ng-click="deleteInput(input.name)"></i> -->
+
+					<!-- 1.1.1必填项目中校验一，是否填了 -->
+					<p ng-show="formShow.{{input.name}}.$error.required" class="has-error">此项必须填选</p>
+					<!-- 1.1.2必填项目中校验二，是否最小长度等于最大长度限制 -->
+					<p ng-show="input.maxlength == input.minlength && formShow.{{input.name}}.$error.minlength">字符长度必须为{{input.minlength}}位</p>
+					<!-- 1.1.3必填项目中的校验三。是否不符合要求的字符长度限制 -->
+					<p ng-show="(formShow.{{input.name}}.$error.minlength || formShow.{{input.name}}.$error.maxlength) && input.maxlength != input.minlength" class="has-error">字符长度应在{{input.minlength}}-{{input.maxlength}}位</p>
+					<!-- 1.2此项不是必填，那么直接加上成功的样式 -->
+					<input ng-hide="input.required" name="{{input.name}}" type="{{input.type}}" class="form-control has-success"> 
+				</div>
+			</div>
+
+			<!-- 第二种情况，生成的input类型是checkbox/radio/select -->
+			<div ng-if="input.type !== 'text' && input.type !== 'password' && input.type !== 'email'" ng-class="{'has-success': formShow.{{input.name}}.$valid, 'has-error': formShow.{{input.name}}.$invalid}" class="form-group">	
+				<!-- 设置个不显示的input，让其弥补checkbox/raido等required不好验证的问题。-->
+				<input ng-show="input.required" name="{{input.name}}" type="text" ng-required="checkOptionsValidity(input.name)" ng-model="checkOption" style="display: none;">
+				<label  class="control-label col-sm-3">
+					<i ng-show="input.required" style="" class="glyphicon glyphicon-asterisk"></i> {{input.label}}
+				</label>
+				<div class="col-sm-9">
+					<!-- 然后我们去循环这个input（inputs数组里的一项数据），根据这项数据的options集合去生成单个选择标签checkbox/raido。 -->
+					<label ng-repeat="option in input.options" ng-class="{'input-fail':formShow.{{input.name}}.$invalid, 'input-success':formShow.{{input.name}}.$valid}" class="{{input.type}}-inline">
+						{{option.value}}
+						<!-- 第二种情况的验证，把此次伪装的input序号（input.name）传入。根据其来决定在inputs中的序号-->
+						<input  type="{{input.type}}" ng-click="changeOptionsStatus($index, input.name)"   ng-checked="{{option.checked}}"  value="{{option.value}}" name="input-option">
+					</label>
+					
+					<!-- 提示信息，需要验证的时候且不符合规则才提示-->
+					<p ng-show="{{input.required}} && formShow.{{input.name}}.$invalid">请至少输入一项</p>
+				</div>	
+			</div>
+		</div>
+		<input type="submit" ng-disabled="formShow.$invalid" class="btn btn-primary center-block">
+	</form>
+</div>
+<script src="http://cdn.bootcss.com/angular.js/1.5.8/angular.min.js"></script>
+<script src="./task002/task002_32/main(2).js"></script>
+</body>
+</html>

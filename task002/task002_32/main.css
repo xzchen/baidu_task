@@ -1,0 +1,90 @@
+@charset "utf-8";
+body {
+	color: #15241c;
+	margin-top: 15px;
+}
+
+.a {
+ background-color: #b7ae9d;
+ box-shadow: 4px 3px 1px #ccc, -5px -5px 20px #ccc;
+}
+
+legend {
+	border-bottom:2px solid #ccc;
+}
+
+.form-inline .form-group {
+	margin-bottom: 20px;
+}
+/*因为.radio-inline+.radio-inline {margin-left: 10px}, 所以给第个一radio-inline加个margin-left去对齐*/
+.ben > label:first-child{
+	margin-left: 10px;
+}
+ 
+.ben > label {
+	margin-left: 25px;
+	width: 40%;
+}
+
+label {
+	display: block;
+	font-weight: 400;
+}
+
+/*仿照表单校验状态样式*/
+.has-success {
+	border-color:#3c763d;
+	color: #3c763d;
+}
+.has-error {
+	color: #a94442;
+	border-color:#a94442;
+}
+
+fieldset  span {
+	display: inline-block;
+	padding: 10px;
+	margin:10px 10px 10px 0;
+	font-size: 20px;
+	font-weight: 700;
+	background-color: #fff;
+}
+
+
+.formShow input[type=checkbox], 
+.formShow input[type=radio] {
+	margin:-15px 0 0 -15px;
+}
+
+/* @charset "utf-8";
+#container {
+	background-color: #ccc;
+}
+
+input {
+	outline: none;
+}
+.input-success {
+	border:1px solid green;
+	color: green;
+}
+
+.input-fail {
+	border:1px solid red;
+	color:red;
+}
+
+.option {
+	display: inline-block;
+	padding: 10px;
+	margin: 5px;
+	background-color: darkgreen;
+}
+
+i {
+	
+
+	font-size: 20px;
+	font:"Microsoft YaHei";
+	color: red;
+} */

@@ -1,0 +1,143 @@
+html, body {
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	margin:20px 50px;
+	min-width: 786px;
+}
+
+table, div, ol, table, tbody, tr, td, textarea, ul, li {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+/*左侧table界面，包括按钮执行操作*/
+#table-panel {
+	float: left;
+	position: relative;
+}
+#table-panel ol li{
+	float: left;
+	width: 50px;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	list-style: none;
+}
+.table-col {
+	position: relative;
+	left: 50px;
+	width: 500px;
+	height: 50px;
+	border-bottom: 1px solid #ccc;
+}
+.table-row {
+	float: left;
+	width: 50px;
+	height: 500px;
+	border-right: 1px solid #ccc;
+}
+
+table {
+	border-collapse: collapse;
+}
+tr {
+	float: left; /* tr竖排。方便我们习惯上定义的(x,y)坐标。不然易变为(y,x)坐标*/
+}
+td {
+	display: block;   /*这个block去掉与否td会发生变化，不懂为何*/
+	width: 50px;
+	height: 50px;
+	border-width: 0 1px 1px 0;
+	border-style: solid;
+	border-color: #ccc;
+}
+
+/*我们要执行指令的方块的样式*/
+#box {
+	position: absolute;
+	width: 50px;
+	height: 50px;
+	background-color: blue;
+}
+
+.box-head {
+	width: 100%;
+	height: 15px;
+	background-color: red;
+}
+
+/*右侧指令面板。可供用户输入指令。*/
+#command-panel {
+	position: relative;
+	top: 20px;
+	margin-left: 600px;
+	width: 400px;
+	height: 530px;
+
+}
+#command-panel ol {
+	position: absolute;
+	height: 100%;
+	width: 30px;
+	line-height: 20px;
+	text-align: center;
+	background-color: #313335;
+	color: #888;
+	overflow: hidden;
+}
+
+.wrong {
+	background-color: red;
+}
+.active {
+	background-color: lightgreen;
+}
+.wall {
+	background-color: lightgray;
+}
+#command-panel textarea {
+	position: relative;
+	width: 300px;
+	left: 30px;
+	height: 100%;
+	border: 0;
+	outline: none;
+	background-color: #818383;
+	resize: none;
+	font-size: 16px;
+	line-height: 20px;
+	padding: 0px 5px;
+}
+
+.command-button {
+	width: 550px;
+	padding-left: 50px;
+	display: block;
+}
+button {
+	margin-top: 10px;
+}
+input {
+	text-indent: 3px;
+	margin-top: 10px;
+}
+
+.tips {
+	width: 80%;
+	min-width: 800px;
+	margin-top: 20px;
+	margin-left: 50px;
+	padding-left: 30px;
+	padding-right: 50px;
+	border: 5px dashed red;
+}
+
+
+
+

@@ -5,8 +5,9 @@ body {
 }
 
 .a {
- background-color: #b7ae9d;
- box-shadow: 4px 3px 1px #ccc, -5px -5px 20px #ccc;
+	padding: 15px;
+	background-color: #b7ae9d;
+	box-shadow: 4px 3px 1px #ccc, -5px -5px 20px #ccc;
 }
 
 legend {

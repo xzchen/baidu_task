@@ -65,13 +65,13 @@
 				<input type="number" ng-model="inputData.minlength" ng-required="true" class="form-control" name="minlength">
 			</label>
 		</div>	
-		<div ng-show="configForm.maxlength.$invalid" class="has-error">
+		<div ng-show="configForm.maxlength.$invalid" class="form-group has-error">
 			<label class="control-label">
 				最大：
 				<input type="number"  ng-model="inputData.maxlength" ng-required="true" class="form-control" name=maxlength>
 			</label>
 		</div>
-		<div ng-show="configForm.maxlength.$valid" class="has-success">
+		<div ng-show="configForm.maxlength.$valid" class="form-group has-success">
 			<label class="control-label">
 				最大：
 				<input type="number"  ng-model="inputData.maxlength" ng-required="true" class="form-control" name=maxlength>
@@ -98,7 +98,9 @@
 
 	<!-- 提交按钮。根据配置信息取创建input。把每个input放入inputs里面
 	inputs数组里面存储的是所有生成input的数据 -->
-	<input type="button" ng-disabled="configForm.$invalid" ng-click="createInput()" value="提交" class="btn btn-primary">
+	
+	<button type="submit" ng-disabled="configForm.$invalid" ng-click="createInput()" class="btn btn-primary btn-block">提交</button>
+	
 </form>
 
 <!-- 表单展示区 -->
@@ -165,7 +167,8 @@
 				</div>	
 			</div>
 		</div>
-		<input type="submit" ng-disabled="formShow.$invalid" class="btn btn-primary center-block">
+		
+		<button type="submit" ng-disabled="formShow.$invalid" class="btn btn-primary btn-block">提交</button>
 	</form>
 </div>
 <script src="http://cdn.bootcss.com/angular.js/1.5.8/angular.min.js"></script>

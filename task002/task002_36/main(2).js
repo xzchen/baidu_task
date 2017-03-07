@@ -256,8 +256,12 @@ function getPathResult(startX, startY, endX, endY) {
 
 //限制运动时间的文本框只让输入数字
 document.getElementById('time').onkeyup = function () {
-	this.value = this.value.replace(/\D/,"")
+	this.value = this.value.replace(/\D|[\b]/g,"")
 }
+document.getElementById('time').onblur = function () {
+	this.value = this.value.replace(/\D|[\b]/g,"")
+}
+
 
 window.onload = function () {
 	var box = document.getElementById('box');
@@ -671,24 +675,29 @@ window.onload = function () {
 	window.onkeydown = function (ev) {
 		ev = ev || window.event;
 		keyCode = ev.keyCode || ev.which || ev.charCode;
-		ev.preventDefault()
 		if (moveFlag || rotateFlag || moveToFlag) {
+			ev.preventDefault()
 			return;
 		}
 		if (keyCode === 37) {
 			arrCmd[7].onclick();
+			ev.preventDefault()
 		}
 		else if (keyCode === 38) {
 			arrCmd[4].onclick();
+			ev.preventDefault()
 		}
 		else if (keyCode === 39) {
 			arrCmd[5].onclick();
+			ev.preventDefault()
 		}
 		else if (keyCode === 40) {
 			arrCmd[6].onclick();
+			ev.preventDefault()
 		}
 		else if (keyCode === 32 || keyCode === 13) {
 			buildWall();
+			ev.preventDefault()
 		}
 	}
 }

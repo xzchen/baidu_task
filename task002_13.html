@@ -24,6 +24,9 @@
                 btn.attachEvent("click",spanChange)
             }
 
+            document.getElementById('text').onkeyup = function () {
+                this.value = this.value.replace(/\D+/g,"");
+            };
             function spanChange() {
                 // 判断是否输入值为空，trim()方法可以去掉两边的空格
                 if (document.getElementById("text").value.trim() == "") {

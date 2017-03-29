@@ -1,0 +1,47 @@
+html, body {
+	width: 100%;
+	height: 100%;
+}
+
+div {
+	position: relative; 
+	width: 100%;
+	height: 600px;
+}
+
+.image {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+.width0 {
+	-webkit-clip-path: polygon(0% 0%, 66.7% 0%, 33.3% 100%, 0% 100%);
+	clip-path: polygon(0% 0%, 66.7% 0%, 33.3% 100%, 0% 100%);
+}
+
+.width1 {
+	-webkit-clip-path: polygon(66.7% 0%, 100% 0%, 100% 100%, 33.3% 100%);
+	clip-path: polygon(66.7% 0%, 100% 0%, 100% 100%, 33.3% 100%);
+}
+/* .try {
+	background-image: url(../../../game.png);
+	width: 300px;
+	height: 300px;
+
+	background-size: cover;
+	transition:2s ;
+	-webkit-clip-path: circle(180px at 128px 95px);
+    clip-path: circle(180px at 128px 95px);
+	
+	 -webkit-clip-path: polygon(0% 50%, 50% 0%, 100% 50%);
+	clip-path: polygon(0% 50%, 50% 0%, 100% 50%); 
+	
+}
+
+.try:hover {
+	-webkit-clip-path: circle(95px at 128px 95px);
+	    clip-path: circle(95px at 128px 95px);
+     -webkit-clip-path: polygon(100% 0%, 100% 100%, 0% 50%);
+	clip-path: polygon(0% 0%, 50% 0%, 100% 100%); 
+} */

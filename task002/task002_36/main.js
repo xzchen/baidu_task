@@ -1,685 +1,705 @@
-//生成我们需要的格子空间
-!function () {                    
-	//用字符串（数组）代替不必要的DOM操作。
-	var tbody = document.getElementById('tbody');
-	var table = [];
-	var tableStr = "<tr>";
-	var tr = [];
-	var trStr = "";
-
-	for (let i = 0; i < 10; i++) {
-		trStr += "<td></td>"
-	}
-	for (let i = 0; i < 10; i++) {
-		table.push(trStr);
-	}
-	tableStr += table.join("</tr><tr>") + "</tr>";
-	tbody.innerHTML = tableStr;
-}()
-
-//生成我们要操作的的小方块并随机产生位置
+//生成table
 !function () {
-	var table = document.getElementById('table');
-	table.innerHTML += "<div id = 'box' class = 'box'><div class='tHead'></div>ben<div class='tBody'></div></div>";
-	var box = document.getElementById('box');
-	/*box.style.top = Math.floor(Math.random()*10)*50 + "px";
-	box.style.left = Math.floor(Math.random()*10)*50 + "px";*/
-	box.style.top = 450 + "px";
-	box.style.left = 450 + "px";
+	var tablePanel = document.getElementById('table-panel');
+	var arrOl = tablePanel.getElementsByTagName('ol');
+	for (var i = 0; i < arrOl.length; i++) {
+		for (var j = 0; j < 10; j++) {
+			arrOl[i].innerHTML += "<li>" + (j+1) + "</li>";
+		}
+	}
+	var tbody = document.createElement("tbody");
+	var tbodyInnerHTML = "";
+	var tbodyArr = [];
+	for (var i = 0; i < 10; i++) {
+		tbodyInnerHTML += "<td></td>";
+	}
+	for (var i = 0; i < 10; i++) {
+		tbodyArr.push(tbodyInnerHTML);
+	}
+	tbodyInnerHTML = "";
+	tbodyInnerHTML += "<tr>" + tbodyArr.join("</tr><tr>") + "</tr>";
+	tbody.innerHTML = tbodyInnerHTML;
+	var body = document.getElementsByTagName('table')[0];
+	body.appendChild(tbody)
 }()
 
-//根据命令后面跟的数字决定移动多少距离，这里的long是得到是几个单位长度（一个Td格子的边长）
-function getUnitLength(str) {
-	var long = str.match(/\d/);
-	if (long == null) {
-		long = 1;
-	}
-	return long;
-}
+//生成我们要操作的小方块并进行定位
+!function () {
+	var box = document.createElement("div");
+	box.innerHTML = "<div class='box-head'></div>";
+	box.id = "box";
+	//因为序号也占据了空间。所以坐标+1。
+	box.style.top = Math.floor(Math.random()*10+1)*50 + "px";
+	box.style.left = Math.floor(Math.random()*10+1)*50 + "px";
+	document.getElementsByTagName('table')[0].appendChild(box);
+}()
 
-window.onload = function () {
-	var box = document.getElementById("box");
-	var table = document.getElementById('table');
-	var aTd = document.getElementsByTagName('td');  //所有的指令按钮（不包括命令面板的）
-	var aBtn = document.getElementsByTagName('button');
-	var moveFlag = true;	//给文本框的执行来判断是否在执行命令中。如果为true就代表可以执行下一个命令
-	var rotateFlag = true;   //同上，判断是否在进行旋转操作
-	var moveTimer = null;	//移动函数的定时器
-	var rotateTimer = null;	//旋转函数的定时器
-	var count = 0;
-	var arrTd = [];			//把Td用二维数组表示，这样方便定位。如arrTd[3][5]。表示第3行，第5列（从0行0列开始起）
-	for (let i = 0; i < 10; i++) {
+//获取所有td格子。让我们方便操作。给并给所有td格子加点击事件。
+function getArrTd() {
+	var boxLength = document.getElementById('box').offsetWidth;
+	var arrTd = [];
+
+	for (var i = 1; i <= 10; i++) {
 		arrTd[i] = [];
+		arrTd[i].push("");
 	}
-	for (let i = 0; i < 10; i++) {
-		for (let j = 0; j < 10; j++) {
-			arrTd[i].push(aTd[count]);
-			count++
-		}
-	}
-
-	//用一个对象来存储跟这个方块盒子相关的信息
-	var boxInfo = {            
-		direction: 0,          //定义方块盒子当前的方向 0-3分别为上右下左
-		angle: 0,             //定义方块盒子当前的旋转角度
-		rows: box.offsetTop / 50,   //定义方块盒子当前所处的行（从0起）
-		cols: box.offsetLeft / 50,	//定义方块盒子当前所处的列（从0起）
-		/**
-		 * move方法定义这个小方块怎么运动，朝哪个方向运动，运动距离是多少
-		 * @param  {[string]} direction [决定了运动的方向，是上下还是左右]
-		 * @param  {[number} long      [决定了运动的距离，根据正负来判断是下（右）还是上（左）]
-		 * .....写到现在发现这个move方法好长。。。感觉不太好。没有注释都无法重新理解意思了。看看改时间要不把提出单独的函数来
-		 */
-		move: function (direction, long) {
-			clearInterval(moveTimer)
-			//简单写了下解决当未完成一个move运动时候继续点击导致位置不到正确边界的bug，不好用。效果很突兀，但是又不想写两个定时器。把上下和左右的分开。
-			if (direction == "top") {
-				box.style.left = Math.round(box.offsetLeft / 50) * 50 + "px";
-			}
-			if (direction == "left") {
-				box.style.top = Math.round(box.offsetTop / 50) * 50 + "px";
-			}
-
-			speed = long / 50;
-			var startPos = direction == "top" ? box.offsetTop : box.offsetLeft;
-			//保证任意时候点击指令按钮时都是以当前td边界的位置作为起始值来计算目标值的。
-			if (long < 0) {
-				startPos = Math.ceil(startPos / 50) * 50;
-			}
-			else {
-				startPos = Math.floor(startPos / 50) * 50;
-			}
-			var target = startPos + long;        //设定要到达的目标位置
-			//如果第一次移动后的位置会超过边界，就不去移动，直接判断这次运动完成
-			//（满足是否去运动的条件。判断是否有障碍（墙/边界） 或许可以写个函数。但是这样就要区分是上下还是左右运动）
-			if ( (startPos + speed) >= 0 && (startPos + speed) <= 450) {
-				moveFlag = false;	//表示正处于一个运动状态（旋转）。
-				let index;   //存放我们要去测试我们将会移动到的TD格子的序号。如果是上下，则记录的是行数。左右记录列数。
-				//上下移动的情况。根据speed正负值判断是上还是下。另外处于上下移动的时候，我们的小方块所在的列数就不会变化。
-				if (direction == "top") {
-					if (speed < 0) {   //代表向上
-						index = boxInfo.rows - 1;  //设定了index的初始检验值。
-					}
-					else {
-						index = boxInfo.rows + 1;
-					}
-					//判断将会移动到的下一个td格子是否是“墙”，是则退出move这个函数。并且告知commandTimer判定这个指令完成了。
-					if (arrTd[index][boxInfo.cols].className == "wall") {
-						moveFlag = true;
-						return false;
-					}
-
-					//如果当前的位置不能再加上N个speed后刚好到达目标target的位置。就把当前的位置改变下。
-					box.style.top = target - Math.round( (target - box.offsetTop) / speed) * speed + "px";
-					box.style.top = box.offsetTop + speed + "px";	
-					moveTimer = setInterval(function () {
-						// 到达0/450的边界情况的处理。提前停止
-						if (box.offsetTop === target || box.offsetTop <= 0 || box.offsetTop >= 450) {
-							clearInterval(moveTimer)    //clearInterval(moveTimer) 和 moveTimver = null 为什么结果不一样?
-							if (box.offsetTop != 0) {
-								if (box.offsetTop >= 450) {
-									box.style.top = 450 + "px";
-								}
-								else if (box.offsetTop <= 0) {
-									box.style.top = 0 + "px";
-								}
-							}
-							boxInfo.rows = box.offsetTop / 50;
-							moveFlag = true; //当前运动（旋转）完成后将flag定义为true，证明可以进行下一步操作了。
-						}
-						else {
-							box.style.top = box.offsetTop + speed + "px";
-							//判断是否下一个TD格子是否是墙障碍。不能用 box.offsetTop % 50 == 0来判断，这样当步长不能不能被50的倍数整除时就不会满足条件
-							if (Math.abs(Math.round(box.offsetTop / 50) * 50 - box.offsetTop) < Math.abs(speed)) {
-								boxInfo.rows = Math.round(box.offsetTop / 50);  //把小方块格子的所处的行重新赋值一下
-								//因为boxInfo.cols在上下运动时不会改变，每次只是改变的boxInfo.rows。所以只是每次运动到TD格子边界都是td的序号格子加减10。有点小问题。虽然每次，但是如果在运动中途点击改变了位置。index位置就会发生错乱
-								if (speed < 0) {
-									index = boxInfo.rows - 1;
-								}
-								else {
-									index = boxInfo.rows + 1;
-								}
-								//为了防止超过aTd的下标之后报错
-								if (0 <= index && index <= 9) {
-									if (arrTd[index][boxInfo.cols].className == "wall") {
-										clearInterval(moveTimer);
-										box.style.top = boxInfo.rows * 50 + "px";  //当是因为步长不能被50的倍数整除时就停止了运动后其位置能回到正确的格子边界
-										moveFlag = true;
-									}
-								}
-							} 
-						}
-					}, 25)
-				}
-				else if (direction == "left") { 
-					if (speed < 0) {   //代表向左
-						index = boxInfo.cols - 1;
-					}
-					else {
-						index = boxInfo.cols + 1;
-					}
-					//判断在移动的时候是否遇到墙的阻碍，是则退出move这个函数。并且告知commandTimer判定这个指令完成了。
-					if (arrTd[boxInfo.rows][index].className == "wall") {
-						moveFlag = true;
-						return false;
-					}
-					box.style.left = target - Math.round( (target - box.offsetLeft) / speed) * speed + "px";
-					box.style.left = box.offsetLeft + speed + "px";
-					
-					moveTimer = setInterval(function () {
-						if (box.offsetLeft === target || box.offsetLeft <= 0 || box.offsetLeft >= 450) {
-							clearInterval(moveTimer)   
-							if (box.offsetLeft != 0) {
-								if (box.offsetLeft >= 450) {
-									box.style.left = 450 + "px";
-								}
-								else if (box.offsetLeft <= 0) {
-									box.style.left = 0 + "px";
-								}
-							}
-							boxInfo.cols = box.offsetLeft / 50;
-							moveFlag = true;
-						}
-						else {
-							box.style.left = box.offsetLeft + speed + "px";
-							if (Math.abs(Math.round(box.offsetLeft / 50) * 50 - box.offsetLeft) < Math.abs(speed)) {
-								boxInfo.cols = Math.round(box.offsetLeft / 50);  //把小方块格子的所处的行重新赋值一下
-								if (speed < 0) {
-									index = boxInfo.cols - 1;
-								}
-								else {
-									index = boxInfo.cols + 1;
-								}
-								if (0 <= index && index <= 99) {
-									if (arrTd[boxInfo.rows][index].className == "wall") {
-										clearInterval(moveTimer);
-										box.style.left = boxInfo.cols * 50 + "px";  //当是因为步长不能被50的倍数整除时就停止了运动后其位置能回到正确的格子边界
-										moveFlag = true;
-									}
-								}
-							} 
-						}
-					}, 25)
+	var allTd = document.getElementsByTagName('table')[0].getElementsByTagName('td');
+	for (var i = 1; i <= 10; i++) {
+		for (var j = 1; j <= 10; j++) {
+			//保证td序号符合我们常规认知。（1-10而非0-9);
+			arrTd[i].push(allTd[i*10+j-11])
+			arrTd[i][j].x = i;
+			arrTd[i][j].y = j;
+			//左击就把盒子瞬移到某个不为墙的格子
+			arrTd[i][j].onclick = function (ev) {
+				if (arrTd[this.x][this.y].className != "wall") {
+					box.x = this.x;
+					box.y = this.y;
+					box.style.left = box.x * boxLength + "px";
+					box.style.top = this.y * boxLength + "px";
 				}
 			}
-		},
-
-		/**
-	 	* 控制旋转的函数，并根据最后的旋转结果确定方向,这里根据上个任务重新写了下。简单了点。目标要达到的旋转角度可以通过culculateNeedAngle函数得出
-	 	* @param  {[type]} angle [提供我们所需要在原本的基础上还需旋转的角度]
-	 	*/
-		rotate: function(angle=90) {
-			rotateFlag = false;
-			clearInterval(rotateTimer)
-			boxInfo.angle = +box.style.transform.match(/-?\d+/);   //获取当前盒子的angle值
-			var speed = angle / 90;    //根据提供的旋转角度angle参数来计算单次的步长。
-			var endAngle;			//结束的旋转角度值
-			//保证随时点击的时候，都能得到正确的结束angle值（endAngle % 90 = 0）
-			if (angle != 0) {
-				if (angle > 0) {
-					endAngle = Math.floor(boxInfo.angle / 90) * 90 + angle;
-				}
-				else {
-					endAngle = Math.ceil(boxInfo.angle / 90) * 90 + angle;
-				}
-				rotateTimer = setInterval(function() {
-					if ( Math.abs(endAngle - boxInfo.angle) < Math.abs(speed) ) {
-						clearInterval(rotateTimer);
-						//旋转运动完成确认当前方块盒子的方向
-						boxInfo.angle = boxInfo.angle >= 360 ? boxInfo.angle - 360 : boxInfo.angle;
-						boxInfo.angle = boxInfo.angle < 0 ? boxInfo.angle + 360 : boxInfo.angle;
-						boxInfo.direction = boxInfo.angle / 90;
-						box.style.transform = "rotate(" + boxInfo.angle + "deg)"
-						rotateFlag = true;  //代表旋转操作的完成
-					}
-					else {
-						boxInfo.angle += speed;
-						box.style.transform = "rotate(" + boxInfo.angle +"deg)" 
-					}
-				},6)
-			}
-			else {
-				rotateFlag = true;
-			}
-			
-		},
-
-		/*moveTo: function (x, y) {
-			console.log(x + "," + y);
-			var openList = [];
-			var closeList = [];
-			closeList.push(arrTd[boxInfo.rows][boxInfo.cols])
-			// openList.push(arrTd[boxInfo.rows - 1][boxInfo.cols])
-			var g = 1;
-			var nowRows = boxInfo.rows;
-			var nowCols = boxInfo.cols;
-			judgeIsOpenListandCountSocre(g, nowRows - 1, nowCols, openList)
-			judgeIsOpenListandCountSocre(g, nowRows, nowCols + 1, openList)
-			judgeIsOpenListandCountSocre(g, nowRows + 1, nowCols, openList)
-			judgeIsOpenListandCountSocre(g, nowRows, nowCols - 1, openList)
-			console.log(openList)
-			for (let i = 0; i < openList.length; i++) {
-				console.log(openList[i].fScore + "i")
-			}
-			for (let i = 0; i < openList.length - 1; i++) {
-
-				if (openList[i].fScore < openList[i + 1].fScore) {
-					var temp = openList[i].fScore;
-					openList[i].fScore = openList[i + 1].fScore;
-					openList[i + 1].fScore = temp;
-				}
-			}
-			for (let i = 0; i < openList.length; i++) {
-				console.log(openList[i].fScore + "i")
-			}
-			//添加分值最小最近的那个作为下一个起点
-			closeList.closeList[openList[0]];
-		}*/
-	}
-
-	function judgeIsOpenListandCountSocre(g, rows, cols, openList) {
-		if ( 0 <= rows && 0 <= cols && rows <= 9 && cols <= 9 && arrTd[rows][cols].className != "wall") {
-			openList.push(arrTd[rows][cols]);
-			let h = Math.abs(3 - rows) + Math.abs(6 - cols)
-			arrTd[rows][cols].fScore = g + h;
-		}
-	}
-
-	//执行“前进”命令时，根据当前盒子方向去执行boxInfo的move方法。
-	function getDirectionAndGo(long=50) {
-		if (boxInfo.direction === 0 || boxInfo.direction === 3) {
-			long = -long;        //默认long为正值。如果当前盒子头部处于上或者左，则移动矢量为负值。负方向。
-		}
-		if (boxInfo.direction === 0 || boxInfo.direction === 2) {
-			boxInfo.move("top", long);   //上下方向
-		}
-		else if (boxInfo.direction === 1 || boxInfo.direction === 3) {
-			boxInfo.move("left", long)
-		}	
-	}
-
-	function getDirectionAndBuildWall(nowY, nowX) {
-		if (boxInfo.direction === 0) {
-			if (checkIsWallOrBorder(boxInfo.rows - 1, boxInfo.cols)  === false) {
-				arrTd[nowY - 1][nowX].className = "wall";
-			}
-		}
-		else if (boxInfo.direction === 1){
-			if (checkIsWallOrBorder(boxInfo.rows, boxInfo.cols + 1)  === false) {
-				arrTd[nowY][nowX + 1].className = "wall";
-			}
-			
-		}
-		else if (boxInfo.direction === 2){
-			if (checkIsWallOrBorder(boxInfo.rows + 1, boxInfo.cols) === false) {
-				arrTd[nowY + 1][nowX].className = "wall";
-			}
-		}
-		else if (boxInfo.direction === 3){
-			if (checkIsWallOrBorder(boxInfo.rows, boxInfo.cols - 1)  === false) {
-				arrTd[nowY][nowX - 1].className = "wall";
-			}
-		}
-	}
-
-	function checkIsWallOrBorder(rows, cols) {
-		if (0 <= rows && rows <= 9 && 0 <= cols && cols <= 9) {
-			if (arrTd[rows][cols].className == "wall") {
-				return true;
-			}
-			else {
+			//右击就去掉墙
+			arrTd[i][j].oncontextmenu = function (ev) {
+				this.className = "";
+				this.style.background = "#fff";
+				this.style.borderColor = "#ccc";			
 				return false;
 			}
 		}
 	}
+	return arrTd;
+}
+var arrTd = getArrTd();  //获取所有可以操作的td格子
+var table = document.getElementsByTagName('table')[0];
 
-	function getDirectionAndBruWall (nowY, nowX, str) {
-		if (boxInfo.direction === 0) {
-			if (checkIsWallOrBorder(nowY - 1, nowX) === true) {
-				arrTd[nowY - 1][nowX].style.backgroundColor = str;
-			} 
+//处理用户输入指令的前后空格。为了兼容，写个trim函数。原生的trimIE9+才有。
+function trim(str) {
+	str = String(str);
+	return str.replace(/(^\s*)|(\s*$)/g,"");
+}
+
+/**
+ * 根据用户textarea文本域内输入的指令去渲染出指令序号来。并且判断是否有不符合要求的指令。如果有，就不能够去执行文本域内的所有指令。
+ * @param  {[object]}  cmdText  		[用户输入指令的文本域]
+ * @param  {[object]}  cmdIndex 		[操作ol的innerHTML来渲染出指令序号]
+ * @return {[object]}  cmd  [包含2个属性。validity:boolean类型 是否有不合法的指令，有则值为false。list，将所有的指令都去掉了前后空格返回，方便之后的正则判断]
+ */
+function renderIndexAndCheckValidity(cmdText, cmdIndex) {
+	var cmdValidity = true; 
+	var cmdList = cmdText.value.split(/\n|\r/); 
+	var cmdIndexText = "";
+	
+	var cmdReg = /^Go\s*\d?$|^TUN LEF\s*\d?$|^TUN RIG\s*\d?$|^TUN BAC\s*\d?$|^MOV TOP\s*\d?$|^MOV RIG\s*\d?$|^MOV BOT\s*\d?$|^MOV LEF\s*\d?$|^TRA TOP\s*\d?$|^TRA RIG\s*\d?$|^TRA BOT\s*\d?$|^TRA LEF\s*\d?$|^BUILD$|^BRU\s+|^MOVE TO\s*(\[|\(|（)?\s?([1-9]|10)\s?(,|，|\s)\s?([1-9]|10)\s?(\]|\))?$/i;
+	for (var i in cmdList) {
+		cmdList[i] = trim(cmdList[i])
+		if (cmdReg.test(cmdList[i])) {
+			cmdIndexText += "<li>" + (+i+1) + "</li>"  
 		}
-		else if (boxInfo.direction === 1){
-			if (checkIsWallOrBorder(nowY, nowX + 1) === true) {
-				arrTd[nowY][nowX + 1].style.backgroundColor = str;
-			}
-		}
-		else if (boxInfo.direction === 2){
-			if (checkIsWallOrBorder(nowY + 1, nowX) === true) {
-				arrTd[nowY + 1][nowX].style.backgroundColor = str;
-			}
-		}
-		else if (boxInfo.direction === 3){
-			if (checkIsWallOrBorder(nowY, nowX - 1) === true) {
-				arrTd[nowY][nowX - 1].style.backgroundColor = str;
-			}
+		else {
+			cmdIndexText += '<li class="wrong">' + (+i+1) + "</li>"; //不合法的指令标志出来
+			cmdValidity = false;
 		}
 	}
-	//每个按钮的执行语句
-	for (let i = 0; i <= 11; i++) {
-		aBtn[i].onclick = function () {
-			switch (i) {
-				case 0: {
-					getDirectionAndGo();
-					break;
-				}
-				case 1: {
-					boxInfo.rotate(-90);
-					break;
-				}
-				case 2: {
-					boxInfo.rotate(90);
-					break;
-				}
-				case 3: {
-					boxInfo.rotate(180)
-					break;
-				}					
-				case 4: {
-					boxInfo.rotate(culculateNeedAngle(0))
-					boxInfo.move("top", -50)
-					break;
-				}
-				case 5: {
-					boxInfo.rotate(culculateNeedAngle(90))
-					boxInfo.move("left", 50)
-					break;
-				}
-				case 6: {
-					boxInfo.rotate(culculateNeedAngle(180))
-					boxInfo.move("top", 50)
-					break;
-				}
-				case 7: {
-					boxInfo.rotate(culculateNeedAngle(270))
-					boxInfo.move("left", -50)
-					break;
-				}
-				case 8: {
-					boxInfo.move("top", -50)
-					break;
-				}
-				case 9: {
-					boxInfo.move("left", 50)
-					break;
-				}
-				case 10: {
-					boxInfo.move("top", 50)
-					break;
-				}
-				case 11: {
-					boxInfo.move("left", -50)
-					break;
-				}
+	cmdIndex.innerHTML = cmdIndexText;
+	return cmd = {
+		validity:cmdValidity,
+		list:cmdList
+	};
+}
+
+//建墙指令
+function buildWall() {
+	switch(box.direction) {
+		case 1: 
+			if (box.y > 1) {
+				arrTd[box.x][box.y-1].className = "wall";
 			}
-		}
+			break;
+		case 2:
+			if (box.x < 10) {
+				arrTd[box.x+1][box.y].className = "wall";
+			}
+			break;
+		case 3:
+			if (box.y < 10) {
+				arrTd[box.x][box.y+1].className = "wall";
+			}
+			break;
+		case 4:
+			if (box.x > 1) {
+				arrTd[box.x-1][box.y].className = "wall";
+			}
+			break;
 	}
 	
+}
 
-	//键盘上下左右/WASD控制移动
-	window.onkeydown = function (ev) {
-		ev = event || window.event;
-		var keyCode = ev.keyCode || ev.which;
-		switch (keyCode) {
-			case 37:
-				aBtn[1].onclick();
-				break;
-			case 38:
-				aBtn[0].onclick();
-				break;
-			case 39:
-				aBtn[2].onclick();
-				break;
-			case 40:
-				aBtn[3].onclick();
-				break;
-			case 87:
-				aBtn[4].onclick();
-				break;
-			case 68:
-				aBtn[5].onclick();
-				break;
-			case 83:
-				aBtn[6].onclick();
-				break;
-			case 65:
-				aBtn[7].onclick();
-				break;
+/**
+ * 判断我们需要粉刷（bru指令）为墙的td格子的时候判断box小方块的下个格子是否是墙。是的话返回要粉刷的td格子的坐标值
+ * @param  {[number]}  direction [当前小方块的方向。根据它来决定下1个格子。若是上。则y坐标-1。类推]
+ * @param  {[number]}  x         [当前小方块的x坐标]
+ * @param  {[number]}  y         [当前小方块的x坐标]
+ * @return {Object}           [返回的x属性:要粉刷的格子的x坐标。y同理。如果不是墙。return false]
+ */
+function isWall(direction, x, y) {
+	if (direction === 1 && y>1 && arrTd[x][y-1].className === "wall") {
+		return bruTdIndex = {
+			x:x,
+			y:y-1
+		};
+	}
+	else if (direction === 2 && x<10 && arrTd[x+1][y].className === "wall") {
+		return bruTdIndex = {
+			x:x+1,
+			y:y
+		};
+	}
+	else if (direction === 3  && y<10 && arrTd[x][y+1].className === "wall") {
+		return bruTdIndex = {
+			x:x,
+			y:y+1
+		};
+	}
+	else if (direction === 4 && x>1 && arrTd[x-1][y].className === "wall") {
+		return bruTdIndex = {
+			x:x-1,
+			y:y
+		};
+	}
+	return false;
+}
+
+//将开启列表中的格子的F值从小至大排序。
+function sortF(a, b) {
+	return a.F - b.F;
+}
+
+//得到当前格子周围的格子（上右下左）
+function SurroundPoint(currentPoint) {
+	var x = currentPoint.x;
+	var y = currentPoint.y;
+	return [
+		{x:x, y:y-1},
+		{x:x+1, y:y},
+		{x:x, y:y+1},
+		{x:x-1, y:y}
+	]
+}
+
+// 判断某点（某格子）是否在某个（开启/闭合）列表里面
+function existList(x, y, openList) {
+	for (i in openList) {
+		if(x === openList[i].x && y === openList[i].y) {
+			return i;
 		}
 	}
+	return false;
+}
 
-	//点击任意td格子移动到当前位置（有墙则不可移动）
-	for (var i = 0, len = aTd.length; i < len; i++) {
-		aTd[i].onclick = function () {
-			if (this.className != "wall") {
-				box.style.left = this.offsetLeft + "px";
-				box.style.top = this.offsetTop + "px";
-				boxInfo.rows = box.offsetTop / 50;
-				boxInfo.cols = box.offsetLeft / 50;
+// 根据当前位置和目标位置。得到行进路线
+function getPathResult(startX, startY, endX, endY) {
+	var openList = [];
+	var closeList = [];
+	var pathResult = [];
+	var resultIndex;
+	openList.push({x:startX, y:startY, G:0});
+	//当目标位置不存在于开启列表（代表还没找到路径）时。
+	while (!(resultIndex=existList(endX, endY, openList))) {
+		//把开启列表中F值最小的提取出来作为当前要遍历的周围节点的父节点
+		var currentPoint = openList.shift();
+		closeList.push(currentPoint)//当前点加入闭合列表
+		var surroundPoint = SurroundPoint(currentPoint); //得到当前点周围的点
+		for (var i in surroundPoint) {
+			var item = surroundPoint[i];
+			if(item.x>=1 && item.y >=1 && item.x <= 10 && item.y <= 10) {
+				//不存在于闭合列表。并且不是墙
+				if (!existList(item.x, item.y, closeList) && arrTd[item.x][item.y].className != "wall") {
+					var g = currentPoint.G + 10;
+					//如果不存在在开启列表中
+					if (!existList(item.x, item.y, openList)) {
+						item.H = Math.abs(endX - item.x) * 10 + Math.abs(endY - item.y) * 10;
+						item.G = g;
+						item.F =item.H + item.G;
+						item.parent = currentPoint;
+						openList.unshift(item) //我们是从开启列表的的队首提取当前点的。也往队首加入满足要求的点。
+					}
+				}
 			}
 		}
-	}
-
-	/*for (var i = 0, len = aTd.length; i < len; i++) {
-		aTd[i].onrightclick= function () {
-			console.log(1)
-			if (this.className != "wall") {
-				box.style.left = this.offsetLeft + "px";
-				box.style.top = this.offsetTop + "px";
-				boxInfo.rows = box.offsetTop / 50;
-				boxInfo.cols = box.offsetLeft / 50;
-			}
-			return false;
+		if (openList.length === 0) {
+			//开启列表空了。没有通路。结果为空。退出循环。
+			break;
 		}
+		openList.sort(sortF);
 	}
-	table.onrightclick = function () {
-		console.log("ta")
-	}*/
+
+	//如果目标位置在openList找不到。序号为false
+	if (!resultIndex) {
+		pathResult = [];
+	}
+	else {
+		//取到openList中的点。
+		var currentObj = openList[resultIndex];
+		// 一层一层往上推到父节点，加入result中
+		while (currentObj.x!==startX || currentObj.y!==startY) {
+			pathResult.unshift({
+				x:currentObj.x,
+				y:currentObj.y
+			});
+			currentObj = currentObj.parent;
+		}
+		currentObj = currentObj.parent;
+	}
+	return pathResult;
+}
+
+//限制运动时间的文本框只让输入数字
+document.getElementById('time').onkeyup = function () {
+	this.value = this.value.replace(/\D|[\b]/g,"")
+}
+document.getElementById('time').onblur = function () {
+	this.value = this.value.replace(/\D|[\b]/g,"")
+}
 
 
-
-	var run = document.getElementById('run');
-	var index = document.getElementById('index');
-	var commandList = document.getElementById('commandList');
+window.onload = function () {
+	var box = document.getElementById('box');
+	var boxLength = box.offsetWidth;
+	//给这个盒子的一些属性赋值。
+	box.x = box.offsetLeft / boxLength;
+	box.y = box.offsetTop / boxLength;
+	box.direction = 1;  //指示当前方向1-4为上-左
+	box.angle = 0;  //这里改明看用box.style.transfrom来写看能不能更好。
 	
+	var moveTimer,  //运动的定时器
+		rotateTimer,
+		moveToTimer,
+		moveFlag = false,   //运动是否正在进行，是则true
+		rotateFlag = false,
+		moveToFlag = false,
+		commandTimer //定时执行文本域中的所有指令
+	var timeDom = document.getElementById('time');
+	var time = timeDom.value; //定时器的间隔时间
+
 	/**
-	 * 检查我们输入的指令，给其加上对应的序号。对于不合法的指令，根据要求判断是否标识出来。
-	 * @param  {[type]} flag [对于需要执行指令的时候，听过flag参数，代表需要标识不合法的指令。
+	 * 控制小方块运动的函数
+	 * @param  {[number]} direction [确定当前小方块头部所在方向1-4分别为上-左]
+	 * @param  {[number]} long      [确定当前小方块此次运动需要移动的坐标值（移动几个格子）指令传入的值∈[0,9]。如果没有传入， 则默认为1]
+	 * @param  {[number]} time      [每次运动的快慢。]
 	 */
-	function renderIndexAndCheckValidity(flag) {
-		var commandArr = commandList.value.split(/\n/);
-		var str = "<li>";
-		var arr = [];
-		for (let i = 0, len = commandArr.length; i < len; i++) {
-			commandArr[i] = commandArr[i].trim()
-			//在有需求验证命令是否合法的情况下，并且该项指令不合法才标识为不合法。否则同意正常显示。
-			if (!checkCommand(commandArr[i]) && flag) {   
-				arr.push("<li class='wrong'>" + (i+1))  //这样的话略微有点小问题。因为写到HTML里是，遇到<li>缺少对应的闭合标签</li>的时候会自动补齐。所以一这样写，经过join加入到str时经过HTML会多一个空的<li></li>.但是因为整个ol具有list-style：none的属性，所以看不出来。也可以直接累加str去解决。
+	function move(direction, long, time) {
+		//没有传入合适的long（坐标偏移值）就不执行这个move函数了。
+		if (long == 0) {
+			return;
+		}
+		clearInterval(moveTimer);
+		moveFlag = true; //运动开启时设置moveFlag为true
+		if (long == null) {
+			long = 1;
+		}
+		var startCoord,   //开始的坐标的值（取值1-10）
+		 	coord,		  //我们要改变的坐标是x还是y坐标
+		 	property,	  //改变根据方向确定改变的是方块的top还是left值
+		 	propertyValue;//赋值为offsetTop/Left 方便我们写1个语句根据方向得到值
+		if (direction === 1 || direction === 3) {
+			startCoord = box.y;
+			coord = "y";
+			coordOpposite = "x";
+			property = "top";
+			propertyValue = "offsetTop";
+		}
+		else {
+			startCoord = box.x;
+			coord = "x";
+			coordOpposite = "y";
+			property = "left";
+			propertyValue = "offsetLeft";
+		}
+	
+		//如果执行move运动的时候小方块box并不处于每个td的边界上，就把我们要开始的位置默认设置到边界上（不改变其实际位置），可以使得停止的位置是td的边界。
+		if (box.x % 1 != 0 || box.y % 1 != 0) {
+			startCoord = Math.ceil(startCoord);
+			startCoord = direction == 1 || direction == 2?Math.ceil(startCoord):Math.floor(startCoord);
+			//如果此时是左右移动（此时coord为x），就把盒子的纵坐标移到最近的整数上，反之。
+			if (coord == "x") {
+				box.y = Math.round(box.y);
+				box.style.top = box.y * boxLength + "px";
 			}
 			else {
-				arr.push((i+1));
+				box.x = Math.round(box.x);
+				box.style.left = box.x * boxLength + "px";
 			}
 		}
-		str += arr.join("<li>") + "<li>";
-		index.innerHTML = str;
-	}
-	renderIndexAndCheckValidity();
 
-	//在命令面板里输入指令的时候，就重新刷新序号。并且关闭当前定时器。
-	commandList.oninput = function () {
-		renderIndexAndCheckValidity();
-		clearInterval(commandTimer);
-	}
+		var endCoord = direction == 1 || direction == 4?startCoord - long:+long + startCoord; //获得结束的坐标的值
+		var step = (endCoord - startCoord) * boxLength / 10;  //单次移动的步长（px）
+		
+		moveTimer = setInterval(function () {
+			//满足单次移动所造成的坐标的改变小于目标坐标和当前坐标的差值 或者 将要超越table边界 或者遇到障碍（墙）的时候结束move运动
+			if (Math.abs(box[coord] - endCoord) < Math.abs(step/boxLength) || (box[coord] < 1 - step/boxLength) || (box[coord] > 10 - step/boxLength)) {
+				clearInterval(moveTimer)
+				box[coord] = Math.round(box[coord]);
+				box.style[property] = box[coord] * boxLength + "px";
+				moveFlag = false; //运动定时器如果关闭就把moveFlag设置为false。
+			}
+			else {
 
-	var refresh = document.getElementById('refresh');
-	//清空命令面板
-	refresh.onclick = function () {
-		index.innerHTML = "<li>" + 1 + "</li>";
-		commandList.value = "";  
-		clearInterval(commandTimer);
-	}
+				// 判断下一次运动碰倒障碍（墙）也关闭运动定时器
+				if(coord === "x") {  
+					if (step > 0) {
+						nextTdIsWall = arrTd[Math.ceil(box.x + step/boxLength)][box.y].className == "wall";
+					}
+					else {
+						nextTdIsWall = arrTd[Math.floor(box.x + step/boxLength)][box.y].className == "wall";
+					}
+				}
+				else {
+					if (step > 0) {
+						nextTdIsWall = arrTd[box.x][Math.ceil(box.y + step/boxLength)].className == "wall";
+					}
+					else {
+						nextTdIsWall = arrTd[box.x][Math.floor(box.y + step/boxLength)].className == "wall";
+					}
+				}
+				
+				if (nextTdIsWall) {   
+					clearInterval(moveTimer)
+					box[coord] = step < 0?Math.floor(box[coord]):Math.ceil(box[coord]);
+					box.style[property] = box[coord] * boxLength + "px";
+					moveFlag = false;
+					return;
+				}	
 
-	//验证单个指令是否合法的正则。
-	function checkCommand(strc) {
-		var commandReg = /^GO\s*\d?\s*$|^TUN LEF\s*\d?$|^TUN RIG\s*\d?$|^TUN BAC\s*\d?$|^MOV TOP\s*\d?\s*$|^MOV RIG\s*\d?\s*$|^MOV BOT\s*\d?\s*$|^MOV LEF\s*\d?\s*$|^TRA TOP\s*\d?\s*$|^TRA RIG\s*\d?\s*$|^TRA BOT\s*\d?\s*$|^TRA LEF\s*\d?\s*$|^MOVE TO\s*\d\s*,\s*\d\s*\s*$|^BUILD\s*$|^BRU\s*/i
-		if (commandReg.test(strc)) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	//滚动事件。指令序号同步滚动
-	commandList.onscroll = function () {
-		index.scrollTop = commandList.scrollTop;
+				//不会碰倒障碍物的话就直接改变box的坐标和实际位置
+				box.style[property] = box[propertyValue] + step + "px";
+				box[coord] = box[propertyValue] / boxLength;
+			}
+		},time)
 	}
 
 	/**
-	 * 根据我们要达到的角度，并且已知当前盒子角度的情况下去计算去我们需要旋转的角度值
-	 * @param  {[number]} targetAngle [我们要达到的旋转角度值]
-	 * @return {[number]} angle       [得出来的需要旋转的角度值,我们可以用这个返回值去执行boxInfo的rotate方法。]
+	 * 控制小方块选择的函数
+	 * @param  {[number]} angle [确定当前小方块需要旋转的角度。（90的倍数）]
+	 * @param  {[number]} time  [决定旋转的快慢]
+	 * @return {[type]}       [description]
 	 */
-	function culculateNeedAngle(targetAngle) {
-		var angle = targetAngle - boxInfo.angle;
-		if (angle > 0) {                       //保证随时点击的时候都能保证我们目标的值angle % 90 = 0;
-			angle = Math.ceil(angle / 90) * 90;
-		}
-		else {
-			angle = Math.floor(angle / 90) * 90;
-		}
-		if (angle === -180) {
-			angle = 180;
-		}
-		else if (angle === 270) {
-			angle = -90;
-		}
-		else if (angle === -270) {
-			angle = 90;
-		}
-		return angle;
-	} 
-
-
-	//随机建墙。
-	var bulid = document.getElementById('build');
-	build.onclick = function () {
-		var x = Math.floor(Math.random() * 10);
-		var y = Math.floor(Math.random() * 10);
-		createWall(x,y);
-	}
-	function createWall(x, y) {
-		let index = x + 10 * y;
-		aTd[index].className = "wall"
+	function rotate(angle, time) {
+		clearInterval(rotateTimer)
+		rotateFlag = true;
+		//同move函数一样，我们需要确定每次进行旋转操作时。小方块的起始角度。（小方块的上-左方向对应的角度分别为 0deg 90deg 180deg -90deg。方向向上和向左的角度比较特殊）
+		//如果确定小方块时顺时针旋转（angle>0）的话，起始角度设置为当前角度/90的数值向下取整后 * 90，反之则向上取整。
+		var startRotate = angle >= 0?Math.floor(box.angle / 90) * 90:Math.ceil(box.angle / 90) * 90; 
+		//同样确定小方块时顺时针旋转（angle>0）的话，要旋转的角度因为改变了startRotate，所以要向计算出的值/90向上取整后 * 90，反之亦然。
+		angle = angle >= 0? Math.ceil(angle / 90) * 90: Math.floor(angle / 90) * 90;
+		var endRotate = startRotate + angle;
+		var step = (endRotate - startRotate) / 10;
+		
+		rotateTimer = setInterval(function (){
+			if (Math.abs(endRotate - box.angle) <= Math.abs(step)) {
+				rotateFlag = false;
+				clearInterval(rotateTimer)
+				box.angle = endRotate % 360;
+				if (box.angle < 0) {
+					box.angle = 360 + box.angle;
+				}
+				box.direction = box.angle / 90 + 1;
+				box.style.transform = "rotate(" + box.angle + "deg)";
+			}
+			else {
+				box.angle = box.angle + step;
+				box.style.transform = "rotate(" + box.angle + "deg)";
+			}
+		}, time)
 	}
 
-	var commandTimer = null;
-	//执行所有合法的指令
-	run.onclick = function () {
-		var arr = commandList.value.trim().split("\n");
-		//保证每条指令前方有空格也能正常执行
-		for (let i = 0; i < arr.length; i++) {
-			arr[i] = arr[i].trim()
+	function moveTo(startX, startY, endX, endY) {
+		//运行getPathResult得到从当前格子到目标格子的行进路线
+		var pathResult = getPathResult(startX, startY, endX, endY)
+		var length = pathResult.length;
+		if (!length) {
+			console.log("没有通路可去")
+			return;
 		}
-		var aLi = index.getElementsByTagName("li");
-		var flag = true;
-		renderIndexAndCheckValidity("flag");   //执行验证函数。看所有指令是否合法。因为带有参数，自带验证效果
-
-		//经过验证后，如果找到一个不合法的指令（标志指令不合法的是对应的li具有wrong的class），就将flag设置为false，不会执行所有指令
-		for (let i = 0, len = aLi.length; i < len; i++) {
-			if (aLi[i].className == "wrong") {
-				flag = false;
-				break;
+		moveToFlag = true;
+		var index = 0;
+		//因为每行进一次可能包括move和rotate函数。所以我要保证move和rotate都执行完了才执行从i到i+1个格子的方法
+		moveToTimer = setInterval(function () {
+			if (!moveFlag && !rotateFlag) {
+				if (index === length) {
+					clearInterval(moveToTimer)
+					moveToFlag = false;
+				}
+				else {   //分别执行至上-至左的操作
+					if (pathResult[index].y - box.y === -1) {  //至上
+						if (box.angle === 270) {
+							rotate(360 - box.angle, time);
+						}
+						else {
+							rotate(0 - box.angle, time)
+						}
+						move(1, 1, time)
+					}
+					else if (pathResult[index].x - box.x === 1) {
+						rotate(90 - box.angle, time)
+						move(2, 1, time)
+					}
+					else if (pathResult[index].y - box.y === 1) {
+						rotate(180 - box.angle, time)
+						move(3, 1, time);
+					}
+					else {
+						if (box.angle === 0) {
+							rotate(270 - 360, time)
+						}
+						else {
+							rotate(270 - box.angle, time);
+						}
+						move(4, 1, time)
+					}
+				}
+				index++;
+			}
+		},30)
+	}
+	
+	var arrCmd = document.querySelector(".command-button").getElementsByTagName('button');
+	// 给执行某个指令的按钮添加事件
+	for (var i = 0; i < arrCmd.length; i++) {
+		arrCmd[i].index = i+1;
+		arrCmd[i].onclick = function () {
+			time = timeDom.value;
+			switch (this.index) {	
+				case 1:
+					move(box.direction, 1, time);
+					break;
+				case 2:
+				 	rotate(-90, time);
+					break;
+				case 3:
+				 	rotate(90, time);
+					break;
+				case 4:
+				 	rotate(180, time);
+					break;
+				case 5:
+					if (box.angle === 270) {
+						rotate(360 - box.angle, time);
+					}
+					else {
+						rotate(0 - box.angle, time)
+					}
+					move(1, 1, time);
+					break;
+				case 6:
+					rotate(90-box.angle, time);
+					move(2, 1, time);
+					break;
+				case 7:
+					rotate(180-box.angle, time);
+					move(3, 1, time);
+					break;
+				case 8:
+					if (box.angle === 0) {
+						rotate(270 - 360, time)
+					}
+					else {
+						rotate(270 - box.angle, time);
+					}
+					move(4, 1, time);
+					break;
+				case 9:
+					move(1, 1, time);
+				case 10:
+					move(2, 1, time);
+					break;
+				case 11:
+					move(3, 1, time);
+					break;
+				case 12:
+					move(4, 1, time);
+					break;
 			}
 		}
+	}
 
-		commandList.scrollTop = 0;
-		//当所有指令都是合法的话，执行指令
-		if (flag) {
-			clearInterval(commandTimer)
-			let i = 0; 
-			aLi[0].className = "active";  //立即将第一个指令标志位正在执行状态
-			//开个定时器，定时去验证当前是否没有进行旋转或者移动操作
-			commandTimer = setInterval(function () { 
-				//当指令未完成就不会关闭这个定时器
-				if (i < arr.length) {
-					//确保move和rotate方法都没有在执行。因为有的命令是需要两个方法同时进行的，如果只是检验其一的话，会导致错误执行下一个命令
-					if (moveFlag && rotateFlag) {
-						//执行完一屏的任务之后就滚动到下一屏（一屏30条指令高度为540PX）
-						if (i % 30 == 0) {
-							commandList.scrollTop = i / 30 * 540  //因为之前写了个当comandList滚动的时候，序号也会跟着滚动的函数。所以不用再写
+	var cmdPanel = document.getElementById('command-panel');     //指令面板
+	var cmdText = cmdPanel.getElementsByTagName('textarea')[0];  //用户输入指令的文本域
+	var cmdIndex = cmdPanel.getElementsByTagName('ol')[0];		 //渲染指令的序号 
+
+	//command-panel下几个按钮的事件
+	var runCmd = document.getElementById('run-cmd');
+	var reset = document.getElementById('reset');
+	var resetStr="go 4\ntun lef 3\n mov top 3\n tra rig 2\nmove to (9,9)\ntun bac\n mov lef 4\n go 5\n tra bot\n go 2\n move to 3,3\n mov lef 3"
+	var refresh = document.getElementById('refresh');
+	var createWall = document.getElementById('create-wall');
+
+	
+	createWall.onclick = function () {
+		if(!moveToFlag) {
+			arrTd[Math.floor(Math.random()*10)+1][Math.floor(Math.random()*10)+1].className = "wall";
+		}
+	}
+	reset.onclick = function () {
+		cmdText.value = resetStr;
+		renderIndexAndCheckValidity(cmdText, cmdIndex)
+		clearInterval(commandTimer)
+	}
+	reset.onclick()
+	refresh.onclick = function () {
+		cmdText.value = "";
+		cmdIndex.innerHTML = "<li>1</li>";
+		clearInterval(commandTimer)
+	}
+	runCmd.onclick = function () {
+		time = timeDom.value;
+		clearInterval(moveToTimer)
+		moveToFlag = false;
+		clearInterval(commandTimer)
+		var cmd = renderIndexAndCheckValidity(cmdText, cmdIndex);
+		//如果指令列表里存在不合法的指令。就不开始执行所有指令
+		if (!cmd.validity) {
+			return;
+		}
+		cmdText.scrollTop = 0;
+		var cmdList = cmd.list;
+		var command;//每次需要执行的指令
+		var cmdIndexLi = cmdIndex.getElementsByTagName('li');
+		var index = 0;//当前执行指令的index
+		var count = cmdList.length //总计有多少个指令
+		var liHeight = cmdIndexLi[0].offsetHeight;//每个指令占据的高度。据此
+		var screenLiLength = Math.floor(cmdIndex.offsetHeight / liHeight); //一个cmdIndex能包含多少个指令。
+		commandTimer = setInterval(function () {
+			//未执行完所有执行。
+			if (index < count) {
+				//当一个执行的move和rotate和moveTo都完成时。开始执行下1个指令
+				if (!moveFlag && !rotateFlag && !moveToFlag) {
+					cmdIndexLi[index].className = "active";//标记当前正在执行的指令序号
+					if (index) {
+						cmdIndexLi[index - 1].className = ""; //去掉之前的标记
+					}
+					if (/^Go/i.test(cmdList[index])) {
+						move(box.direction, cmdList[index].match(/\d/g), time)
+					}
+					else if (/^Tun lef/i.test(cmdList[index])) {
+						var per = cmdList[index].match(/\d/g) === null?1:cmdList[index].match(/\d/g);
+						rotate(per * -90, time)
+					}
+					else if (/^Tun rig/i.test(cmdList[index])) {
+						var per = cmdList[index].match(/\d/g) === null?1:cmdList[index].match(/\d/g);
+						rotate(per * 90, time)
+					}
+					else if (/^Tun bac/i.test(cmdList[index])) {
+						var per = cmdList[index].match(/\d/g) === null?1:cmdList[index].match(/\d/g);
+						rotate(per * 180, time)
+					}
+					else if (/^Mov top/i.test(cmdList[index])) {
+						if (box.angle === 270) {
+							rotate(360 - box.angle, time);
 						}
-						//动态标志出当前正在执行的指令，从1开始，否则j-1的下标会越界。
-						if (i != 0) {
-							aLi[i - 1].className = "";
+						else {
+							rotate(0 - box.angle, time)
 						}
-						aLi[i].className = "active";
-						
-						//每个合法指令对应的执行函数,即使这个函数并不被执行也会继续执行下一条指令
-						if (/^GO/i.test(arr[i])) {
-							getDirectionAndGo(50 * getUnitLength(arr[i]))
+						move(1, cmdList[index].match(/\d/g), time);
+					}
+					else if (/^Mov rig/i.test(cmdList[index])) {
+						rotate(90 - box.angle, time);
+						move(2, cmdList[index].match(/\d/g), time);
+					}
+					else if (/^Mov bot/i.test(cmdList[index])) {
+						rotate(180 - box.angle, time);
+						move(3, cmdList[index].match(/\d/g), time);
+					}
+					else if (/^Mov lef/i.test(cmdList[index])) {
+						if (box.angle === 0) {
+							rotate(270 - 360, time)
 						}
-						else if (/^TUN LEF/i.test(arr[i])){
-							boxInfo.rotate(-90 * getUnitLength(arr[i]))
+						else {
+							rotate(270 - box.angle, time)
 						}
-						else if (/^TUN RIG/i.test(arr[i])) {
-							boxInfo.rotate(90 * getUnitLength(arr[i]))
+						move(4, cmdList[index].match(/\d/g), time);
+					}
+					else if (/^Tra top/i.test(cmdList[index])) {
+						move(1, cmdList[index].match(/\d/g), time);
+					}
+					else if (/^Tra rig/i.test(cmdList[index])) {
+						move(2, cmdList[index].match(/\d/g), time);
+					}
+					else if (/^Tra bot/i.test(cmdList[index])) {
+						move(3, cmdList[index].match(/\d/g), time);
+					}
+					else if (/^Tra lef/i.test(cmdList[index])) {
+						move(4, cmdList[index].match(/\d/g), time);
+					}
+					else if (/^Build$/i.test(cmdList[index])) {
+						buildWall()
+					}
+					else if (/^Bru/i.test(cmdList[index])) {
+						if (isWall(box.direction, box.x, box.y)) {
+							arrTd[bruTdIndex.x][bruTdIndex.y].style.background = trim(cmdList[index].slice(3))
+							arrTd[bruTdIndex.x][bruTdIndex.y].style.borderColor = trim(cmdList[index].slice(3))
 						}
-						else if (/^TUN BAC/i.test(arr[i])) {
-							boxInfo.rotate(180 * getUnitLength(arr[i]))
-						}
-						else if (/^MOV TOP/i.test(arr[i])) {
-							boxInfo.rotate(culculateNeedAngle(0));  //culculateNeedAngle这个函数帮我们计算在当前这个位置。我们需要到达各个方向所需旋转的角度
-							boxInfo.move("top", -50 * getUnitLength(arr[i]))
-						}
-						else if (/^MOV RIG/i.test(arr[i])) {
-							boxInfo.rotate(culculateNeedAngle(90));
-							boxInfo.move("left", 50 * getUnitLength(arr[i]));
-						}
-						else if (/^MOV BOT/i.test(arr[i])) {
-							boxInfo.rotate(culculateNeedAngle(180));
-							boxInfo.move("top", 50 * getUnitLength(arr[i]));
-						}
-						else if (/^MOV LEF/i.test(arr[i])) {
-							boxInfo.rotate(culculateNeedAngle(270));
-							boxInfo.move("left", -50 * getUnitLength(arr[i]));
-						}
-						else if (/^TRA TOP/i.test(arr[i])) {
-							boxInfo.move("top", -50 * getUnitLength(arr[i]));
-						}
-						else if (/^TRA RIG/i.test(arr[i])) {
-							boxInfo.move("left", 50 * getUnitLength(arr[i]));
-						}
-						else if (/^TRA BOT/i.test(arr[i])) {
-							boxInfo.move("top", 50 * getUnitLength(arr[i]));
-						}
-						else if (/^TRA LEF/i.test(arr[i])) {
-							boxInfo.move("left", -50 * getUnitLength(arr[i]));
-						}
-						else if (/^MOVE TO\s*\d{0,2}/i.test(arr[i])) {
-							var targetSite = arr[i].match(/\d/g)
-							if (targetSite.length === 2) {
-								boxInfo.moveTo(targetSite[0], targetSite[1])
-							}
-						}
-						else if (/^BUILD/i.test(arr[i])) {
-							getDirectionAndBuildWall(boxInfo.rows, boxInfo.cols);
-						}
-						else if (/^BRU/i.test(arr[i])) {
-							getDirectionAndBruWall(boxInfo.rows, boxInfo.cols, arr[i].slice(3).trim());
-						}
-						i++;
-					}	
+					}
+					else {
+						var targetPos = cmdList[index].match(/\d+/g)
+						moveTo(box.x, box.y, +targetPos[0], +targetPos[1])
+					}
+					index++;
+					if (index % screenLiLength == 0) {
+						cmdText.scrollTop = liHeight * index;  //主屏滚动index
+					}
 				}
-				else {
-					//执行完所有指令关闭这个定时器
-					clearInterval(commandTimer);
+			}
+			else {
+				//等待所有指令完成了关闭这个定时器。并且把最后1项的active状态去掉
+				if (!moveFlag && !rotateFlag && !moveToFlag) {
+					clearInterval(commandTimer)
+					cmdIndexLi[count - 1].className = "";
 				}
-			}, 10)
+			}
+		},30)
+	}
+
+	cmdText.oninput = function (){
+		renderIndexAndCheckValidity(cmdText, cmdIndex);  //即时输入指令即时渲染序号并检查指令合法性
+	}
+	//阻止输入指令的文本域的事件冒泡
+	cmdText.onkeydown = function (ev) {
+		ev = ev || window.event;
+		window.event ? window.event.cancelBubble = true: ev.stopPropagation();
+	}
+	cmdText.onscroll = function () {
+		cmdIndex.scrollTop = cmdText.scrollTop;	//指令序号和输入指令的文本域同步显示
+	}
+
+	window.onkeydown = function (ev) {
+		ev = ev || window.event;
+		keyCode = ev.keyCode || ev.which || ev.charCode;
+		if (moveFlag || rotateFlag || moveToFlag) {
+			ev.preventDefault()
+			return;
+		}
+		if (keyCode === 37) {
+			arrCmd[7].onclick();
+			ev.preventDefault()
+		}
+		else if (keyCode === 38) {
+			arrCmd[4].onclick();
+			ev.preventDefault()
+		}
+		else if (keyCode === 39) {
+			arrCmd[5].onclick();
+			ev.preventDefault()
+		}
+		else if (keyCode === 40) {
+			arrCmd[6].onclick();
+			ev.preventDefault()
+		}
+		else if (keyCode === 32 || keyCode === 13) {
+			buildWall();
+			ev.preventDefault()
 		}
 	}
 }
 
-
-//Q：
-//onrightclick事件。
+console.log("多个指令提取每次需要变化单位量（移动坐标/旋转角度）。可以提取为1个函数写下来")

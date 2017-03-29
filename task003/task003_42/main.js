@@ -95,51 +95,80 @@ window.onload = function () {
 	var timer ;
 	var count = 0;
 	for (let i = 0, len = aTd.length; i < len; i++) {
-		/*aTd[i].onclick = function () {
+		aTd[i].onclick = function () {
 			clearTimeout(timer)
 			//因为使用定时器后，this指向的是windowsd，用个that吧this存储起来
 			count++;
 			var that = this;
 			timer = setTimeout(function () {
-				if (that.dataset.month == (monthSelect.selectedIndex + 1)) {
-					for (let j = 0, len = aTd.length; j < len; j++) {
-						//点击的时候，如果有搜索到元素的className含有active，则将active类去掉
-						if (aTd[j].className.search("active") >= 0) {
-							aTd[j].className = aTd[j].className.replace(/active/,"");
+				//每次清空上次结果还有问题。
+				that.className += " active";
+				console.log(count)
+				if (count == 1) {
+					for (let i = 0, len = aTd.length; i < len; i++) {
+						if (aTd[i].dataset.period == "begin") {
+							aTd[i].dataset.period = "";
+							aTd[i].dataset.dateText = "";
+						}
+						if (aTd[i].dataset.period == "end") {
+							aTd[i].dataset.period = "begin";
+							that.dataset.period = "end"
+							count =2;
 							break;
 						}
 					}
-					that.className += " abc";
-					clickDate = that.innerHTML;
+					if (that.dataset.period !== "end") {
+						that.dataset.period = "begin";
+					}
+					
+					that.dataset.index = i;
+					that.dataset.dateText = yearSelect.value + monthSelect.value + that.innerHTML + "日 星期" + week[i % 7 + 1];
 				}
-				else {
-					//点击跳转到的月份为下一年一月或者上一年12月的情况处理
-					if (that.dataset.month == 13) {
-						monthSelect.options[0].selected = true;
-						yearSelect.options[yearSelect.selectedIndex + 1].selected = true;
-						render2(yearSelect.selectedIndex + 1970,monthSelect.selectedIndex + 1)
+				else if (count == 2) {
+					for (let i = 0, len = aTd.length; i < len; i++) {
+						if (aTd[i].dataset.period == "end") {
+							aTd[i].dataset.period = "";
+							aTd[i].dataset.dateText = "";
+							count = 2;
+							break;
+						}
 					}
-					else if (that.dataset.month == 0) {
-						monthSelect.options[11].selected = true;
-						yearSelect.options[yearSelect.selectedIndex - 1].selected = true;
-						render2(yearSelect.selectedIndex + 1970,monthSelect.selectedIndex + 1)
+					that.dataset.period = "end";
+					that.dataset.dateText = yearSelect.value + monthSelect.value + that.innerHTML + "日 星期" + week[i % 7 + 1];
+				}
+				
+				if (count == 2) {
+					for (let i = 0; i < aTd.length; i++) {
+						if ( aTd[i].className.search("period") !== -1 || aTd[i].className.search("active") !== -1) {
+							aTd[i].className = aTd[i].className.replace(/period|active/g, "").trim();
+						}
 					}
-					else {
-						monthSelect.options[that.dataset.month - 1].selected = true;
-						clickDate = that.innerHTML  //此时得到当前点击的日期。当一下渲染日历表的时候会用到这个日期
-						render2("",+that.className,clickDate)
+					searchPeriod:
+					for (let i = 0; i < aTd.length; i++) {
+						if (aTd[i].dataset.period == "begin" || aTd[i].dataset.period == "end" )
+						{	
+							if (aTd[i].dataset.period == "begin") {
+								for (let j = i; j < aTd.length; j++) {
+									aTd[j].className += " period";
+									if (aTd[j].dataset.period == "end") {
+										break searchPeriod;
+									}
+								}
+							}
+						}
+
 					}
+					count = 0;
 				}
 			},350)
-		}*/
-		aTd[i].onclick = function () {
+		}
+		aTd[i].ondblclick = function () {
 			clearTimeout(timer)
 			if (this.dataset.month == (monthSelect.selectedIndex + 1)) {
 				for (let j = 0, len = aTd.length; j < len; j++) {
 					//点击的时候，如果有搜索到元素的className含有active，则将active类去掉
 					if (aTd[j].className.search("active") >= 0) {
 						aTd[j].className = aTd[j].className.replace(/active/,"");
-						break;
 					}
 				}
 				this.className += " active";
